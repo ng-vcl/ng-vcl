@@ -1,0 +1,1 @@
+[{"__symbolic":"module","version":4,"metadata":{"defineMetadata":{"__symbolic":"function"},"getMetadata":{"__symbolic":"function","parameters":["key","target"],"value":{"__symbolic":"error","message":"Reference to a local symbol","line":0,"character":12,"context":{"name":"Reflect"}}}}}]
