@@ -5,5 +5,9 @@ export declare class DropdownOption {
     metadata: any;
     label: string;
     sublabel: string;
+    prepIcon?: string;
+    appIcon?: string;
+    appIconSrc?: string;
+    prepIconSrc?: string;
     disabled: boolean;
 }

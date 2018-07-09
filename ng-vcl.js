@@ -287,6 +287,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 var FileInputComponent = /** @class */ (function () {
     function FileInputComponent(cdRef) {
         this.cdRef = cdRef;
+        this.icon = 'fa fa-upload';
         this.accept = '*';
         this.multiple = false;
         this.files = new EventEmitter();
@@ -398,6 +399,10 @@ var FileInputComponent = /** @class */ (function () {
     __decorate$3([
         Input(),
         __metadata$2("design:type", String)
+    ], FileInputComponent.prototype, "icon", void 0);
+    __decorate$3([
+        Input(),
+        __metadata$2("design:type", String)
     ], FileInputComponent.prototype, "accept", void 0);
     __decorate$3([
         Input(),
@@ -478,13 +483,14 @@ var FileInputComponent = /** @class */ (function () {
     FileInputComponent = __decorate$3([
         Component({
             selector: 'vcl-file-input',
-            template: "<input #input type=\"file\" style=\"display: none;\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" />\n<div class=\"vclFileInputIcon vclIcon fa fa-upload\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div>\n<div class=\"vclFileInputPlaceholder\">\n  <ng-container *ngIf=\"filename\">{{filename}}</ng-container>\n  <div *ngIf=\"!filename\">\n    <ng-content></ng-content>\n  </div>\n</div>\n",
-            host: {
-                '[class.vclFileInput]': 'true',
-                role: 'button'
-            },
+            template: "<input #input type=\"file\" [style.display]=\"'none'\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" />\n<div class=\"vclFileInputIcon vclIcon {{ icon }}\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div>\n<div class=\"vclFileInputPlaceholder\">\n  <ng-container *ngIf=\"filename\">{{ filename }}</ng-container>\n  <div *ngIf=\"!filename\">\n    <ng-content></ng-content>\n  </div>\n</div>\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
-            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            host: {
+                '[class.vclInput]': 'true',
+                '[class.vclFileInput]': 'true',
+                role: 'button',
+            }
         }),
         __metadata$2("design:paramtypes", [ChangeDetectorRef])
     ], FileInputComponent);
@@ -1811,6 +1817,22 @@ var DropdownOption = /** @class */ (function () {
     ], DropdownOption.prototype, "sublabel", void 0);
     __decorate$g([
         Input(),
+        __metadata$8("design:type", String)
+    ], DropdownOption.prototype, "prepIcon", void 0);
+    __decorate$g([
+        Input(),
+        __metadata$8("design:type", String)
+    ], DropdownOption.prototype, "appIcon", void 0);
+    __decorate$g([
+        Input(),
+        __metadata$8("design:type", String)
+    ], DropdownOption.prototype, "appIconSrc", void 0);
+    __decorate$g([
+        Input(),
+        __metadata$8("design:type", String)
+    ], DropdownOption.prototype, "prepIconSrc", void 0);
+    __decorate$g([
+        Input(),
         __metadata$8("design:type", Boolean)
     ], DropdownOption.prototype, "disabled", void 0);
     DropdownOption = __decorate$g([
@@ -2130,7 +2152,7 @@ var DropdownComponent = /** @class */ (function () {
     DropdownComponent = __decorate$h([
         Component({
             selector: 'vcl-dropdown',
-            template: "<ul vcl-metalist #metalist\n  class=\"vclDropdown vclOpen\"\n  role=\"listbox\"\n  [class.vclLayoutHidden]=\"state === DropdownState.Closed\" \n  [value]=\"value\"\n  [mode]=\"mode\"\n  [maxSelectableItems]=\"maxSelectableItems\"\n  [class.vclDisabled]=\"disabled\"\n  [attr.tabindex]=\"tabindex\"\n  [attr.aria-multiselectable]=\"mode === 'multiple'\"\n  [style.position]=\"'static'\"\n  (change)=\"onMetalistChange($event)\"\n  (focus)=\"onMetalistFocus()\"\n  (blur)=\"onMetalistBlur()\"\n  (keydown)=\"onMetalistKeydown($event)\"\n  (itemsChange)=\"onItemsChange()\"\n  >\n    <li \n      *ngFor=\"let item of items\" \n      vcl-metalist-item\n      #meta=meta\n      [metadata]=\"item\"\n      [disabled]=\"disabled || item.disabled\"\n      [value]=\"item.value\"\n      role=\"option\"\n      class=\"vclDropdownItem\"\n      [class.vclSelected]=\"meta.selected\"\n      [class.vclDisabled]=\"disabled || meta.disabled\"\n      [class.vclHighlighted]=\"focused && meta.marked\"\n      [attr.aria-selected]=\"meta.selected\"\n      (click)=\"onMetalistItemTap(meta)\">\n      <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\">\n        {{item.label}}\n      </div>\n      <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\">\n        {{item.sublabel}}\n      </div>\n      <wormhole *ngIf=\"item._content\" [connect]=\"item._content\"></wormhole>\n    </li>\n</ul>\n",
+            template: "<ul vcl-metalist #metalist\n  class=\"vclDropdown vclOpen\"\n  role=\"listbox\"\n  [class.vclLayoutHidden]=\"state === DropdownState.Closed\" \n  [value]=\"value\"\n  [mode]=\"mode\"\n  [maxSelectableItems]=\"maxSelectableItems\"\n  [class.vclDisabled]=\"disabled\"\n  [attr.tabindex]=\"tabindex\"\n  [attr.aria-multiselectable]=\"mode === 'multiple'\"\n  [style.position]=\"'static'\"\n  (change)=\"onMetalistChange($event)\"\n  (focus)=\"onMetalistFocus()\"\n  (blur)=\"onMetalistBlur()\"\n  (keydown)=\"onMetalistKeydown($event)\"\n  (itemsChange)=\"onItemsChange()\"\n  >\n    <li \n      *ngFor=\"let item of items\" \n      vcl-metalist-item\n      #meta=meta\n      [metadata]=\"item\"\n      [disabled]=\"disabled || item.disabled\"\n      [value]=\"item.value\"\n      role=\"option\"\n      class=\"vclDropdownItem\"\n      [class.vclSelected]=\"meta.selected\"\n      [class.vclDisabled]=\"disabled || meta.disabled\"\n      [class.vclHighlighted]=\"focused && meta.marked\"\n      [attr.aria-selected]=\"meta.selected\"\n      (click)=\"onMetalistItemTap(meta)\">\n      <div vcl-icogram *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"\n         [prepIcon]=\"item.prepIcon\"\n         [appIcon]=\"item.appIcon\"\n         [appIconSrc]=\"item.appIconSrc\"\n         [prepIconSrc]=\"item.prepIconSrc\"\n      >\n        {{item.label}}\n      </div>\n      <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\">\n        {{item.sublabel}}\n      </div>\n      <wormhole *ngIf=\"item._content\" [connect]=\"item._content\"></wormhole>\n    </li>\n</ul>\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3],
             host: {
@@ -2151,53 +2173,33 @@ var __decorate$i = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLDropdownModule = /** @class */ (function () {
-    function VCLDropdownModule() {
-    }
-    VCLDropdownModule = __decorate$i([
-        NgModule({
-            imports: [CommonModule, VCLMetalistModule, VCLWormholeModule],
-            exports: [DropdownComponent, DropdownOption],
-            declarations: [DropdownComponent, DropdownOption],
-            providers: [],
-        })
-    ], VCLDropdownModule);
-    return VCLDropdownModule;
-}());
-
-var __decorate$j = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var __metadata$a = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var IcogramComponent = /** @class */ (function () {
     function IcogramComponent() {
     }
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramComponent.prototype, "label", void 0);
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramComponent.prototype, "prepIcon", void 0);
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramComponent.prototype, "appIcon", void 0);
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramComponent.prototype, "prepIconSrc", void 0);
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramComponent.prototype, "appIconSrc", void 0);
-    IcogramComponent = __decorate$j([
+    IcogramComponent = __decorate$i([
         Component({
             selector: 'vcl-icogram, div[vcl-icogram]',
             host: {
@@ -2213,27 +2215,27 @@ var IcogramComponent = /** @class */ (function () {
 var IcogramSpanComponent = /** @class */ (function () {
     function IcogramSpanComponent() {
     }
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramSpanComponent.prototype, "label", void 0);
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramSpanComponent.prototype, "prepIcon", void 0);
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramSpanComponent.prototype, "appIcon", void 0);
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramSpanComponent.prototype, "prepIconSrc", void 0);
-    __decorate$j([
+    __decorate$i([
         Input(),
         __metadata$a("design:type", String)
     ], IcogramSpanComponent.prototype, "appIconSrc", void 0);
-    IcogramSpanComponent = __decorate$j([
+    IcogramSpanComponent = __decorate$i([
         Component({
             selector: 'span[vcl-icogram]',
             host: {
@@ -2247,7 +2249,7 @@ var IcogramSpanComponent = /** @class */ (function () {
     return IcogramSpanComponent;
 }());
 
-var __decorate$k = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$j = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -2256,7 +2258,7 @@ var __decorate$k = (this && this.__decorate) || function (decorators, target, ke
 var VCLIcogramModule = /** @class */ (function () {
     function VCLIcogramModule() {
     }
-    VCLIcogramModule = __decorate$k([
+    VCLIcogramModule = __decorate$j([
         NgModule({
             imports: [CommonModule, VCLIconModule, VCLLayoutModule],
             exports: [IcogramComponent, IcogramSpanComponent, VCLLayoutModule],
@@ -2265,6 +2267,26 @@ var VCLIcogramModule = /** @class */ (function () {
         })
     ], VCLIcogramModule);
     return VCLIcogramModule;
+}());
+
+var __decorate$k = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var VCLDropdownModule = /** @class */ (function () {
+    function VCLDropdownModule() {
+    }
+    VCLDropdownModule = __decorate$k([
+        NgModule({
+            imports: [CommonModule, VCLMetalistModule, VCLWormholeModule, VCLIcogramModule],
+            exports: [DropdownComponent, DropdownOption],
+            declarations: [DropdownComponent, DropdownOption],
+            providers: [],
+        })
+    ], VCLDropdownModule);
+    return VCLDropdownModule;
 }());
 
 var __decorate$l = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2515,26 +2537,31 @@ var OffClickDirective = /** @class */ (function () {
         this.elem = elem;
         this.offClickDelay = 10;
         this.offClick = new EventEmitter();
+        this.subs = [];
     }
     OffClickDirective.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (typeof document !== 'undefined') {
+            // Track mouse move on host element and store hovered inner elements
+            var subTrack = merge(fromEvent(this.elem.nativeElement, 'mouseover').pipe(map(function (e) { return e.target || undefined; })), fromEvent(this.elem.nativeElement, 'mouseleave').pipe(map(function () { return undefined; }))).subscribe(function (target) { return _this.hoveredElement = target; });
             // Add a small delay, so any click that causes this directive to render does not trigger an off-click
-            var delay$ = timer(this.offClickDelay).pipe(first());
-            this.sub = fromEvent(document, 'click').pipe(skipUntil(delay$)).subscribe(function (ev) {
+            var subClick = fromEvent(document, 'click').pipe(skipUntil(timer(this.offClickDelay).pipe(first()))).subscribe(function (ev) {
                 var me = _this.elem.nativeElement;
                 // Check that the target is not the off-clicks target element or any sub element
-                var excludes = [
+                var checks = [
+                    _this.hoveredElement,
                     me
                 ].concat((_this.offClickExcludes || []).map(function (e) { return e instanceof ElementRef ? e.nativeElement : e; }).filter(function (e) { return e instanceof Element; }));
-                if (ev.target && excludes.every(function (e) { return e !== ev.target && !e.contains(ev.target); })) {
+                var target = ev.target;
+                if (target && checks.every(function (el) { return (el !== target || !el.contains(target)); })) {
                     _this.offClick.emit();
                 }
             });
+            this.subs = [subTrack, subClick];
         }
     };
     OffClickDirective.prototype.ngOnDestroy = function () {
-        this.sub && this.sub.unsubscribe();
+        this.subs.forEach(function (sub) { return sub.unsubscribe(); });
     };
     __decorate$q([
         Input(),
@@ -2551,6 +2578,7 @@ var OffClickDirective = /** @class */ (function () {
     OffClickDirective = __decorate$q([
         Directive({
             selector: '[offClick]',
+            exportAs: 'offClick'
         }),
         __metadata$f("design:paramtypes", [ElementRef])
     ], OffClickDirective);
@@ -2632,7 +2660,9 @@ var PopoverComponent = /** @class */ (function (_super) {
         _this.targetX = AttachmentX.Left;
         _this.targetY = AttachmentY.Bottom;
         _this.attachmentX = AttachmentX.Left;
+        _this.offsetAttachmentX = 0;
         _this.attachmentY = AttachmentY.Top;
+        _this.offsetAttachmentY = 0;
         _this.willClose = new EventEmitter();
         _this.willOpen = new EventEmitter();
         _this.state = PopoverState.hidden;
@@ -2718,14 +2748,14 @@ var PopoverComponent = /** @class */ (function (_super) {
             ownPos[AttachmentX.Left] + ownPos[Dimension.Width] / 2 :
             ownPos[this.attachmentX];
         var diffX = mustX - isX;
-        this.translateX = this.translateX + diffX;
+        this.translateX = this.translateX + diffX + this.offsetAttachmentX;
         var mustY = this.targetY === AttachmentY.Center ?
             targetPos[AttachmentY.Top] + targetPos[Dimension.Height] / 2 :
             targetPos[this.targetY];
         var isY = this.attachmentY === AttachmentY.Center ?
             ownPos[AttachmentY.Top] + ownPos[Dimension.Height] / 2 :
             ownPos[this.attachmentY];
-        var diffY = mustY - isY;
+        var diffY = mustY - isY + +this.offsetAttachmentY;
         if (this.debug) {
             console.log(tag, {
                 targetPos: targetPos,
@@ -2850,8 +2880,16 @@ var PopoverComponent = /** @class */ (function (_super) {
     ], PopoverComponent.prototype, "attachmentX", void 0);
     __decorate$s([
         Input(),
+        __metadata$g("design:type", Number)
+    ], PopoverComponent.prototype, "offsetAttachmentX", void 0);
+    __decorate$s([
+        Input(),
         __metadata$g("design:type", String)
     ], PopoverComponent.prototype, "attachmentY", void 0);
+    __decorate$s([
+        Input(),
+        __metadata$g("design:type", Number)
+    ], PopoverComponent.prototype, "offsetAttachmentY", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", Object),
@@ -3464,6 +3502,22 @@ var SelectOption = /** @class */ (function () {
     ], SelectOption.prototype, "label", void 0);
     __decorate$y([
         Input(),
+        __metadata$k("design:type", String)
+    ], SelectOption.prototype, "prepIcon", void 0);
+    __decorate$y([
+        Input(),
+        __metadata$k("design:type", String)
+    ], SelectOption.prototype, "appIcon", void 0);
+    __decorate$y([
+        Input(),
+        __metadata$k("design:type", String)
+    ], SelectOption.prototype, "appIconSrc", void 0);
+    __decorate$y([
+        Input(),
+        __metadata$k("design:type", String)
+    ], SelectOption.prototype, "prepIconSrc", void 0);
+    __decorate$y([
+        Input(),
         __metadata$k("design:type", Boolean)
     ], SelectOption.prototype, "disabled", void 0);
     SelectOption = __decorate$y([
@@ -3852,7 +3906,7 @@ var SelectComponent = /** @class */ (function () {
     SelectComponent = SelectComponent_1 = __decorate$z([
         Component({
             selector: 'vcl-select',
-            template: "<div (offClick)=\"close()\">\n  <div\n    #select\n    class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\"\n    [style.marginBottom]=\"0\"\n    >\n    <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\n      {{displayValue}}\n    </div>\n    <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\n      <vcl-token-list [disabled]=\"disabled\">\n        <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item.metaItem)\"></vcl-token>\n      </vcl-token-list>\n    </div>\n\n    <button vcl-button\n      [disabled]=\"disabled\"\n      type=\"button\"\n      tabindex=\"-1\"\n      class=\"vclTransparent vclAppended\"\n      [icon]=\"expanded ? expandedIcon : collapsedIcon\"\n      (click)=\"toggle()\">\n    </button>\n  </div>\n\n  <vcl-dropdown \n      #dropdown\n      tabindex=\"-1\"\n      [disabled]=\"disabled\"\n      [expanded]=\"expanded\"\n      [value]=\"value\"\n      [mode]=\"mode\"\n      [maxSelectableItems]=\"maxSelectableItems\"\n      [style.position]=\"'relative'\"\n      [style.top.px]=\"dropdownTop\"\n      [style.width]=\"'100%'\"\n      [style.position]=\"'absolute'\"\n      [style.zIndex]=\"zIndex\"\n      (change)=\"onDropdownChange($event)\"\n      (itemsChange)=\"onItemsChange()\">\n    <vcl-dropdown-option \n      *ngFor=\"let item of items\" \n      [metadata]=\"item\" \n      [value]=\"item.value\" \n      [disabled]=\"disabled || item.disabled\" \n      [label]=\"item.label\" \n      [sublabel]=\"item.sublabel\">\n    </vcl-dropdown-option>\n  </vcl-dropdown>\n</div>\n",
+            template: "<div (offClick)=\"close()\">\n  <div\n    #select\n    class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\"\n    [style.marginBottom]=\"0\"\n    >\n    <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\n      {{displayValue}}\n    </div>\n    <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\n      <vcl-token-list [disabled]=\"disabled\">\n        <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item.metaItem)\"></vcl-token>\n      </vcl-token-list>\n    </div>\n\n    <button vcl-button\n      [disabled]=\"disabled\"\n      type=\"button\"\n      tabindex=\"-1\"\n      class=\"vclTransparent vclAppended\"\n      [icon]=\"expanded ? expandedIcon : collapsedIcon\"\n      (click)=\"toggle()\">\n    </button>\n  </div>\n\n  <vcl-dropdown \n      #dropdown\n      tabindex=\"-1\"\n      [disabled]=\"disabled\"\n      [expanded]=\"expanded\"\n      [value]=\"value\"\n      [mode]=\"mode\"\n      [maxSelectableItems]=\"maxSelectableItems\"\n      [style.position]=\"'relative'\"\n      [style.top.px]=\"dropdownTop\"\n      [style.width]=\"'100%'\"\n      [style.position]=\"'absolute'\"\n      [style.zIndex]=\"zIndex\"\n      (change)=\"onDropdownChange($event)\"\n      (itemsChange)=\"onItemsChange()\"\n  >\n    <vcl-dropdown-option\n      *ngFor=\"let item of items\" \n      [metadata]=\"item\" \n      [value]=\"item.value\" \n      [disabled]=\"disabled || item.disabled\" \n      [label]=\"item.label\" \n      [sublabel]=\"item.sublabel\"\n      [prepIcon]=\"item.prepIcon\"\n      [appIcon]=\"item.appIcon\"\n      [appIconSrc]=\"item.appIconSrc\"\n      [prepIconSrc]=\"item.prepIconSrc\"\n      >\n    </vcl-dropdown-option>\n  </vcl-dropdown>\n</div>\n",
             // changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$6],
             host: {
@@ -5935,6 +5989,7 @@ var CheckboxComponent = /** @class */ (function () {
         this.disabled = false;
         this.iconPosition = 'left';
         this.checked = false;
+        this.hideLabel = false;
         /**
         Action fired when the `checked` state changes due to user interaction.
         */
@@ -6028,6 +6083,10 @@ var CheckboxComponent = /** @class */ (function () {
         __metadata$B("design:type", Boolean)
     ], CheckboxComponent.prototype, "checked", void 0);
     __decorate$Y([
+        Input(),
+        __metadata$B("design:type", Boolean)
+    ], CheckboxComponent.prototype, "hideLabel", void 0);
+    __decorate$Y([
         Output(),
         __metadata$B("design:type", Object)
     ], CheckboxComponent.prototype, "checkedChange", void 0);
@@ -6040,7 +6099,7 @@ var CheckboxComponent = /** @class */ (function () {
     CheckboxComponent = __decorate$Y([
         Component({
             selector: 'vcl-checkbox',
-            template: "<ng-template #cb>\n  <div class=\"vclCheckbox\" \n      [class.vclDisabled]=\"isDisabled\" \n      role=\"checkbox\" \n      [attr.tabindex]=\"tabindex\" \n      [attr.aria-checked]=\"checked\"\n      [attr.aria-disabled]=\"isDisabled\"\n      (keyup)=\"onKeyup($event)\"\n      (blur)=\"onBlur()\"\n      >\n  <div vcl-icon [icon]=\"icon\"></div>\n</div>  \n</ng-template>\n\n<label vcl-form-control-label [wrapping]=\"true\" [label]=\"label\">\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n  {{label }}\n  <ng-content></ng-content>\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n</label>\n",
+            template: "<ng-template #cb>\n  <div class=\"vclCheckbox\" \n      [class.vclDisabled]=\"isDisabled\" \n      role=\"checkbox\" \n      [attr.tabindex]=\"tabindex\" \n      [attr.aria-checked]=\"checked\"\n      [attr.aria-disabled]=\"isDisabled\"\n      (keyup)=\"onKeyup($event)\"\n      (blur)=\"onBlur()\"\n      >\n  <div vcl-icon [icon]=\"icon\"></div>\n</div>  \n</ng-template>\n\n<label vcl-form-control-label [wrapping]=\"true\" [label]=\"hideLabel ? '' : label\">\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n  {{label }}\n  <ng-content></ng-content>\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n</label>\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$a],
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
@@ -6789,6 +6848,7 @@ var MonthPickerComponent = /** @class */ (function () {
     MonthPickerComponent.prototype.addAvailableMonth = function (year, month) {
         if (this.isDateInBounds(year, month)) {
             this.getYearMeta(year)[month].available = true;
+            this.ref.markForCheck();
         }
     };
     MonthPickerComponent.prototype.removeAvailableMonth = function (year, month) {
@@ -6803,6 +6863,7 @@ var MonthPickerComponent = /** @class */ (function () {
             _this.deselectMonth(year, month);
             _this.removeAvailableMonth(year, month);
         });
+        this.ref.markForCheck();
     };
     MonthPickerComponent.prototype.onPrevYearTap = function () {
         if (this.prevYearAvailable) {

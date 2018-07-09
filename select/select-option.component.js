@@ -30,6 +30,22 @@ var SelectOption = /** @class */ (function () {
     ], SelectOption.prototype, "label", void 0);
     __decorate([
         Input(),
+        __metadata("design:type", String)
+    ], SelectOption.prototype, "prepIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SelectOption.prototype, "appIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SelectOption.prototype, "appIconSrc", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SelectOption.prototype, "prepIconSrc", void 0);
+    __decorate([
+        Input(),
         __metadata("design:type", Boolean)
     ], SelectOption.prototype, "disabled", void 0);
     SelectOption = __decorate([

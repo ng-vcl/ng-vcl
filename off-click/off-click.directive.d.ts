@@ -4,7 +4,8 @@ export declare class OffClickDirective {
     offClickDelay: number;
     offClickExcludes?: (ElementRef | Element)[];
     offClick: EventEmitter<{}>;
-    private sub;
+    private subs;
+    private hoveredElement?;
     constructor(elem: ElementRef);
     ngAfterViewInit(): void;
     ngOnDestroy(): void;

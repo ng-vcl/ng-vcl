@@ -1,4 +1,4 @@
-import { MonthPickerComponent } from './month-picker.component';
-export { MonthPickerComponent };
+import { MonthPickerComponent, Month } from './month-picker.component';
+export { MonthPickerComponent, Month };
 export declare class VCLMonthPickerModule {
 }

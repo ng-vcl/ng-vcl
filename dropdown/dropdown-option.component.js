@@ -34,6 +34,22 @@ var DropdownOption = /** @class */ (function () {
     ], DropdownOption.prototype, "sublabel", void 0);
     __decorate([
         Input(),
+        __metadata("design:type", String)
+    ], DropdownOption.prototype, "prepIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], DropdownOption.prototype, "appIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], DropdownOption.prototype, "appIconSrc", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], DropdownOption.prototype, "prepIconSrc", void 0);
+    __decorate([
+        Input(),
         __metadata("design:type", Boolean)
     ], DropdownOption.prototype, "disabled", void 0);
     DropdownOption = __decorate([

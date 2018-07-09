@@ -10,13 +10,14 @@ import { VCLWormholeModule } from '../wormhole/index';
 import { VCLMetalistModule } from '../metalist/index';
 import { DropdownComponent, DROPDOWN_ANIMATIONS } from './dropdown.component';
 import { DropdownOption } from './dropdown-option.component';
+import { VCLIcogramModule } from '../icogram/index';
 export { DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS };
 var VCLDropdownModule = /** @class */ (function () {
     function VCLDropdownModule() {
     }
     VCLDropdownModule = __decorate([
         NgModule({
-            imports: [CommonModule, VCLMetalistModule, VCLWormholeModule],
+            imports: [CommonModule, VCLMetalistModule, VCLWormholeModule, VCLIcogramModule],
             exports: [DropdownComponent, DropdownOption],
             declarations: [DropdownComponent, DropdownOption],
             providers: [],

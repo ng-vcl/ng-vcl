@@ -10,6 +10,7 @@ export declare class CheckboxComponent implements ControlValueAccessor {
     disabled: boolean;
     iconPosition: 'left' | 'right';
     checked: boolean;
+    hideLabel: boolean;
     /**
     Action fired when the `checked` state changes due to user interaction.
     */

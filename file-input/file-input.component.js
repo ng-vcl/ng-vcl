@@ -18,6 +18,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 var FileInputComponent = /** @class */ (function () {
     function FileInputComponent(cdRef) {
         this.cdRef = cdRef;
+        this.icon = 'fa fa-upload';
         this.accept = '*';
         this.multiple = false;
         this.files = new EventEmitter();
@@ -129,6 +130,10 @@ var FileInputComponent = /** @class */ (function () {
     __decorate([
         Input(),
         __metadata("design:type", String)
+    ], FileInputComponent.prototype, "icon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
     ], FileInputComponent.prototype, "accept", void 0);
     __decorate([
         Input(),
@@ -209,13 +214,14 @@ var FileInputComponent = /** @class */ (function () {
     FileInputComponent = __decorate([
         Component({
             selector: 'vcl-file-input',
-            template: "<input #input type=\"file\" style=\"display: none;\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" />\n<div class=\"vclFileInputIcon vclIcon fa fa-upload\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div>\n<div class=\"vclFileInputPlaceholder\">\n  <ng-container *ngIf=\"filename\">{{filename}}</ng-container>\n  <div *ngIf=\"!filename\">\n    <ng-content></ng-content>\n  </div>\n</div>\n",
-            host: {
-                '[class.vclFileInput]': 'true',
-                role: 'button'
-            },
+            template: "<input #input type=\"file\" [style.display]=\"'none'\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" />\n<div class=\"vclFileInputIcon vclIcon {{ icon }}\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div>\n<div class=\"vclFileInputPlaceholder\">\n  <ng-container *ngIf=\"filename\">{{ filename }}</ng-container>\n  <div *ngIf=\"!filename\">\n    <ng-content></ng-content>\n  </div>\n</div>\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
-            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            host: {
+                '[class.vclInput]': 'true',
+                '[class.vclFileInput]': 'true',
+                role: 'button',
+            }
         }),
         __metadata("design:paramtypes", [ChangeDetectorRef])
     ], FileInputComponent);

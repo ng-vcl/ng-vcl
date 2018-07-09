@@ -3,6 +3,7 @@ import { ControlValueAccessor } from '@angular/forms';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class FileInputComponent implements ControlValueAccessor {
     private cdRef;
+    icon: string;
     accept: string;
     multiple: boolean;
     files: EventEmitter<FileList>;

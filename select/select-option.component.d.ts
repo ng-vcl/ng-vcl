@@ -4,5 +4,9 @@ export declare class SelectOption {
     value: any;
     sublabel: string;
     label: string;
+    prepIcon?: string;
+    appIcon?: string;
+    appIconSrc?: string;
+    prepIconSrc?: string;
     disabled: boolean;
 }

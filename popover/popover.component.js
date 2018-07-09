@@ -21,8 +21,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, HostListener, Inject, InjectionToken, Input, Optional, Output } from '@angular/core';
-import { ObservableComponent } from '../core/index';
 import { AnimationBuilder } from '@angular/animations';
+import { ObservableComponent } from '../core/index';
 export var AttachmentX = {
     Left: 'left',
     Center: 'center',
@@ -58,7 +58,9 @@ var PopoverComponent = /** @class */ (function (_super) {
         _this.targetX = AttachmentX.Left;
         _this.targetY = AttachmentY.Bottom;
         _this.attachmentX = AttachmentX.Left;
+        _this.offsetAttachmentX = 0;
         _this.attachmentY = AttachmentY.Top;
+        _this.offsetAttachmentY = 0;
         _this.willClose = new EventEmitter();
         _this.willOpen = new EventEmitter();
         _this.state = PopoverState.hidden;
@@ -144,14 +146,14 @@ var PopoverComponent = /** @class */ (function (_super) {
             ownPos[AttachmentX.Left] + ownPos[Dimension.Width] / 2 :
             ownPos[this.attachmentX];
         var diffX = mustX - isX;
-        this.translateX = this.translateX + diffX;
+        this.translateX = this.translateX + diffX + this.offsetAttachmentX;
         var mustY = this.targetY === AttachmentY.Center ?
             targetPos[AttachmentY.Top] + targetPos[Dimension.Height] / 2 :
             targetPos[this.targetY];
         var isY = this.attachmentY === AttachmentY.Center ?
             ownPos[AttachmentY.Top] + ownPos[Dimension.Height] / 2 :
             ownPos[this.attachmentY];
-        var diffY = mustY - isY;
+        var diffY = mustY - isY + +this.offsetAttachmentY;
         if (this.debug) {
             console.log(tag, {
                 targetPos: targetPos,
@@ -276,8 +278,16 @@ var PopoverComponent = /** @class */ (function (_super) {
     ], PopoverComponent.prototype, "attachmentX", void 0);
     __decorate([
         Input(),
+        __metadata("design:type", Number)
+    ], PopoverComponent.prototype, "offsetAttachmentX", void 0);
+    __decorate([
+        Input(),
         __metadata("design:type", String)
     ], PopoverComponent.prototype, "attachmentY", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], PopoverComponent.prototype, "offsetAttachmentY", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object),

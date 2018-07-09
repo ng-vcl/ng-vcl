@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, ElementRef, EventEmitter, InjectionToken, SimpleChanges } from '@angular/core';
-import { ObservableComponent } from '../core/index';
 import { AnimationBuilder, AnimationFactory, AnimationMetadata } from '@angular/animations';
+import { ObservableComponent } from '../core/index';
 export declare type AttachmentX = 'left' | 'center' | 'right';
 export declare const AttachmentX: {
     Left: AttachmentX;
@@ -38,7 +38,9 @@ export declare class PopoverComponent extends ObservableComponent {
     targetX: AttachmentX;
     targetY: AttachmentY;
     attachmentX: AttachmentX;
+    offsetAttachmentX: number;
     attachmentY: AttachmentY;
+    offsetAttachmentY: number;
     visible: boolean;
     willClose: EventEmitter<any>;
     willOpen: EventEmitter<any>;

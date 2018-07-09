@@ -23,6 +23,7 @@ var CheckboxComponent = /** @class */ (function () {
         this.disabled = false;
         this.iconPosition = 'left';
         this.checked = false;
+        this.hideLabel = false;
         /**
         Action fired when the `checked` state changes due to user interaction.
         */
@@ -116,6 +117,10 @@ var CheckboxComponent = /** @class */ (function () {
         __metadata("design:type", Boolean)
     ], CheckboxComponent.prototype, "checked", void 0);
     __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], CheckboxComponent.prototype, "hideLabel", void 0);
+    __decorate([
         Output(),
         __metadata("design:type", Object)
     ], CheckboxComponent.prototype, "checkedChange", void 0);
@@ -128,7 +133,7 @@ var CheckboxComponent = /** @class */ (function () {
     CheckboxComponent = __decorate([
         Component({
             selector: 'vcl-checkbox',
-            template: "<ng-template #cb>\n  <div class=\"vclCheckbox\" \n      [class.vclDisabled]=\"isDisabled\" \n      role=\"checkbox\" \n      [attr.tabindex]=\"tabindex\" \n      [attr.aria-checked]=\"checked\"\n      [attr.aria-disabled]=\"isDisabled\"\n      (keyup)=\"onKeyup($event)\"\n      (blur)=\"onBlur()\"\n      >\n  <div vcl-icon [icon]=\"icon\"></div>\n</div>  \n</ng-template>\n\n<label vcl-form-control-label [wrapping]=\"true\" [label]=\"label\">\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n  {{label }}\n  <ng-content></ng-content>\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n</label>\n",
+            template: "<ng-template #cb>\n  <div class=\"vclCheckbox\" \n      [class.vclDisabled]=\"isDisabled\" \n      role=\"checkbox\" \n      [attr.tabindex]=\"tabindex\" \n      [attr.aria-checked]=\"checked\"\n      [attr.aria-disabled]=\"isDisabled\"\n      (keyup)=\"onKeyup($event)\"\n      (blur)=\"onBlur()\"\n      >\n  <div vcl-icon [icon]=\"icon\"></div>\n</div>  \n</ng-template>\n\n<label vcl-form-control-label [wrapping]=\"true\" [label]=\"hideLabel ? '' : label\">\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n  {{label }}\n  <ng-content></ng-content>\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n</label>\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {

@@ -8,33 +8,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { EventEmitter, Output, Input, Directive, ElementRef } from '@angular/core';
-import { timer, fromEvent } from 'rxjs';
-import { first, skipUntil } from 'rxjs/operators';
+import { timer, fromEvent, merge } from 'rxjs';
+import { first, skipUntil, map } from 'rxjs/operators';
 var OffClickDirective = /** @class */ (function () {
     function OffClickDirective(elem) {
         this.elem = elem;
         this.offClickDelay = 10;
         this.offClick = new EventEmitter();
+        this.subs = [];
     }
     OffClickDirective.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (typeof document !== 'undefined') {
+            // Track mouse move on host element and store hovered inner elements
+            var subTrack = merge(fromEvent(this.elem.nativeElement, 'mouseover').pipe(map(function (e) { return e.target || undefined; })), fromEvent(this.elem.nativeElement, 'mouseleave').pipe(map(function () { return undefined; }))).subscribe(function (target) { return _this.hoveredElement = target; });
             // Add a small delay, so any click that causes this directive to render does not trigger an off-click
-            var delay$ = timer(this.offClickDelay).pipe(first());
-            this.sub = fromEvent(document, 'click').pipe(skipUntil(delay$)).subscribe(function (ev) {
+            var subClick = fromEvent(document, 'click').pipe(skipUntil(timer(this.offClickDelay).pipe(first()))).subscribe(function (ev) {
                 var me = _this.elem.nativeElement;
                 // Check that the target is not the off-clicks target element or any sub element
-                var excludes = [
+                var checks = [
+                    _this.hoveredElement,
                     me
                 ].concat((_this.offClickExcludes || []).map(function (e) { return e instanceof ElementRef ? e.nativeElement : e; }).filter(function (e) { return e instanceof Element; }));
-                if (ev.target && excludes.every(function (e) { return e !== ev.target && !e.contains(ev.target); })) {
+                var target = ev.target;
+                if (target && checks.every(function (el) { return (el !== target || !el.contains(target)); })) {
                     _this.offClick.emit();
                 }
             });
+            this.subs = [subTrack, subClick];
         }
     };
     OffClickDirective.prototype.ngOnDestroy = function () {
-        this.sub && this.sub.unsubscribe();
+        this.subs.forEach(function (sub) { return sub.unsubscribe(); });
     };
     __decorate([
         Input(),
@@ -51,6 +56,7 @@ var OffClickDirective = /** @class */ (function () {
     OffClickDirective = __decorate([
         Directive({
             selector: '[offClick]',
+            exportAs: 'offClick'
         }),
         __metadata("design:paramtypes", [ElementRef])
     ], OffClickDirective);

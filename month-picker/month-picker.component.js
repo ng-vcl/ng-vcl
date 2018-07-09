@@ -215,6 +215,7 @@ var MonthPickerComponent = /** @class */ (function () {
     MonthPickerComponent.prototype.addAvailableMonth = function (year, month) {
         if (this.isDateInBounds(year, month)) {
             this.getYearMeta(year)[month].available = true;
+            this.ref.markForCheck();
         }
     };
     MonthPickerComponent.prototype.removeAvailableMonth = function (year, month) {
@@ -229,6 +230,7 @@ var MonthPickerComponent = /** @class */ (function () {
             _this.deselectMonth(year, month);
             _this.removeAvailableMonth(year, month);
         });
+        this.ref.markForCheck();
     };
     MonthPickerComponent.prototype.onPrevYearTap = function () {
         if (this.prevYearAvailable) {
