@@ -88,7 +88,22 @@ var JssFormComponent = /** @class */ (function () {
                         // non-objects
                     }
                     else {
-                        group[key] = new FormControl('', _this.createJsonSchemaValidator(p, false));
+                        var state = '';
+                        switch (p.type) {
+                            case 'number':
+                                state = 0;
+                                break;
+                            case 'array':
+                                state = [];
+                                break;
+                            case 'boolean':
+                                state = false;
+                                break;
+                            case undefined:
+                                state = undefined;
+                                break;
+                        }
+                        group[key] = new FormControl(state, _this.createJsonSchemaValidator(p, false));
                     }
                 }
             });
