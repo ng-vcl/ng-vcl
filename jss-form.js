@@ -170,12 +170,12 @@ var JssFormObjectComponent = /** @class */ (function () {
     };
     JssFormObjectComponent.prototype.addItem = function () {
         var newFormGroup = this.formComponent.createFormGroup(this.fo.schema.items);
-        var parentArray = this.form.get('items');
+        var parentArray = this.form.get(this.fo.key);
         parentArray.setControl(parentArray.controls.length, newFormGroup);
         this.fo.formObjects.push(createFormObjects(this.fo.schema, this.fo)[0]);
     };
     JssFormObjectComponent.prototype.removeItem = function (i) {
-        var parentArray = this.form.get('items');
+        var parentArray = this.form.get(this.fo.key);
         parentArray.removeAt(i);
         this.fo.formObjects.splice(i, 1);
     };
