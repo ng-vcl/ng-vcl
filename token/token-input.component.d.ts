@@ -17,6 +17,7 @@ export declare class TokenInputContainerComponent implements ControlValueAccesso
     removeIcon: string;
     tabindex: number;
     tokenClass: string | undefined;
+    controlAsString: boolean;
     disabled: boolean;
     tokensChange: EventEmitter<Token[]>;
     confirm: EventEmitter<Token[]>;

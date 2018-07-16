@@ -3235,6 +3235,7 @@ var TokenInputContainerComponent = /** @class */ (function () {
         this.preselect = false;
         this.removeIcon = 'fa:remove';
         this.tabindex = 0;
+        this.controlAsString = false;
         this.disabled = false;
         this.tokensChange = new EventEmitter();
         // Emits on enter key with no input
@@ -3275,7 +3276,12 @@ var TokenInputContainerComponent = /** @class */ (function () {
     };
     TokenInputContainerComponent.prototype.triggerChange = function () {
         this.tokensChange.emit(this.tokens);
-        this.onChange(this.tokens);
+        if (this.controlAsString) {
+            this.onChange(this.tokens.map(function (t) { return t.label; }));
+        }
+        else {
+            this.onChange(this.tokens);
+        }
     };
     TokenInputContainerComponent.prototype.writeValue = function (tokens) {
         var _this = this;
@@ -3321,6 +3327,10 @@ var TokenInputContainerComponent = /** @class */ (function () {
         Input(),
         __metadata$j("design:type", Object)
     ], TokenInputContainerComponent.prototype, "tokenClass", void 0);
+    __decorate$w([
+        Input(),
+        __metadata$j("design:type", Object)
+    ], TokenInputContainerComponent.prototype, "controlAsString", void 0);
     __decorate$w([
         HostBinding('class.vclDisabled'),
         Input(),
@@ -3397,6 +3407,9 @@ var TokenInputDirective = /** @class */ (function () {
         if (code == 'Backspace' && this.lastKey == 'Backspace' && value === '') {
             // remove last token
             this.tokenInputContainer.removeLastToken();
+        }
+        else if (code == 'Enter') {
+            ev.preventDefault();
         }
         else if (code) {
             this.lastKey = code;
