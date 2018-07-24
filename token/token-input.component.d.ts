@@ -21,11 +21,11 @@ export declare class TokenInputContainerComponent implements ControlValueAccesso
     disabled: boolean;
     tokensChange: EventEmitter<Token[]>;
     confirm: EventEmitter<Token[]>;
-    labelPre: TokenInputLabelPre;
-    labelPost: TokenInputLabelPost;
+    labelPre?: TokenInputLabelPre;
+    labelPost?: TokenInputLabelPost;
     constructor(elementRef: ElementRef, cdRef: ChangeDetectorRef);
     removeLastToken(): void;
-    addToken(label: string, value?: any, selected?: boolean): void;
+    addToken(token: Token | string): void;
     select(token: Token): void;
     removeToken(token: Token): void;
     triggerChange(): void;

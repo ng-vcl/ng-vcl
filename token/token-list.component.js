@@ -24,6 +24,7 @@ var TokenListComponent = /** @class */ (function () {
         this.dispatchEvent = false;
         this.disabled = false;
         this.tokensChange = new EventEmitter();
+        this.labels = [];
     }
     TokenListComponent.prototype.syncTokens = function () {
         var labels = this.labels;

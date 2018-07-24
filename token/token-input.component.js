@@ -1,3 +1,11 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,7 +18,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Component, Input, Output, forwardRef, EventEmitter, HostListener, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, HostBinding, Directive, ContentChild, TemplateRef, SkipSelf, Self } from '@angular/core';
+import { Component, Input, Output, forwardRef, EventEmitter, HostListener, ElementRef, ChangeDetectorRef, HostBinding, Directive, ContentChild, TemplateRef, SkipSelf, Self, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputDirective } from '../input/index';
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
@@ -58,20 +66,18 @@ var TokenInputContainerComponent = /** @class */ (function () {
         this.onTouched = function () { };
     }
     TokenInputContainerComponent.prototype.removeLastToken = function () {
-        var token = this.tokens.pop();
+        this.tokens = this.tokens.slice();
+        this.tokens.pop();
         this.triggerChange();
+        this.cdRef.markForCheck();
     };
-    TokenInputContainerComponent.prototype.addToken = function (label, value, selected) {
-        selected = selected === undefined ? this.preselect : selected;
-        var token = {
-            selected: selected,
-            label: label,
-            value: value === undefined ? label : value
-        };
-        if (this.allowDuplicates === false && this.tokens.some(function (thisToken) { return thisToken.value === token.value; })) {
+    TokenInputContainerComponent.prototype.addToken = function (token) {
+        token = typeof token === 'string' ? { label: token } : token;
+        var newToken = __assign({}, token, { selected: token.selected === undefined ? this.preselect : token.selected, value: token.value === undefined ? token.label : token.value });
+        if (this.allowDuplicates === false && this.tokens.some(function (thisToken) { return thisToken.value === newToken.value; })) {
             return;
         }
-        this.tokens.push(token);
+        this.tokens = this.tokens.concat([newToken]);
         this.triggerChange();
         this.cdRef.markForCheck();
     };
@@ -166,7 +172,7 @@ var TokenInputContainerComponent = /** @class */ (function () {
     TokenInputContainerComponent = __decorate([
         Component({
             selector: 'vcl-token-input-container',
-            template: "<div class=\"vclTokenContainer\">\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\n  <vcl-token *ngFor=\"let token of tokens\"\n             (remove)=\"removeToken(token)\"\n             (click)=\"select(token)\"\n             [disabled]=\"disabled\"\n             [ngClass]=\"tokenClass\"\n             [selected]=\"token.selected\"\n             [removable]=\"true\"\n             [icon]=\"removeIcon\"\n             [attr.tabindex]=\"-1\"\n             [label]=\"token.label\">\n  </vcl-token>\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\n</div>\n<ng-content></ng-content>\n",
+            template: "<div class=\"vclTokenContainer\">\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\n  <vcl-token *ngFor=\"let token of tokens\"\n             (remove)=\"removeToken(token)\"\n             (click)=\"select(token)\"\n             [tokenIcon]=\"token.tokenIcon\"\n             [disabled]=\"disabled\"\n             [ngClass]=\"tokenClass\"\n             [selected]=\"token.selected\"\n             [removable]=\"true\"\n             [icon]=\"removeIcon\"\n             [attr.tabindex]=\"-1\"\n             [label]=\"token.label\">\n  </vcl-token>\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\n</div>\n<ng-content></ng-content>\n",
             host: {
                 '[class.vclInput]': 'true',
                 '[class.vclTokenInput]': 'true',

@@ -23,8 +23,8 @@ export declare class TokenListComponent implements AfterContentInit, OnChanges, 
     /**
    * things needed for ControlValueAccessor-Interface
    */
-    private onTouchedCallback;
-    private onChangeCallback;
+    private onTouchedCallback?;
+    private onChangeCallback?;
     writeValue(value: any): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;

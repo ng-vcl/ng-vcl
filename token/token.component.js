@@ -11,6 +11,7 @@ import { Component, Input, Output, EventEmitter, HostListener, HostBinding, Chan
 var TokenComponent = /** @class */ (function () {
     function TokenComponent(cdRef) {
         this.cdRef = cdRef;
+        this.label = '';
         this.disabled = false;
         this.selected = false;
         this.removable = false;
@@ -73,6 +74,10 @@ var TokenComponent = /** @class */ (function () {
         __metadata("design:type", String)
     ], TokenComponent.prototype, "icon", void 0);
     __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TokenComponent.prototype, "tokenIcon", void 0);
+    __decorate([
         Output(),
         __metadata("design:type", Object)
     ], TokenComponent.prototype, "remove", void 0);
@@ -88,7 +93,7 @@ var TokenComponent = /** @class */ (function () {
     TokenComponent = __decorate([
         Component({
             selector: 'vcl-token',
-            template: "<span class=\"vclTokenLabel\">{{label}}</span>\n<button vcl-button\n        [disabled]=\"isDisabled\"\n        *ngIf=\"removable\" \n        class=\"vclTransparent\"\n        type=\"button\" \n        title=\"Remove\"\n        [icon]=\"icon\"\n        (click)=\"onRemoveClick($event)\">\n</button>\n",
+            template: "<div *ngIf=\"tokenIcon\" vcl-icogram [appIcon]=\"tokenIcon\" ></div>\n<span class=\"vclTokenLabel\">{{label}}</span>\n<button vcl-button\n        [disabled]=\"isDisabled\"\n        *ngIf=\"removable\" \n        class=\"vclTransparent\"\n        type=\"button\" \n        title=\"Remove\"\n        [icon]=\"icon\"\n        (click)=\"onRemoveClick($event)\">\n</button>\n",
             host: {
                 '[class.vclToken]': 'true',
             }

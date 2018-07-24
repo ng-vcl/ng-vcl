@@ -84,7 +84,10 @@ var TokenInputAutocompleteDirective = /** @class */ (function (_super) {
             return;
         }
         this.acSub = this.ac.open(this.tokenInputContainer.elementRef).subscribe(function (selection) {
-            _this.tokenInputContainer.addToken(selection.label || String(selection.value), selection.value);
+            _this.tokenInputContainer.addToken({
+                label: selection.label || String(selection.value),
+                value: selection.value
+            });
             _this.elementRef.nativeElement.value = '';
             if (!_this.focused) {
                 _this.destroyAutocomplete();
