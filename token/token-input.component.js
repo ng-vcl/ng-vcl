@@ -53,10 +53,12 @@ var TokenInputContainerComponent = /** @class */ (function () {
         this.allowDuplicates = false;
         this.preselect = false;
         this.removeIcon = 'fa:remove';
+        this.removeToken = true;
         this.tabindex = 0;
         this.controlAsString = false;
         this.disabled = false;
         this.tokensChange = new EventEmitter();
+        this.remove = new EventEmitter();
         // Emits on enter key with no input
         this.confirm = new EventEmitter();
         /**
@@ -87,9 +89,12 @@ var TokenInputContainerComponent = /** @class */ (function () {
             this.triggerChange();
         }
     };
-    TokenInputContainerComponent.prototype.removeToken = function (token) {
-        this.tokens = this.tokens.filter(function (t) { return t !== token; });
-        this.triggerChange();
+    TokenInputContainerComponent.prototype.onTokenRemove = function (token) {
+        this.remove.emit(token);
+        if (this.removeToken) {
+            this.tokens = this.tokens.filter(function (t) { return t !== token; });
+            this.triggerChange();
+        }
     };
     TokenInputContainerComponent.prototype.triggerChange = function () {
         this.tokensChange.emit(this.tokens);
@@ -138,6 +143,10 @@ var TokenInputContainerComponent = /** @class */ (function () {
     ], TokenInputContainerComponent.prototype, "removeIcon", void 0);
     __decorate([
         Input(),
+        __metadata("design:type", Boolean)
+    ], TokenInputContainerComponent.prototype, "removeToken", void 0);
+    __decorate([
+        Input(),
         __metadata("design:type", Number)
     ], TokenInputContainerComponent.prototype, "tabindex", void 0);
     __decorate([
@@ -160,6 +169,10 @@ var TokenInputContainerComponent = /** @class */ (function () {
     __decorate([
         Output(),
         __metadata("design:type", Object)
+    ], TokenInputContainerComponent.prototype, "remove", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
     ], TokenInputContainerComponent.prototype, "confirm", void 0);
     __decorate([
         ContentChild(TokenInputLabelPre, { read: TemplateRef }),
@@ -172,7 +185,7 @@ var TokenInputContainerComponent = /** @class */ (function () {
     TokenInputContainerComponent = __decorate([
         Component({
             selector: 'vcl-token-input-container',
-            template: "<div class=\"vclTokenContainer\">\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\n  <vcl-token *ngFor=\"let token of tokens\"\n             (remove)=\"removeToken(token)\"\n             (click)=\"select(token)\"\n             [tokenIcon]=\"token.tokenIcon\"\n             [disabled]=\"disabled\"\n             [ngClass]=\"tokenClass\"\n             [selected]=\"token.selected\"\n             [removable]=\"true\"\n             [icon]=\"removeIcon\"\n             [attr.tabindex]=\"-1\"\n             [label]=\"token.label\">\n  </vcl-token>\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\n</div>\n<ng-content></ng-content>\n",
+            template: "<div class=\"vclTokenContainer\">\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\n  <vcl-token *ngFor=\"let token of tokens\"\n             (remove)=\"onTokenRemove(token)\"\n             (click)=\"select(token)\"\n             [tokenIcon]=\"token.tokenIcon\"\n             [disabled]=\"disabled\"\n             [ngClass]=\"tokenClass\"\n             [selected]=\"token.selected\"\n             [removable]=\"true\"\n             [icon]=\"removeIcon\"\n             [attr.tabindex]=\"-1\"\n             [label]=\"token.label\">\n  </vcl-token>\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\n</div>\n<ng-content></ng-content>\n",
             host: {
                 '[class.vclInput]': 'true',
                 '[class.vclTokenInput]': 'true',

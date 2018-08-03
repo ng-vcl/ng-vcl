@@ -39,8 +39,51 @@ var MonthPickerComponent = /** @class */ (function () {
         this.minSelectableMonths = 0;
         this.minYear = Number.MIN_SAFE_INTEGER;
         this.maxYear = Number.MAX_SAFE_INTEGER;
+        this.change = new EventEmitter();
     }
     MonthPickerComponent_1 = MonthPickerComponent;
+    Object.defineProperty(MonthPickerComponent.prototype, "min", {
+        set: function (value) {
+            if (!value) {
+                return;
+            }
+            this.minValue = value;
+            this.minValue.setDate(0);
+            this.minValue.setHours(0, 0, 0, 0);
+            if (!this.maxValue || !this.months) {
+                return;
+            }
+            this.useAvailableMonths = true;
+            this.removeAllAvailableMonths();
+            var i;
+            for (i = new Date(this.minValue); i <= this.maxValue; i.setMonth(i.getMonth() + 1)) {
+                this.addAvailableMonth(i.getFullYear(), i.getMonth());
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MonthPickerComponent.prototype, "max", {
+        set: function (value) {
+            if (!value) {
+                return;
+            }
+            this.maxValue = value;
+            this.maxValue.setDate(0);
+            this.maxValue.setHours(0, 0, 0, 0);
+            if (!this.minValue || !this.months) {
+                return;
+            }
+            this.useAvailableMonths = true;
+            this.removeAllAvailableMonths();
+            var i;
+            for (i = new Date(this.minValue); i <= this.maxValue; i.setMonth(i.getMonth() + 1)) {
+                this.addAvailableMonth(i.getFullYear(), i.getMonth());
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     MonthPickerComponent.prototype.ngOnInit = function () {
         var _this = this;
         // Create month labels.
@@ -55,6 +98,16 @@ var MonthPickerComponent = /** @class */ (function () {
         }
         this.availableColors = this.colors ? this.colors.map(function (color) { return true; }) : [];
         this.setYearMeta(this.currentYear);
+        if (!this.maxValue || !this.minValue) {
+            return;
+        }
+        this.useAvailableMonths = true;
+        this.removeAllAvailableMonths();
+        var i;
+        for (i = new Date(this.minValue); i <= this.maxValue; i.setMonth(i.getMonth() + 1)) {
+            console.log(' ' + i.getFullYear() + ' ' + i.getMonth());
+            this.addAvailableMonth(i.getFullYear(), i.getMonth());
+        }
     };
     MonthPickerComponent.prototype.ngOnChanges = function (changes) {
         var tag = this.tag + ".ngOnChanges()";
@@ -375,6 +428,20 @@ var MonthPickerComponent = /** @class */ (function () {
         Input(),
         __metadata("design:type", Number)
     ], MonthPickerComponent.prototype, "maxYear", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], MonthPickerComponent.prototype, "change", void 0);
+    __decorate([
+        Input('min'),
+        __metadata("design:type", Date),
+        __metadata("design:paramtypes", [Date])
+    ], MonthPickerComponent.prototype, "min", null);
+    __decorate([
+        Input('max'),
+        __metadata("design:type", Date),
+        __metadata("design:paramtypes", [Date])
+    ], MonthPickerComponent.prototype, "max", null);
     MonthPickerComponent = MonthPickerComponent_1 = __decorate([
         Component({
             selector: 'vcl-month-picker',

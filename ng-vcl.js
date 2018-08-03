@@ -3248,10 +3248,12 @@ var TokenInputContainerComponent = /** @class */ (function () {
         this.allowDuplicates = false;
         this.preselect = false;
         this.removeIcon = 'fa:remove';
+        this.removeToken = true;
         this.tabindex = 0;
         this.controlAsString = false;
         this.disabled = false;
         this.tokensChange = new EventEmitter();
+        this.remove = new EventEmitter();
         // Emits on enter key with no input
         this.confirm = new EventEmitter();
         /**
@@ -3282,9 +3284,12 @@ var TokenInputContainerComponent = /** @class */ (function () {
             this.triggerChange();
         }
     };
-    TokenInputContainerComponent.prototype.removeToken = function (token) {
-        this.tokens = this.tokens.filter(function (t) { return t !== token; });
-        this.triggerChange();
+    TokenInputContainerComponent.prototype.onTokenRemove = function (token) {
+        this.remove.emit(token);
+        if (this.removeToken) {
+            this.tokens = this.tokens.filter(function (t) { return t !== token; });
+            this.triggerChange();
+        }
     };
     TokenInputContainerComponent.prototype.triggerChange = function () {
         this.tokensChange.emit(this.tokens);
@@ -3333,6 +3338,10 @@ var TokenInputContainerComponent = /** @class */ (function () {
     ], TokenInputContainerComponent.prototype, "removeIcon", void 0);
     __decorate$w([
         Input(),
+        __metadata$j("design:type", Boolean)
+    ], TokenInputContainerComponent.prototype, "removeToken", void 0);
+    __decorate$w([
+        Input(),
         __metadata$j("design:type", Number)
     ], TokenInputContainerComponent.prototype, "tabindex", void 0);
     __decorate$w([
@@ -3355,6 +3364,10 @@ var TokenInputContainerComponent = /** @class */ (function () {
     __decorate$w([
         Output(),
         __metadata$j("design:type", Object)
+    ], TokenInputContainerComponent.prototype, "remove", void 0);
+    __decorate$w([
+        Output(),
+        __metadata$j("design:type", Object)
     ], TokenInputContainerComponent.prototype, "confirm", void 0);
     __decorate$w([
         ContentChild(TokenInputLabelPre, { read: TemplateRef }),
@@ -3367,7 +3380,7 @@ var TokenInputContainerComponent = /** @class */ (function () {
     TokenInputContainerComponent = __decorate$w([
         Component({
             selector: 'vcl-token-input-container',
-            template: "<div class=\"vclTokenContainer\">\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\n  <vcl-token *ngFor=\"let token of tokens\"\n             (remove)=\"removeToken(token)\"\n             (click)=\"select(token)\"\n             [tokenIcon]=\"token.tokenIcon\"\n             [disabled]=\"disabled\"\n             [ngClass]=\"tokenClass\"\n             [selected]=\"token.selected\"\n             [removable]=\"true\"\n             [icon]=\"removeIcon\"\n             [attr.tabindex]=\"-1\"\n             [label]=\"token.label\">\n  </vcl-token>\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\n</div>\n<ng-content></ng-content>\n",
+            template: "<div class=\"vclTokenContainer\">\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\n  <vcl-token *ngFor=\"let token of tokens\"\n             (remove)=\"onTokenRemove(token)\"\n             (click)=\"select(token)\"\n             [tokenIcon]=\"token.tokenIcon\"\n             [disabled]=\"disabled\"\n             [ngClass]=\"tokenClass\"\n             [selected]=\"token.selected\"\n             [removable]=\"true\"\n             [icon]=\"removeIcon\"\n             [attr.tabindex]=\"-1\"\n             [label]=\"token.label\">\n  </vcl-token>\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\n</div>\n<ng-content></ng-content>\n",
             host: {
                 '[class.vclInput]': 'true',
                 '[class.vclTokenInput]': 'true',
@@ -6697,8 +6710,51 @@ var MonthPickerComponent = /** @class */ (function () {
         this.minSelectableMonths = 0;
         this.minYear = Number.MIN_SAFE_INTEGER;
         this.maxYear = Number.MAX_SAFE_INTEGER;
+        this.change = new EventEmitter();
     }
     MonthPickerComponent_1 = MonthPickerComponent;
+    Object.defineProperty(MonthPickerComponent.prototype, "min", {
+        set: function (value) {
+            if (!value) {
+                return;
+            }
+            this.minValue = value;
+            this.minValue.setDate(0);
+            this.minValue.setHours(0, 0, 0, 0);
+            if (!this.maxValue || !this.months) {
+                return;
+            }
+            this.useAvailableMonths = true;
+            this.removeAllAvailableMonths();
+            var i;
+            for (i = new Date(this.minValue); i <= this.maxValue; i.setMonth(i.getMonth() + 1)) {
+                this.addAvailableMonth(i.getFullYear(), i.getMonth());
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MonthPickerComponent.prototype, "max", {
+        set: function (value) {
+            if (!value) {
+                return;
+            }
+            this.maxValue = value;
+            this.maxValue.setDate(0);
+            this.maxValue.setHours(0, 0, 0, 0);
+            if (!this.minValue || !this.months) {
+                return;
+            }
+            this.useAvailableMonths = true;
+            this.removeAllAvailableMonths();
+            var i;
+            for (i = new Date(this.minValue); i <= this.maxValue; i.setMonth(i.getMonth() + 1)) {
+                this.addAvailableMonth(i.getFullYear(), i.getMonth());
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     MonthPickerComponent.prototype.ngOnInit = function () {
         var _this = this;
         // Create month labels.
@@ -6713,6 +6769,16 @@ var MonthPickerComponent = /** @class */ (function () {
         }
         this.availableColors = this.colors ? this.colors.map(function (color) { return true; }) : [];
         this.setYearMeta(this.currentYear);
+        if (!this.maxValue || !this.minValue) {
+            return;
+        }
+        this.useAvailableMonths = true;
+        this.removeAllAvailableMonths();
+        var i;
+        for (i = new Date(this.minValue); i <= this.maxValue; i.setMonth(i.getMonth() + 1)) {
+            console.log(' ' + i.getFullYear() + ' ' + i.getMonth());
+            this.addAvailableMonth(i.getFullYear(), i.getMonth());
+        }
     };
     MonthPickerComponent.prototype.ngOnChanges = function (changes) {
         var tag = this.tag + ".ngOnChanges()";
@@ -7033,6 +7099,20 @@ var MonthPickerComponent = /** @class */ (function () {
         Input(),
         __metadata$D("design:type", Number)
     ], MonthPickerComponent.prototype, "maxYear", void 0);
+    __decorate$11([
+        Output(),
+        __metadata$D("design:type", Object)
+    ], MonthPickerComponent.prototype, "change", void 0);
+    __decorate$11([
+        Input('min'),
+        __metadata$D("design:type", Date),
+        __metadata$D("design:paramtypes", [Date])
+    ], MonthPickerComponent.prototype, "min", null);
+    __decorate$11([
+        Input('max'),
+        __metadata$D("design:type", Date),
+        __metadata$D("design:paramtypes", [Date])
+    ], MonthPickerComponent.prototype, "max", null);
     MonthPickerComponent = MonthPickerComponent_1 = __decorate$11([
         Component({
             selector: 'vcl-month-picker',

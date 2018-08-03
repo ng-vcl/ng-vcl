@@ -42,6 +42,11 @@ export declare class MonthPickerComponent {
     minSelectableMonths: number;
     minYear: number;
     maxYear: number;
+    change: EventEmitter<Date | (Date | undefined)[]>;
+    minValue: Date | null;
+    min: Date;
+    maxValue: Date | null;
+    max: Date;
     constructor(ref: ChangeDetectorRef);
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;

@@ -15,11 +15,13 @@ export declare class TokenInputContainerComponent implements ControlValueAccesso
     allowDuplicates: boolean;
     preselect: boolean;
     removeIcon: string;
+    removeToken: boolean;
     tabindex: number;
     tokenClass: string | undefined;
     controlAsString: boolean;
     disabled: boolean;
     tokensChange: EventEmitter<Token[]>;
+    remove: EventEmitter<Token>;
     confirm: EventEmitter<Token[]>;
     labelPre?: TokenInputLabelPre;
     labelPost?: TokenInputLabelPost;
@@ -27,7 +29,7 @@ export declare class TokenInputContainerComponent implements ControlValueAccesso
     removeLastToken(): void;
     addToken(token: Token | string): void;
     select(token: Token): void;
-    removeToken(token: Token): void;
+    onTokenRemove(token: Token): void;
     triggerChange(): void;
     /**
      * things needed for ControlValueAccessor-Interface
