@@ -113,7 +113,8 @@ var TooltipComponent = /** @class */ (function () {
     });
     TooltipComponent.prototype.ngOnDestroy = function () {
         if (!this.showOnInit) {
-            this.element.nativeElement.parentNode.removeChild(this.element.nativeElement);
+            var parentNode = this.element.nativeElement.parentNode;
+            parentNode && parentNode.removeChild(this.element.nativeElement);
         }
     };
     TooltipComponent.Tag = 'TooltipComponent';

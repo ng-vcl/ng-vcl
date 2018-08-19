@@ -9,11 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { EventEmitter, Output, Input, Directive, ElementRef } from '@angular/core';
 import { timer, fromEvent, merge } from 'rxjs';
-import { first, skipUntil, map } from 'rxjs/operators';
+import { first, skipUntil, map, filter } from 'rxjs/operators';
 var OffClickDirective = /** @class */ (function () {
     function OffClickDirective(elem) {
         this.elem = elem;
         this.offClickDelay = 10;
+        this.offClickListen = true;
         this.offClick = new EventEmitter();
         this.subs = [];
     }
@@ -23,16 +24,21 @@ var OffClickDirective = /** @class */ (function () {
             // Track mouse move on host element and store hovered inner elements
             var subTrack = merge(fromEvent(this.elem.nativeElement, 'mouseover').pipe(map(function (e) { return e.target || undefined; })), fromEvent(this.elem.nativeElement, 'mouseleave').pipe(map(function () { return undefined; }))).subscribe(function (target) { return _this.hoveredElement = target; });
             // Add a small delay, so any click that causes this directive to render does not trigger an off-click
-            var subClick = fromEvent(document, 'click').pipe(skipUntil(timer(this.offClickDelay).pipe(first()))).subscribe(function (ev) {
-                var me = _this.elem.nativeElement;
+            var subClick = fromEvent(document, 'click').pipe(filter(function () { return _this.offClickListen; }), skipUntil(timer(this.offClickDelay).pipe(first()))).subscribe(function (ev) {
+                var popoverHostElement = _this.elem.nativeElement;
                 // Check that the target is not the off-clicks target element or any sub element
                 var checks = [
                     _this.hoveredElement,
-                    me
-                ].concat((_this.offClickExcludes || []).map(function (e) { return e instanceof ElementRef ? e.nativeElement : e; }).filter(function (e) { return e instanceof Element; }));
+                    popoverHostElement
+                ].concat((_this.offClickExcludes || []).map(function (e) { return e instanceof ElementRef ? e.nativeElement : e; }).filter(function (e) { return e instanceof Element; })).filter(function (el) { return !!el; });
                 var target = ev.target;
-                if (target && checks.every(function (el) { return (el !== target || !el.contains(target)); })) {
-                    _this.offClick.emit();
+                if (target) {
+                    var targetIsNotExcludedElementOrChildElement = checks.every(function (el) {
+                        return !(el === target || el.contains(target));
+                    });
+                    if (targetIsNotExcludedElementOrChildElement) {
+                        _this.offClick.emit();
+                    }
                 }
             });
             this.subs = [subTrack, subClick];
@@ -45,6 +51,10 @@ var OffClickDirective = /** @class */ (function () {
         Input(),
         __metadata("design:type", Object)
     ], OffClickDirective.prototype, "offClickDelay", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OffClickDirective.prototype, "offClickListen", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Array)

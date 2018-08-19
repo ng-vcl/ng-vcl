@@ -2536,6 +2536,7 @@ var OffClickDirective = /** @class */ (function () {
     function OffClickDirective(elem) {
         this.elem = elem;
         this.offClickDelay = 10;
+        this.offClickListen = true;
         this.offClick = new EventEmitter();
         this.subs = [];
     }
@@ -2545,16 +2546,21 @@ var OffClickDirective = /** @class */ (function () {
             // Track mouse move on host element and store hovered inner elements
             var subTrack = merge(fromEvent(this.elem.nativeElement, 'mouseover').pipe(map(function (e) { return e.target || undefined; })), fromEvent(this.elem.nativeElement, 'mouseleave').pipe(map(function () { return undefined; }))).subscribe(function (target) { return _this.hoveredElement = target; });
             // Add a small delay, so any click that causes this directive to render does not trigger an off-click
-            var subClick = fromEvent(document, 'click').pipe(skipUntil(timer(this.offClickDelay).pipe(first()))).subscribe(function (ev) {
-                var me = _this.elem.nativeElement;
+            var subClick = fromEvent(document, 'click').pipe(filter(function () { return _this.offClickListen; }), skipUntil(timer(this.offClickDelay).pipe(first()))).subscribe(function (ev) {
+                var popoverHostElement = _this.elem.nativeElement;
                 // Check that the target is not the off-clicks target element or any sub element
                 var checks = [
                     _this.hoveredElement,
-                    me
-                ].concat((_this.offClickExcludes || []).map(function (e) { return e instanceof ElementRef ? e.nativeElement : e; }).filter(function (e) { return e instanceof Element; }));
+                    popoverHostElement
+                ].concat((_this.offClickExcludes || []).map(function (e) { return e instanceof ElementRef ? e.nativeElement : e; }).filter(function (e) { return e instanceof Element; })).filter(function (el) { return !!el; });
                 var target = ev.target;
-                if (target && checks.every(function (el) { return (el !== target || !el.contains(target)); })) {
-                    _this.offClick.emit();
+                if (target) {
+                    var targetIsNotExcludedElementOrChildElement = checks.every(function (el) {
+                        return !(el === target || el.contains(target));
+                    });
+                    if (targetIsNotExcludedElementOrChildElement) {
+                        _this.offClick.emit();
+                    }
                 }
             });
             this.subs = [subTrack, subClick];
@@ -2567,6 +2573,10 @@ var OffClickDirective = /** @class */ (function () {
         Input(),
         __metadata$f("design:type", Object)
     ], OffClickDirective.prototype, "offClickDelay", void 0);
+    __decorate$q([
+        Input(),
+        __metadata$f("design:type", Object)
+    ], OffClickDirective.prototype, "offClickListen", void 0);
     __decorate$q([
         Input(),
         __metadata$f("design:type", Array)
@@ -2819,7 +2829,7 @@ var PopoverComponent = /** @class */ (function (_super) {
     };
     PopoverComponent.prototype.close = function () {
         var _this = this;
-        if (this.state === PopoverState.hidden || this.state === PopoverState.closing) {
+        if (this.state === PopoverState.hidden || this.state === PopoverState.opening || this.state === PopoverState.closing) {
             return;
         }
         this.state = PopoverState.closing;
@@ -6680,7 +6690,6 @@ var __metadata$D = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var MonthPickerComponent = /** @class */ (function () {
-    //
     function MonthPickerComponent(ref) {
         this.ref = ref;
         this.tag = MonthPickerComponent_1.Tag;
@@ -6755,8 +6764,24 @@ var MonthPickerComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    MonthPickerComponent.prototype.onModelChange = function (value) {
+        this.onChangeCallback && this.onChangeCallback(value);
+    };
+    MonthPickerComponent.prototype.writeValue = function (value) {
+        if (value) {
+            this.selectMonth(value.getFullYear(), value.getMonth());
+            this.ref.markForCheck();
+        }
+    };
+    MonthPickerComponent.prototype.registerOnChange = function (fn) {
+        this.onChangeCallback = fn;
+    };
+    MonthPickerComponent.prototype.registerOnTouched = function (fn) {
+        this.onTouchedCallback = fn;
+    };
     MonthPickerComponent.prototype.ngOnInit = function () {
         var _this = this;
+        var tag = this.tag + ".ngOnInit()";
         // Create month labels.
         var date = new Date(this.now.getFullYear(), 0);
         this.months = Array(MonthPickerComponent_1.MonthCount).fill(0).map(function (_) {
@@ -6788,6 +6813,9 @@ var MonthPickerComponent = /** @class */ (function () {
             this.setYearMeta(changes.currentYear.currentValue);
     };
     MonthPickerComponent.prototype.setYearMeta = function (year) {
+        var tag = this.tag + ".setYearMeta()";
+        if (this.debug)
+            console.log(tag, 'year:', year);
         if (!this.yearMeta[year]) {
             this.yearMeta[year] = this.createYearMeta(year);
         }
@@ -6818,6 +6846,7 @@ var MonthPickerComponent = /** @class */ (function () {
         if (monthMeta.selected) {
             this.setMonthBackgroundColor(year, month);
             this.notifySelect(year + "." + month);
+            this.onModelChange(new Date(year, month));
             if (this.maxSelectableMonths === 1 && this.expandable) {
                 this.expanded = false;
                 this.expandedChange.emit(this.expanded);
@@ -7117,7 +7146,14 @@ var MonthPickerComponent = /** @class */ (function () {
         Component({
             selector: 'vcl-month-picker',
             template: "<div class=\"vclDatePicker\">\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\"\n    [attr.role]=\"'grid'\"\n    [attr.tabindex]=\"tabindex\"\n    [attr.aria-multiselectable]=\"maxSelectableMonths > 1\"\n    [attr.aria-expanded]=\"expanded\">\n\n    <div class=\"vclDGRow\">\n      <div class=\"vclToolbar vclLayoutHorizontal vclLayoutFlex vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\n        <div class=\"vclLayoutHorizontal vclLayoutCenter\">\n          <button vcl-button class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\n            type=\"button\"\n            [class.vclDisabled]=\"!prevYearAvailable\"\n            [icon]=\"prevYearBtnIcon\"\n            (click)=\"onPrevYearTap()\">\n          </button>\n\n          <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span>\n\n          <button vcl-button\n            type=\"button\"\n            class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\n            [class.vclDisabled]=\"!nextYearAvailable\"\n            [icon]=\"nextYearBtnIcon\"\n            (click)=\"onNextYearTap()\">\n          </button>\n        </div>\n\n        <div class=\"vclLayoutHorizontal vclLayoutFlex vclLayoutEndJustified\">\n          <button vcl-button *ngIf=\"expandable\"\n            type=\"button\"\n            class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\n            [icon]=\"closeBtnIcon\"\n            (click)=\"onCloseBtnTap()\">\n          </button>\n        </div>\n\n      </div>\n    </div>\n\n    <div class=\"vclSeparator\"></div>\n\n    <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\">\n      <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclDGRow\" role=\"row\">\n        <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\"\n          (click)=\"selectMonth(currentYear, i+j)\"\n          class=\"vclDGCell vclCalItem\"\n          [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\"\n          [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\"\n          [class.vclToday]=\"isCurrentMonth(i+j)\"\n          [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\"\n          [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\"\n          [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\"\n          [style.background-color]=\"currentMeta[i+j].color\"\n          [style.order]=\"i+j\"\n          [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\"\n          [tabindex]=\"i+j\"\n          role=\"gridcell\">\n            <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\">\n              {{months[i + j]}}\n            </div>\n        </div>\n      </div>\n    </ng-template>\n  </div>\n</div>\n",
-            changeDetection: ChangeDetectionStrategy.OnPush
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [
+                {
+                    provide: NG_VALUE_ACCESSOR,
+                    useExisting: forwardRef(function () { return MonthPickerComponent_1; }),
+                    multi: true
+                }
+            ]
         }),
         __metadata$D("design:paramtypes", [ChangeDetectorRef])
     ], MonthPickerComponent);
@@ -9359,7 +9395,8 @@ var TooltipComponent = /** @class */ (function () {
     });
     TooltipComponent.prototype.ngOnDestroy = function () {
         if (!this.showOnInit) {
-            this.element.nativeElement.parentNode.removeChild(this.element.nativeElement);
+            var parentNode = this.element.nativeElement.parentNode;
+            parentNode && parentNode.removeChild(this.element.nativeElement);
         }
     };
     TooltipComponent.Tag = 'TooltipComponent';

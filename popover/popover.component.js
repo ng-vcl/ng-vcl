@@ -217,7 +217,7 @@ var PopoverComponent = /** @class */ (function (_super) {
     };
     PopoverComponent.prototype.close = function () {
         var _this = this;
-        if (this.state === PopoverState.hidden || this.state === PopoverState.closing) {
+        if (this.state === PopoverState.hidden || this.state === PopoverState.opening || this.state === PopoverState.closing) {
             return;
         }
         this.state = PopoverState.closing;

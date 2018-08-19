@@ -1,4 +1,5 @@
 import { EventEmitter, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
 export interface Month {
     date: string;
     label: string;
@@ -7,7 +8,7 @@ export interface Month {
     preselected?: boolean;
     color?: string;
 }
-export declare class MonthPickerComponent {
+export declare class MonthPickerComponent implements ControlValueAccessor {
     private readonly ref;
     static readonly Tag: string;
     readonly tag: string;
@@ -47,6 +48,12 @@ export declare class MonthPickerComponent {
     min: Date;
     maxValue: Date | null;
     max: Date;
+    onModelChange(value: any): void;
+    writeValue(value: Date): void;
+    onTouchedCallback: (_: any) => void;
+    onChangeCallback: (_: any) => void;
+    registerOnChange(fn: any): void;
+    registerOnTouched(fn: any): void;
     constructor(ref: ChangeDetectorRef);
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
