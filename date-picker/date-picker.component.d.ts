@@ -10,6 +10,12 @@ export declare class DatePickerComponent implements OnInit, OnChanges, ControlVa
     highlightSelected: boolean;
     displayWeekNumbers: boolean;
     displayWeekdays: boolean;
+    displayDate: boolean;
+    displayTime: boolean;
+    displayHours24: boolean;
+    displayHours: boolean;
+    displayMinutes: boolean;
+    displaySeconds: boolean;
     prevYearBtnIcon: string;
     nextYearBtnIcon: string;
     displayJumpToday: boolean;
@@ -58,4 +64,5 @@ export declare class DatePickerComponent implements OnInit, OnChanges, ControlVa
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
     setDisabledState(isDisabled: boolean): void;
+    timeChange(date: Date): void;
 }

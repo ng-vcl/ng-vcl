@@ -49,7 +49,7 @@ var CalendarDate = /** @class */ (function () {
      * gets the first day of the month for the given date's month.
      */
     CalendarDate.prototype.getFirstDateOfMonth = function (date) {
-        return new Date(date.getFullYear(), date.getMonth(), 1, 12, date.getMinutes(), date.getSeconds());
+        return new Date(date.getFullYear(), date.getMonth(), 1, date.getHours(), date.getMinutes(), date.getSeconds());
     };
     CalendarDate.prototype.moveToYear = function (year) {
         var newDate = new Date(year, this.date.getMonth(), 1, this.date.getHours(), this.date.getMinutes(), this.date.getSeconds());
@@ -85,7 +85,7 @@ var CalendarDate = /** @class */ (function () {
      * last day of the month.
      */
     CalendarDate.prototype.incrementMonths = function (numberOfMonths) {
-        var dateInTargetMonth = new Date(this.date.getFullYear(), this.date.getMonth() + numberOfMonths, 1);
+        var dateInTargetMonth = new Date(this.date.getFullYear(), this.date.getMonth() + numberOfMonths, 1, this.date.getHours(), this.date.getMinutes(), this.date.getSeconds());
         var numberOfDaysInMonth = this.getNumberOfDaysInMonth(dateInTargetMonth);
         if (numberOfDaysInMonth < this.date.getDate()) {
             dateInTargetMonth.setDate(numberOfDaysInMonth);

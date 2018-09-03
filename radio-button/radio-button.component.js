@@ -170,7 +170,7 @@ var RadioButtonComponent = /** @class */ (function () {
     RadioButtonComponent = __decorate([
         Component({
             selector: 'vcl-radio-button',
-            template: "<ng-template #rb>\n  <div class=\"vclRadioButton\" \n      [class.vclDisabled]=\"isDisabled\" \n      role=\"radio\" \n      [attr.tabindex]=\"tabindex\" \n      [attr.aria-checked]=\"checked\"\n      [attr.aria-disabled]=\"isDisabled\"\n      (keyup)=\"onKeyup($event)\"\n      (blur)=\"onBlur()\"\n      >\n  <div vcl-icon [icon]=\"icon\"></div>\n</div>  \n</ng-template>\n\n<label vcl-form-control-label [wrapping]=\"true\">\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"rb\"></ng-container>\n  {{label}}  \n  <ng-content></ng-content>\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"rb\"></ng-container>\n</label>\n  ",
+            template: "<ng-template #rb>\r\n  <div class=\"vclRadioButton\" \r\n      [class.vclDisabled]=\"isDisabled\" \r\n      role=\"radio\" \r\n      [attr.tabindex]=\"tabindex\" \r\n      [attr.aria-checked]=\"checked\"\r\n      [attr.aria-disabled]=\"isDisabled\"\r\n      (keyup)=\"onKeyup($event)\"\r\n      (blur)=\"onBlur()\"\r\n      >\r\n  <div vcl-icon [icon]=\"icon\"></div>\r\n</div>  \r\n</ng-template>\r\n\r\n<label vcl-form-control-label [wrapping]=\"true\">\r\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"rb\"></ng-container>\r\n  {{label}}  \r\n  <ng-content></ng-content>\r\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"rb\"></ng-container>\r\n</label>\r\n  ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {

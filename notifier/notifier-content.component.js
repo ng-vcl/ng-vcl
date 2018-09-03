@@ -34,7 +34,7 @@ var VCLNotifierContentComponent = /** @class */ (function () {
     VCLNotifierContentComponent = __decorate([
         Component({
             selector: 'vcl-notifier-content-component',
-            template: "<div #wormholeHost></div>\n"
+            template: "<div #wormholeHost></div>\r\n"
         })
     ], VCLNotifierContentComponent);
     return VCLNotifierContentComponent;

@@ -78,7 +78,7 @@ var LinkComponent = /** @class */ (function () {
     LinkComponent = __decorate([
         Component({
             selector: 'a[vcl-link]',
-            template: "<span vcl-icogram\n  [label]=\"label || href\"\n  [prepIcon]=\"prepIcon\"\n  [appIcon]=\"appIcon\">\n  <ng-content></ng-content>\n</span>\n"
+            template: "<span vcl-icogram\r\n  [label]=\"label || href\"\r\n  [prepIcon]=\"prepIcon\"\r\n  [appIcon]=\"appIcon\">\r\n  <ng-content></ng-content>\r\n</span>\r\n"
         })
     ], LinkComponent);
     return LinkComponent;

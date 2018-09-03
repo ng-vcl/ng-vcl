@@ -31,7 +31,7 @@ export declare class MonthPickerComponent implements ControlValueAccessor {
     monthsPerRow: number;
     colors: string[];
     locales: string | string[];
-    dateOptions: any;
+    dateOptions: Intl.DateTimeFormatOptions;
     expandable: boolean;
     prevYearAvailable: boolean;
     nextYearAvailable: boolean;
@@ -44,10 +44,11 @@ export declare class MonthPickerComponent implements ControlValueAccessor {
     minYear: number;
     maxYear: number;
     change: EventEmitter<Date | (Date | undefined)[]>;
-    minValue: Date | null;
+    minValue: Date;
     min: Date;
-    maxValue: Date | null;
+    maxValue: Date;
     max: Date;
+    setAvailableMonths(): void;
     onModelChange(value: any): void;
     writeValue(value: Date): void;
     onTouchedCallback: (_: any) => void;
@@ -76,6 +77,7 @@ export declare class MonthPickerComponent implements ControlValueAccessor {
     isMonthSelected(year: number, month: number): boolean;
     clearMonthBackgroundColor(year: number, month: number): void;
     deselectAllMonths(): void;
+    addAvailableMonthRange(min?: Date, max?: Date): void;
     addAvailableMonth(year: number, month: number): void;
     removeAvailableMonth(year: number, month: number): void;
     removeAllAvailableMonths(): void;

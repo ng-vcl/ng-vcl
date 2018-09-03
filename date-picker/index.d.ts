@@ -1,4 +1,5 @@
 import { DatePickerComponent } from './date-picker.component';
-export { DatePickerComponent };
+import { TimePickerComponent } from './time-picker.component';
+export { DatePickerComponent, TimePickerComponent };
 export declare class VCLDatePickerModule {
 }
