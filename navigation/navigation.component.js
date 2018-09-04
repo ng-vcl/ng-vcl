@@ -62,6 +62,9 @@ var NavigationItemDirective = /** @class */ (function () {
     NavigationItemDirective.prototype.ngAfterContentInit = function () {
         var _this = this;
         if (this.nav.useRouter) {
+            if (this.router.navigated) {
+                this.updateSelectedState();
+            }
             this._subscription = this.router.events.subscribe(function (s) {
                 if (s instanceof NavigationEnd) {
                     _this.updateSelectedState();
