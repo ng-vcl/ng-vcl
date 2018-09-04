@@ -109,7 +109,7 @@ var ProgressBarComponent = /** @class */ (function () {
     ProgressBarComponent = __decorate([
         Component({
             selector: 'vcl-progress-bar',
-            template: "<div class=\"vclProgressBar\"\r\n     [attr.aria-valuenow]=\"value\" \r\n     [attr.aria-valuemin]=\"minValue\" \r\n     [attr.aria-valuemax]=\"maxValue\" \r\n     [attr.aria-valuetext]=\"label\"\r\n     [class.vclIndeterminate]=\"showIndeterminate\"\r\n     >\r\n  <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div>\r\n  <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div>\r\n  <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.animation-duration]=\"animationDurationValue\"></div>\r\n</div>\r\n\r\n",
+            template: "<div class=\"vclProgressBar\"\n     [attr.aria-valuenow]=\"value\" \n     [attr.aria-valuemin]=\"minValue\" \n     [attr.aria-valuemax]=\"maxValue\" \n     [attr.aria-valuetext]=\"label\"\n     [class.vclIndeterminate]=\"showIndeterminate\"\n     >\n  <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div>\n  <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div>\n  <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.animation-duration]=\"animationDurationValue\"></div>\n</div>\n\n",
             host: {
                 '[attr.role]': '"progressbar"',
             },

@@ -31,6 +31,7 @@ export declare class NavigationItemDirective implements NavigationItem {
     class: string | undefined;
     href: string | undefined;
     exactRoute: boolean;
+    onHover: EventEmitter<NavigationItem>;
     route: any[] | undefined;
     contentItems: QueryList<NavigationItemDirective>;
     constructor(router: Router, nav: any, parent: NavigationItemDirective | undefined);
@@ -40,6 +41,7 @@ export declare class NavigationItemDirective implements NavigationItem {
     ngOnDestroy(): void;
     readonly calcPrepIcon: string | undefined;
     readonly calcAppIcon: string | undefined;
+    mouseOver(): void;
 }
 export declare class NavigationComponent {
     private router;
@@ -62,4 +64,5 @@ export declare class NavigationComponent {
     private selectedItem;
     selectItem(item: NavigationItemDirective): void;
     onSubItemSelect(item: any): void;
+    mouseOver(item: NavigationItemDirective): void;
 }

@@ -44,7 +44,7 @@ var BusyIndicatorCoverComponent = /** @class */ (function () {
     BusyIndicatorCoverComponent = __decorate([
         Component({
             selector: '[vclBusyIndicatorCover]',
-            template: "<ng-content></ng-content>\r\n<div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\">\r\n  <div class=\"vclLoadingLayerContent\">\r\n    <vcl-busy-indicator [type]=\"busyIndicatorType\" [label]=\"busyLabel\" [iconHeight]=\"busyIconHeight\" [iconWidth]=\"busyIconWidth\"\r\n                        [layout]=\"busyIndicatorDirection\">\r\n      <span *ngIf=\"busyLabel\">{{busyLabel}}</span>\r\n    </vcl-busy-indicator>\r\n  </div>\r\n</div>\r\n",
+            template: "<ng-content></ng-content>\n<div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\">\n  <div class=\"vclLoadingLayerContent\">\n    <vcl-busy-indicator [type]=\"busyIndicatorType\" [label]=\"busyLabel\" [iconHeight]=\"busyIconHeight\" [iconWidth]=\"busyIconWidth\"\n                        [layout]=\"busyIndicatorDirection\">\n      <span *ngIf=\"busyLabel\">{{busyLabel}}</span>\n    </vcl-busy-indicator>\n  </div>\n</div>\n",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], BusyIndicatorCoverComponent);

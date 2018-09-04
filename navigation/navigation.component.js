@@ -22,6 +22,7 @@ var NavigationItemDirective = /** @class */ (function () {
         this.opened = false;
         this.heading = false;
         this.exactRoute = true;
+        this.onHover = new EventEmitter();
     }
     NavigationItemDirective_1 = NavigationItemDirective;
     Object.defineProperty(NavigationItemDirective.prototype, "items", {
@@ -85,6 +86,9 @@ var NavigationItemDirective = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    NavigationItemDirective.prototype.mouseOver = function () {
+        this.onHover.emit(this);
+    };
     __decorate([
         Input(),
         __metadata("design:type", String)
@@ -125,6 +129,10 @@ var NavigationItemDirective = /** @class */ (function () {
         Input(),
         __metadata("design:type", Boolean)
     ], NavigationItemDirective.prototype, "exactRoute", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], NavigationItemDirective.prototype, "onHover", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object),
@@ -220,6 +228,9 @@ var NavigationComponent = /** @class */ (function () {
     NavigationComponent.prototype.onSubItemSelect = function (item) {
         this.selectItem(item);
     };
+    NavigationComponent.prototype.mouseOver = function (item) {
+        item.mouseOver();
+    };
     __decorate([
         Input(),
         __metadata("design:type", String)
@@ -274,7 +285,7 @@ var NavigationComponent = /** @class */ (function () {
             host: {
                 '[class.vclNavigation]': 'true'
             },
-            template: "  <ul [class.vclLayoutHorizontal]=\"type === 'horizontal'\">\r\n    <li *ngFor=\"let item of navigationItems\"\r\n        [class.vclSelected]=\"item.selectable && item.selected\"\r\n        [class.vclOpen]=\"item.opened\"\r\n        [class.vclClose]=\"!item.opened\"\r\n        [class.vclNavigationHeading]=\"item.heading\"\r\n        [class.vclNavigationItem]=\"!item.heading\"\r\n        [attr.aria-selected]=\"item.selectable && item.selected\"\r\n        [attr.role]=\"item.heading && 'sectionhead' || ariaRole\"\r\n        [attr.tabindex]=\"tabindex\"\r\n        [ngClass]=\"item.class\"\r\n        >\r\n\r\n      <span *ngIf=\"item.heading\">\r\n        {{item.label}}\r\n      </span>\r\n\r\n      <a vcl-link class=\"vclNavigationItemLabel\"\r\n        *ngIf=\"!item.heading\"\r\n        [label]=\"item.label\"\r\n        [prepIcon]=\"item.calcPrepIcon\"\r\n        [appIcon]=\"item.calcAppIcon\"\r\n        (click)=\"selectItem(item)\">\r\n      </a>\r\n\r\n      <nav vcl-navigation *ngIf=\"item.items && item.items.length > 0\"\r\n          [inputItems]=\"item.items\"\r\n          [type]=\"type\"\r\n          [useRouter]=\"useRouter\"\r\n          [subLevelHintIconOpened]=\"subLevelHintIconOpened\"\r\n          [subLevelHintIconClosed]=\"subLevelHintIconClosed\"\r\n          [subLevelHintIconSide]=\"subLevelHintIconSide\"\r\n          (select)=\"onSubItemSelect($event)\">\r\n      </nav>\r\n    </li>\r\n  </ul>\r\n"
+            template: "  <ul [class.vclLayoutHorizontal]=\"type === 'horizontal'\">\n    <li *ngFor=\"let item of navigationItems\"\n        [class.vclSelected]=\"item.selectable && item.selected\"\n        [class.vclOpen]=\"item.opened\"\n        [class.vclClose]=\"!item.opened\"\n        [class.vclNavigationHeading]=\"item.heading\"\n        [class.vclNavigationItem]=\"!item.heading\"\n        [attr.aria-selected]=\"item.selectable && item.selected\"\n        [attr.role]=\"item.heading && 'sectionhead' || ariaRole\"\n        [attr.tabindex]=\"tabindex\"\n        [ngClass]=\"item.class\"\n        (mouseover)=\"mouseOver(item)\"\n        >\n\n      <span *ngIf=\"item.heading\">\n        {{item.label}}\n      </span>\n\n      <a vcl-link class=\"vclNavigationItemLabel\"\n        *ngIf=\"!item.heading\"\n        [label]=\"item.label\"\n        [prepIcon]=\"item.calcPrepIcon\"\n        [appIcon]=\"item.calcAppIcon\"\n        (click)=\"selectItem(item)\">\n      </a>\n\n      <nav vcl-navigation *ngIf=\"item.items && item.items.length > 0\"\n          [inputItems]=\"item.items\"\n          [type]=\"type\"\n          [useRouter]=\"useRouter\"\n          [subLevelHintIconOpened]=\"subLevelHintIconOpened\"\n          [subLevelHintIconClosed]=\"subLevelHintIconClosed\"\n          [subLevelHintIconSide]=\"subLevelHintIconSide\"\n          (select)=\"onSubItemSelect($event)\">\n      </nav>\n    </li>\n  </ul>\n"
         }),
         __metadata("design:paramtypes", [Router])
     ], NavigationComponent);

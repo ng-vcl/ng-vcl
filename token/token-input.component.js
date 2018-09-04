@@ -185,7 +185,7 @@ var TokenInputContainerComponent = /** @class */ (function () {
     TokenInputContainerComponent = __decorate([
         Component({
             selector: 'vcl-token-input-container',
-            template: "<div class=\"vclTokenContainer\">\r\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\r\n  <vcl-token *ngFor=\"let token of tokens\"\r\n             (remove)=\"onTokenRemove(token)\"\r\n             (click)=\"select(token)\"\r\n             [tokenIcon]=\"token.tokenIcon\"\r\n             [disabled]=\"disabled\"\r\n             [ngClass]=\"tokenClass\"\r\n             [selected]=\"token.selected\"\r\n             [removable]=\"true\"\r\n             [icon]=\"removeIcon\"\r\n             [attr.tabindex]=\"-1\"\r\n             [label]=\"token.label\">\r\n  </vcl-token>\r\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\r\n</div>\r\n<ng-content></ng-content>\r\n",
+            template: "<div class=\"vclTokenContainer\">\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\n  <vcl-token *ngFor=\"let token of tokens\"\n             (remove)=\"onTokenRemove(token)\"\n             (click)=\"select(token)\"\n             [tokenIcon]=\"token.tokenIcon\"\n             [disabled]=\"disabled\"\n             [ngClass]=\"tokenClass\"\n             [selected]=\"token.selected\"\n             [removable]=\"true\"\n             [icon]=\"removeIcon\"\n             [attr.tabindex]=\"-1\"\n             [label]=\"token.label\">\n  </vcl-token>\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\n</div>\n<ng-content></ng-content>\n",
             host: {
                 '[class.vclInput]': 'true',
                 '[class.vclTokenInput]': 'true',

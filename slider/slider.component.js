@@ -375,7 +375,7 @@ var SliderComponent = /** @class */ (function () {
     SliderComponent = __decorate([
         Component({
             selector: 'vcl-slider',
-            template: "<div class=\"vclSliderRail\">\r\n  <div class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\" #scale>\r\n    <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointMark\"></div>\r\n  </div>\r\n  <div *ngIf=\"valueValid\" class=\"vclSliderKnobContainer\" [style.left]=\"percentLeftKnob + '%'\" (pan)=\"onPan($event)\">\r\n    <div  class=\"vclSliderKnob\"></div>\r\n  </div>\r\n</div>\r\n<div *ngIf=\"showScale\" class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\">\r\n  <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointLabel\" (click)=\"selectPoint(point)\">{{point.label}}</div>\r\n</div>\r\n",
+            template: "<div class=\"vclSliderRail\">\n  <div class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\" #scale>\n    <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointMark\"></div>\n  </div>\n  <div *ngIf=\"valueValid\" class=\"vclSliderKnobContainer\" [style.left]=\"percentLeftKnob + '%'\" (pan)=\"onPan($event)\">\n    <div  class=\"vclSliderKnob\"></div>\n  </div>\n</div>\n<div *ngIf=\"showScale\" class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\">\n  <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointLabel\" (click)=\"selectPoint(point)\">{{point.label}}</div>\n</div>\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {
                 '[class.vclSlider]': 'true'
