@@ -31,6 +31,7 @@ export declare class NavigationItemDirective implements NavigationItem {
     class: string | undefined;
     href: string | undefined;
     exactRoute: boolean;
+    showActive: boolean;
     onHover: EventEmitter<NavigationItem>;
     onLeave: EventEmitter<NavigationItem>;
     route: any[] | undefined;

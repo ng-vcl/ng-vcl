@@ -5079,6 +5079,7 @@ var NavigationItemDirective = /** @class */ (function () {
         this.opened = false;
         this.heading = false;
         this.exactRoute = true;
+        this.showActive = false;
         this.onHover = new EventEmitter();
         this.onLeave = new EventEmitter();
     }
@@ -5193,6 +5194,10 @@ var NavigationItemDirective = /** @class */ (function () {
         Input(),
         __metadata$v("design:type", Boolean)
     ], NavigationItemDirective.prototype, "exactRoute", void 0);
+    __decorate$N([
+        Input(),
+        __metadata$v("design:type", Boolean)
+    ], NavigationItemDirective.prototype, "showActive", void 0);
     __decorate$N([
         Output(),
         __metadata$v("design:type", Object)
@@ -5358,7 +5363,7 @@ var NavigationComponent = /** @class */ (function () {
             host: {
                 '[class.vclNavigation]': 'true'
             },
-            template: "<ul [class.vclLayoutHorizontal]=\"type === 'horizontal'\">\n  <li *ngFor=\"let item of navigationItems\"\n      [class.vclSelected]=\"item.selectable && item.selected\"\n      [class.vclOpen]=\"item.opened\"\n      [class.vclClose]=\"!item.opened\"\n      [class.vclNavigationHeading]=\"item.heading\"\n      [class.vclNavigationItem]=\"!item.heading\"\n      [attr.aria-selected]=\"item.selectable && item.selected\"\n      [attr.role]=\"item.heading && 'sectionhead' || ariaRole\"\n      [attr.tabindex]=\"tabindex\"\n      [ngClass]=\"item.class\"\n      (mouseleave)=\"mouseLeave(item)\"\n      (mouseover)=\"mouseOver(item)\">\n\n      <span *ngIf=\"item.heading\">\n        {{item.label}}\n      </span>\n\n    <a vcl-link class=\"vclNavigationItemLabel\"\n       *ngIf=\"!item.heading\"\n       [label]=\"item.label\"\n       [prepIcon]=\"item.calcPrepIcon\"\n       [appIcon]=\"item.calcAppIcon\"\n       (click)=\"selectItem(item)\">\n    </a>\n\n    <nav vcl-navigation *ngIf=\"item.items && item.items.length > 0\"\n         [inputItems]=\"item.items\"\n         [type]=\"type\"\n         [useRouter]=\"useRouter\"\n         [subLevelHintIconOpened]=\"subLevelHintIconOpened\"\n         [subLevelHintIconClosed]=\"subLevelHintIconClosed\"\n         [subLevelHintIconSide]=\"subLevelHintIconSide\"\n         (select)=\"onSubItemSelect($event)\">\n    </nav>\n  </li>\n</ul>\n"
+            template: "<ul [class.vclLayoutHorizontal]=\"type === 'horizontal'\">\n  <li *ngFor=\"let item of navigationItems\"\n      [class.vclSelected]=\"(item.showActive || item.selectable) && item.selected\"\n      [class.vclOpen]=\"item.opened\"\n      [class.vclClose]=\"!item.opened\"\n      [class.vclNavigationHeading]=\"item.heading\"\n      [class.vclNavigationItem]=\"!item.heading\"\n      [attr.aria-selected]=\"item.selectable && item.selected\"\n      [attr.role]=\"item.heading && 'sectionhead' || ariaRole\"\n      [attr.tabindex]=\"tabindex\"\n      [ngClass]=\"item.class\"\n      (mouseleave)=\"mouseLeave(item)\"\n      (mouseover)=\"mouseOver(item)\">\n\n      <span *ngIf=\"item.heading\">\n        {{item.label}}\n      </span>\n\n    <a vcl-link class=\"vclNavigationItemLabel\"\n       *ngIf=\"!item.heading\"\n       [label]=\"item.label\"\n       [prepIcon]=\"item.calcPrepIcon\"\n       [appIcon]=\"item.calcAppIcon\"\n       (click)=\"selectItem(item)\">\n    </a>\n\n    <nav vcl-navigation *ngIf=\"item.items && item.items.length > 0\"\n         [inputItems]=\"item.items\"\n         [type]=\"type\"\n         [useRouter]=\"useRouter\"\n         [subLevelHintIconOpened]=\"subLevelHintIconOpened\"\n         [subLevelHintIconClosed]=\"subLevelHintIconClosed\"\n         [subLevelHintIconSide]=\"subLevelHintIconSide\"\n         (select)=\"onSubItemSelect($event)\">\n    </nav>\n  </li>\n</ul>\n"
         }),
         __metadata$v("design:paramtypes", [Router])
     ], NavigationComponent);
