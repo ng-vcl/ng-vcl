@@ -11,44 +11,44 @@ import { Component, Input } from '@angular/core';
 import { HintService } from './hint.service';
 import { HintConfig, Placement } from './types';
 var TourComponent = /** @class */ (function () {
-    function TourComponent(hintService) {
-        this.hintService = hintService;
+    function TourComponent(hint) {
+        this.hint = hint;
     }
     TourComponent.prototype.ngOnInit = function () {
-        this.hintService.register(this.selector + "_" + Number(this.order || 0), this);
+        this.hint.register(this.selector + "_" + Number(this.order || 0), this);
     };
     TourComponent.prototype.showStep = function () {
-        this.hintService.showingStep$.next(this);
-        this.position = this.position || this.hintService.hintOptions.defaultPosition;
-        this.order = +this.order || this.hintService.hintOptions.defaultOrder;
+        this.hint.showingStep$.next(this);
+        this.position = this.position || this.hint.options.defaultPosition;
+        this.order = +this.order || this.hint.options.defaultOrder;
         var highlightedElement = document.getElementById(this.selector);
         if (highlightedElement) {
             highlightedElement.style.zIndex = HintConfig.Z_INDEX;
-            if (this.hintService.hintOptions.elementsDisabled) {
+            if (this.hint.options.elementsDisabled) {
                 this.disableClick(highlightedElement);
             }
-            if (this.hintService.hintOptions.applyRelative) {
+            if (this.hint.options.applyRelative) {
                 this.enableHighlight(highlightedElement);
             }
             switch (this.position) {
                 case Placement.Top:
                     this.transformClass = 'transformX_50 transformY_100';
-                    this.topPos = highlightedElement.offsetTop - this.hintService.hintOptions.defaultLayer;
+                    this.topPos = highlightedElement.offsetTop - this.hint.options.defaultLayer;
                     this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth / 2;
                     break;
                 case Placement.Bottom:
                     this.transformClass = 'transformX_50';
-                    this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight + this.hintService.hintOptions.defaultLayer;
+                    this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight + this.hint.options.defaultLayer;
                     this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth / 2;
                     break;
                 case Placement.Left:
                     this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-                    this.leftPos = highlightedElement.offsetLeft - this.hintService.hintOptions.defaultLayer;
+                    this.leftPos = highlightedElement.offsetLeft - this.hint.options.defaultLayer;
                     this.transformClass = 'transformY_50 transformX_100';
                     break;
                 case Placement.Right:
                     this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-                    this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth + this.hintService.hintOptions.defaultLayer;
+                    this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth + this.hint.options.defaultLayer;
                     this.transformClass = 'transformY_50';
                     break;
                 default:
@@ -60,8 +60,8 @@ var TourComponent = /** @class */ (function () {
             this.leftPos = 0;
         }
         this.showMe = true;
-        this.hasNext = this.hintService.hasNext();
-        this.hasPrevious = this.hintService.hasPrevious();
+        this.hasNext = this.hint.hasNext();
+        this.hasPrevious = this.hint.hasPrevious();
     };
     TourComponent.prototype.hideStep = function () {
         var highlightedElement = document.getElementById(this.selector);
@@ -73,15 +73,15 @@ var TourComponent = /** @class */ (function () {
         this.showMe = false;
     };
     TourComponent.prototype.exit = function () {
-        this.hintService.end();
+        this.hint.end();
     };
     TourComponent.prototype.next = function () {
         this.hideStep();
-        this.hintService.showNext();
+        this.hint.showNext();
     };
     TourComponent.prototype.previous = function () {
         this.hideStep();
-        this.hintService.showPrevious();
+        this.hint.showPrevious();
     };
     TourComponent.prototype.disableClick = function (element) {
         element.style.cursor = 'default';
@@ -116,8 +116,8 @@ var TourComponent = /** @class */ (function () {
     TourComponent = __decorate([
         Component({
             selector: HintConfig.HINT_TAG,
-            template: "<div class=\"vclTourHintWrapper {{transformClass}} step{{order}} {{position}}\"\n  *ngIf=\"showMe\" [ngStyle]=\"{'top': topPos+'px', 'left': leftPos+'px'}\" >\n    <div class=\"header\" *ngIf=\"title\">{{title}}</div>\n    <div class=\"content\"><ng-content></ng-content></div>\n    <div class=\"footer\">\n      <button type=\"button\" class=\"vclButton\" *ngIf=\"hasPrevious\" (click)=\"previous()\">\n        <div class=\"vclIcogram\">\n          <div class=\"vclIcon fa fa-chevron-left\" aria-hidden=\"true\" role=\"img\"></div>\n          <span class=\"vclText\">Previous</span>\n        </div>\n      </button>\n      <button type=\"button\" class=\"vclButton\" *ngIf=\"hasNext\" (click)=\"next()\">\n        <div class=\"vclIcogram\">\n          <div class=\"vclIcon fa fa-chevron-right\" aria-hidden=\"true\" role=\"img\"></div>\n          <span class=\"vclText\">Next</span>\n        </div>\n      </button>\n      <button type=\"button\" class=\"vclButton\" (click)=\"exit()\">\n        <div class=\"vclIcogram\">\n          <div class=\"vclIcon fa fa-close\" aria-hidden=\"true\" role=\"img\"></div>\n          <span class=\"vclText\">Exit</span>\n        </div>\n      </button>\n    </div>\n  </div>",
-            styles: [".vclTourHintWrapper {\n    position: absolute !important;\n    background-color: #fff;\n    z-index: 999;\n    text-align: center;\n    font-size: 14px;\n    color: #000;\n    border-radius: 5px;\n    -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n    box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  }\n  \n.vclTourHintWrapper .header {\n  padding: 10px;\n  border-bottom: 1px solid #ccc;\n  background-color: #ddd;\n  border-radius: 5px;\n  -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n}\n  \n.vclTourHintWrapper .content {\n  padding: 10px;\n}\n\n.vclTourHintWrapper .footer {\n  padding: 10px;\n}\n\n.vclTourHintWrapper .vclButton:first {\n  margin-left: 0;\n}\n  \n.vclTourHintWrapper.transformX_50.transformY_100 {\n  -webkit-transform: translateX(-50%) translateY(-100%);\n  transform: translateX(-50%) translateY(-100%);\n}\n  \n.vclTourHintWrapper.transformX_50 {\n  -webkit-transform: translateX(-50%);\n  transform: translateX(-50%);\n}\n  \n.vclTourHintWrapper.transformY_50 {\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n  \n.vclTourHintWrapper.transformY_50.transformX_100 {\n  -webkit-transform: translateX(-100%) translateY(-50%);\n  transform: translateX(-100%) translateY(-50%);\n}\n  "]
+            template: "<div *ngIf=\"showMe\"\n  class=\"vclTourContainer {{ transformClass }} step{{ order }} {{ position }}\"\n  [ngStyle]=\"{'top': topPos+'px', 'left': leftPos+'px'}\" >\n\n    <div class=\"vclTourContainerHeader\" *ngIf=\"title\">\n      {{ title }}\n    </div>\n\n    <div class=\"vclTourContainerContent\">\n      <ng-content></ng-content>\n    </div>\n\n    <div class=\"vclTourContainerFooter\">\n      \n      <button vcl-button *ngIf=\"hasPrevious\"\n        [label]=\"hint.options.previousLabel\"\n        [prepIcon]=\"hint.options.previousIcon\"\n        (click)=\"previous()\">\n      </button>\n\n      <button vcl-button *ngIf=\"hasNext\"\n        [label]=\"hint.options.nextLabel\"\n        [prepIcon]=\"hint.options.nextIcon\"\n        (click)=\"next()\">\n      </button>\n\n      <button vcl-button\n        [label]=\"hint.options.exitLabel\"\n        [prepIcon]=\"hint.options.exitIcon\"\n        (click)=\"exit()\">\n      </button>\n\n    </div>\n  </div>",
+            styles: [".vclTourContainer {\n    position: absolute !important;\n    background-color: #fff;\n    z-index: 999;\n    text-align: center;\n    font-size: 14px;\n    color: #000;\n    border-radius: 5px;\n    -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n    box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  }\n  \n.vclTourContainer .vclTourContainerHeader {\n  padding: 10px;\n  border-bottom: 1px solid #ccc;\n  background-color: #ddd;\n  border-radius: 5px;\n  -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n}\n  \n.vclTourContainer .vclTourContainerContent {\n  padding: 10px;\n}\n\n.vclTourContainer .vclTourContainerFooter {\n  padding: 10px;\n}\n\n.vclTourContainer .vclButton:first {\n  margin-left: 0;\n}\n  \n.vclTourContainer.transformX_50.transformY_100 {\n  -webkit-transform: translateX(-50%) translateY(-100%);\n  transform: translateX(-50%) translateY(-100%);\n}\n  \n.vclTourContainer.transformX_50 {\n  -webkit-transform: translateX(-50%);\n  transform: translateX(-50%);\n}\n  \n.vclTourContainer.transformY_50 {\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n  \n.vclTourContainer.transformY_50.transformX_100 {\n  -webkit-transform: translateX(-100%) translateY(-50%);\n  transform: translateX(-100%) translateY(-50%);\n}\n  "]
         }),
         __metadata("design:paramtypes", [HintService])
     ], TourComponent);

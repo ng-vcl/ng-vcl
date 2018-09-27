@@ -1,7 +1,7 @@
 import { OnInit } from '@angular/core';
 import { HintService } from './hint.service';
 export declare class TourComponent implements OnInit {
-    hintService: HintService;
+    hint: HintService;
     title: string;
     selector: string;
     order: number;
@@ -14,7 +14,7 @@ export declare class TourComponent implements OnInit {
     transformClass: string;
     transformY: boolean;
     transformX: boolean;
-    constructor(hintService: HintService);
+    constructor(hint: HintService);
     ngOnInit(): void;
     showStep(): void;
     hideStep(): void;

@@ -5,23 +5,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { NgModule } from '@angular/core';
+import { RatingComponent } from './rating.component';
 import { CommonModule } from '@angular/common';
-import { VCLButtonModule } from '@ng-vcl/ng-vcl';
-import { TourOverlayComponent } from './tour-overlay.component';
-import { HintService } from './hint.service';
-import { TourComponent } from './tour.component';
-export { HintService, TourComponent };
-var VCLTourModule = /** @class */ (function () {
-    function VCLTourModule() {
+var VCLRatingModule = /** @class */ (function () {
+    function VCLRatingModule() {
     }
-    VCLTourModule = __decorate([
+    VCLRatingModule = __decorate([
         NgModule({
-            imports: [CommonModule, VCLButtonModule],
-            exports: [TourComponent, TourOverlayComponent],
-            declarations: [TourComponent, TourOverlayComponent],
-            providers: [HintService],
+            imports: [CommonModule],
+            exports: [RatingComponent],
+            declarations: [RatingComponent],
+            providers: [],
         })
-    ], VCLTourModule);
-    return VCLTourModule;
+    ], VCLRatingModule);
+    return VCLRatingModule;
 }());
-export { VCLTourModule };
+export { VCLRatingModule };

@@ -23,8 +23,8 @@ var HintService = /** @class */ (function () {
      */
     HintService.prototype.initialize = function (options) {
         if (options === void 0) { options = new HintOptions(); }
-        this.hintOptions = Object.assign(new HintOptions(), options);
-        var nodes = document.getElementsByTagName(this.hintOptions.stepTag);
+        this.options = Object.assign(new HintOptions(), options);
+        var nodes = document.getElementsByTagName(this.options.stepTag);
         this.steps = this.initSteps(nodes);
         this.startAt(0);
         this.overlay$.next(true);
@@ -141,7 +141,7 @@ var HintService = /** @class */ (function () {
         for (var i = 0; i < nodes.length; i++) {
             steps.push({
                 selector: nodes[i].getAttribute('selector'),
-                order: Number(nodes[i].getAttribute('order')) || this.hintOptions.defaultOrder,
+                order: Number(nodes[i].getAttribute('order')) || this.options.defaultOrder,
             });
         }
         return steps = steps.sort(function (el1, el2) {

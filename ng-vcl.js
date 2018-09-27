@@ -6,6 +6,7 @@ import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { AnimationBuilder, trigger, state, transition, animate, style } from '@angular/animations';
 import { Router, NavigationEnd } from '@angular/router';
 import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
+import { VCLButtonModule } from '@ng-vcl/ng-vcl';
 
 var ObservableComponent = /** @class */ (function () {
     function ObservableComponent() {
@@ -2509,18 +2510,18 @@ var __decorate$p = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLButtonModule = /** @class */ (function () {
-    function VCLButtonModule() {
+var VCLButtonModule$1 = /** @class */ (function () {
+    function VCLButtonModule$$1() {
     }
-    VCLButtonModule = __decorate$p([
+    VCLButtonModule$$1 = __decorate$p([
         NgModule({
             imports: [CommonModule, VCLIcogramModule],
             exports: [ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent],
             declarations: [ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent],
             providers: [],
         })
-    ], VCLButtonModule);
-    return VCLButtonModule;
+    ], VCLButtonModule$$1);
+    return VCLButtonModule$$1;
 }());
 
 var __decorate$q = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3510,7 +3511,7 @@ var VCLTokenModule = /** @class */ (function () {
     }
     VCLTokenModule = __decorate$x([
         NgModule({
-            imports: [CommonModule, VCLInputModule, VCLButtonModule, FormsModule, VCLIconModule, VCLIcogramModule, VCLWormholeModule],
+            imports: [CommonModule, VCLInputModule, VCLButtonModule$1, FormsModule, VCLIconModule, VCLIcogramModule, VCLWormholeModule],
             exports: [TokenComponent, TokenListComponent, TokenInputContainerComponent, TokenInputDirective, TokenInputLabelPost, TokenInputLabelPre],
             declarations: [TokenComponent, TokenListComponent, TokenInputContainerComponent, TokenInputDirective, TokenInputLabelPost, TokenInputLabelPre],
             providers: [],
@@ -3980,7 +3981,7 @@ var VCLSelectModule = /** @class */ (function () {
     }
     VCLSelectModule = __decorate$A([
         NgModule({
-            imports: [CommonModule, VCLDropdownModule, VCLButtonModule, VCLOffClickModule, VCLPopoverModule, VCLTokenModule],
+            imports: [CommonModule, VCLDropdownModule, VCLButtonModule$1, VCLOffClickModule, VCLPopoverModule, VCLTokenModule],
             exports: [SelectComponent, SelectOption],
             declarations: [SelectComponent, SelectOption],
             providers: []
@@ -4174,8 +4175,8 @@ var VCLButtonGroupModule = /** @class */ (function () {
     }
     VCLButtonGroupModule = __decorate$C([
         NgModule({
-            imports: [CommonModule, VCLButtonModule],
-            exports: [ButtonGroupComponent, GroupButtonDirective, VCLButtonModule],
+            imports: [CommonModule, VCLButtonModule$1],
+            exports: [ButtonGroupComponent, GroupButtonDirective, VCLButtonModule$1],
             declarations: [ButtonGroupComponent, GroupButtonDirective],
             providers: [],
         })
@@ -6876,7 +6877,7 @@ var VCLDatePickerModule = /** @class */ (function () {
     }
     VCLDatePickerModule = __decorate$11([
         NgModule({
-            imports: [CommonModule, VCLButtonModule, FormsModule],
+            imports: [CommonModule, VCLButtonModule$1, FormsModule],
             exports: [DatePickerComponent, TimePickerComponent],
             declarations: [DatePickerComponent, TimePickerComponent],
             providers: [],
@@ -7389,7 +7390,7 @@ var VCLMonthPickerModule = /** @class */ (function () {
     }
     VCLMonthPickerModule = __decorate$13([
         NgModule({
-            imports: [CommonModule, VCLButtonModule],
+            imports: [CommonModule, VCLButtonModule$1],
             exports: [MonthPickerComponent],
             declarations: [MonthPickerComponent],
             providers: [],
@@ -8389,7 +8390,7 @@ var VCLAlertModule = /** @class */ (function () {
             imports: [
                 FormsModule,
                 CommonModule,
-                VCLButtonModule,
+                VCLButtonModule$1,
                 VCLInputModule,
                 VCLIcogramModule,
                 VCLLayerModule.forChild({ layers: [] })
@@ -9344,7 +9345,7 @@ var VCLNotificationModule = /** @class */ (function () {
     }
     VCLNotificationModule = __decorate$1o([
         NgModule({
-            imports: [CommonModule, VCLButtonModule],
+            imports: [CommonModule, VCLButtonModule$1],
             exports: [NotificationComponent, NotificationHeaderComponent, NotificationBodyComponent, NotificationFooterComponent],
             declarations: [NotificationComponent, NotificationHeaderComponent, NotificationBodyComponent, NotificationFooterComponent]
         })
@@ -9366,7 +9367,7 @@ var VCLNotifierModule = /** @class */ (function () {
             imports: [
                 FormsModule,
                 CommonModule,
-                VCLButtonModule,
+                VCLButtonModule$1,
                 VCLLayerModule.forChild(),
                 VCLWormholeModule,
                 VCLNotificationModule
@@ -10885,7 +10886,7 @@ var VCLPasswordInputModule = /** @class */ (function () {
     }
     VCLPasswordInputModule = __decorate$1U([
         NgModule({
-            imports: [FormsModule, VCLInputModule, VCLButtonModule],
+            imports: [FormsModule, VCLInputModule, VCLButtonModule$1],
             exports: [PasswordInputComponent, PasswordInputDirective],
             declarations: [PasswordInputComponent, PasswordInputDirective]
         })
@@ -11778,7 +11779,7 @@ var VCLEmbeddedInputGroupModule = /** @class */ (function () {
     }
     VCLEmbeddedInputGroupModule = __decorate$27([
         NgModule({
-            imports: [CommonModule, VCLButtonModule, VCLInputModule, VCLIconModule],
+            imports: [CommonModule, VCLButtonModule$1, VCLInputModule, VCLIconModule],
             exports: [EmbeddedInputGroupComponent, EmbeddedInputDirective, EmbeddedButtonDirective],
             declarations: [EmbeddedInputGroupComponent, EmbeddedInputDirective, EmbeddedButtonDirective],
         })
@@ -12460,6 +12461,12 @@ var HintOptions = /** @class */ (function () {
         this.applyRelative = HintConfig.APPLY_RELATIVE;
         this.stepTag = HintConfig.HINT_TAG;
         this.dismissOnOverlay = HintConfig.DISMISS_ON_OVERLAY;
+        this.previousLabel = 'Previous';
+        this.nextLabel = 'Next';
+        this.exitLabel = 'Exit';
+        this.previousIcon = 'fa fa-chevron-left';
+        this.nextIcon = 'fa fa-chevron-right';
+        this.exitIcon = 'fa fa-chevron-close';
     }
     return HintOptions;
 }());
@@ -12502,8 +12509,8 @@ var HintService = /** @class */ (function () {
      */
     HintService.prototype.initialize = function (options) {
         if (options === void 0) { options = new HintOptions(); }
-        this.hintOptions = Object.assign(new HintOptions(), options);
-        var nodes = document.getElementsByTagName(this.hintOptions.stepTag);
+        this.options = Object.assign(new HintOptions(), options);
+        var nodes = document.getElementsByTagName(this.options.stepTag);
         this.steps = this.initSteps(nodes);
         this.startAt(0);
         this.overlay$.next(true);
@@ -12620,7 +12627,7 @@ var HintService = /** @class */ (function () {
         for (var i = 0; i < nodes.length; i++) {
             steps.push({
                 selector: nodes[i].getAttribute('selector'),
-                order: Number(nodes[i].getAttribute('order')) || this.hintOptions.defaultOrder,
+                order: Number(nodes[i].getAttribute('order')) || this.options.defaultOrder,
             });
         }
         return steps = steps.sort(function (el1, el2) {
@@ -12646,14 +12653,14 @@ var __metadata$1x = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var TourOverlayComponent = /** @class */ (function () {
-    function TourOverlayComponent(hintService) {
+    function TourOverlayComponent(hint) {
         var _this = this;
-        this.hintService = hintService;
-        this.hintService.overlay$.subscribe(function (data) { return _this.show = data; });
+        this.hint = hint;
+        this.hint.overlay$.subscribe(function (data) { return _this.show = data; });
     }
     TourOverlayComponent.prototype.dismiss = function () {
-        if (this.hintService.hintOptions.dismissOnOverlay)
-            this.hintService.overlayNext();
+        if (this.hint.options.dismissOnOverlay)
+            this.hint.overlayNext();
     };
     TourOverlayComponent = __decorate$2d([
         Component({
@@ -12676,44 +12683,44 @@ var __metadata$1y = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var TourComponent = /** @class */ (function () {
-    function TourComponent(hintService) {
-        this.hintService = hintService;
+    function TourComponent(hint) {
+        this.hint = hint;
     }
     TourComponent.prototype.ngOnInit = function () {
-        this.hintService.register(this.selector + "_" + Number(this.order || 0), this);
+        this.hint.register(this.selector + "_" + Number(this.order || 0), this);
     };
     TourComponent.prototype.showStep = function () {
-        this.hintService.showingStep$.next(this);
-        this.position = this.position || this.hintService.hintOptions.defaultPosition;
-        this.order = +this.order || this.hintService.hintOptions.defaultOrder;
+        this.hint.showingStep$.next(this);
+        this.position = this.position || this.hint.options.defaultPosition;
+        this.order = +this.order || this.hint.options.defaultOrder;
         var highlightedElement = document.getElementById(this.selector);
         if (highlightedElement) {
             highlightedElement.style.zIndex = HintConfig.Z_INDEX;
-            if (this.hintService.hintOptions.elementsDisabled) {
+            if (this.hint.options.elementsDisabled) {
                 this.disableClick(highlightedElement);
             }
-            if (this.hintService.hintOptions.applyRelative) {
+            if (this.hint.options.applyRelative) {
                 this.enableHighlight(highlightedElement);
             }
             switch (this.position) {
                 case Placement$1.Top:
                     this.transformClass = 'transformX_50 transformY_100';
-                    this.topPos = highlightedElement.offsetTop - this.hintService.hintOptions.defaultLayer;
+                    this.topPos = highlightedElement.offsetTop - this.hint.options.defaultLayer;
                     this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth / 2;
                     break;
                 case Placement$1.Bottom:
                     this.transformClass = 'transformX_50';
-                    this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight + this.hintService.hintOptions.defaultLayer;
+                    this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight + this.hint.options.defaultLayer;
                     this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth / 2;
                     break;
                 case Placement$1.Left:
                     this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-                    this.leftPos = highlightedElement.offsetLeft - this.hintService.hintOptions.defaultLayer;
+                    this.leftPos = highlightedElement.offsetLeft - this.hint.options.defaultLayer;
                     this.transformClass = 'transformY_50 transformX_100';
                     break;
                 case Placement$1.Right:
                     this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-                    this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth + this.hintService.hintOptions.defaultLayer;
+                    this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth + this.hint.options.defaultLayer;
                     this.transformClass = 'transformY_50';
                     break;
                 default:
@@ -12725,8 +12732,8 @@ var TourComponent = /** @class */ (function () {
             this.leftPos = 0;
         }
         this.showMe = true;
-        this.hasNext = this.hintService.hasNext();
-        this.hasPrevious = this.hintService.hasPrevious();
+        this.hasNext = this.hint.hasNext();
+        this.hasPrevious = this.hint.hasPrevious();
     };
     TourComponent.prototype.hideStep = function () {
         var highlightedElement = document.getElementById(this.selector);
@@ -12738,15 +12745,15 @@ var TourComponent = /** @class */ (function () {
         this.showMe = false;
     };
     TourComponent.prototype.exit = function () {
-        this.hintService.end();
+        this.hint.end();
     };
     TourComponent.prototype.next = function () {
         this.hideStep();
-        this.hintService.showNext();
+        this.hint.showNext();
     };
     TourComponent.prototype.previous = function () {
         this.hideStep();
-        this.hintService.showPrevious();
+        this.hint.showPrevious();
     };
     TourComponent.prototype.disableClick = function (element) {
         element.style.cursor = 'default';
@@ -12781,8 +12788,8 @@ var TourComponent = /** @class */ (function () {
     TourComponent = __decorate$2e([
         Component({
             selector: HintConfig.HINT_TAG,
-            template: "<div class=\"vclTourHintWrapper {{transformClass}} step{{order}} {{position}}\"\n  *ngIf=\"showMe\" [ngStyle]=\"{'top': topPos+'px', 'left': leftPos+'px'}\" >\n    <div class=\"header\" *ngIf=\"title\">{{title}}</div>\n    <div class=\"content\"><ng-content></ng-content></div>\n    <div class=\"footer\">\n      <button type=\"button\" class=\"vclButton\" *ngIf=\"hasPrevious\" (click)=\"previous()\">\n        <div class=\"vclIcogram\">\n          <div class=\"vclIcon fa fa-chevron-left\" aria-hidden=\"true\" role=\"img\"></div>\n          <span class=\"vclText\">Previous</span>\n        </div>\n      </button>\n      <button type=\"button\" class=\"vclButton\" *ngIf=\"hasNext\" (click)=\"next()\">\n        <div class=\"vclIcogram\">\n          <div class=\"vclIcon fa fa-chevron-right\" aria-hidden=\"true\" role=\"img\"></div>\n          <span class=\"vclText\">Next</span>\n        </div>\n      </button>\n      <button type=\"button\" class=\"vclButton\" (click)=\"exit()\">\n        <div class=\"vclIcogram\">\n          <div class=\"vclIcon fa fa-close\" aria-hidden=\"true\" role=\"img\"></div>\n          <span class=\"vclText\">Exit</span>\n        </div>\n      </button>\n    </div>\n  </div>",
-            styles: [".vclTourHintWrapper {\n    position: absolute !important;\n    background-color: #fff;\n    z-index: 999;\n    text-align: center;\n    font-size: 14px;\n    color: #000;\n    border-radius: 5px;\n    -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n    box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  }\n  \n.vclTourHintWrapper .header {\n  padding: 10px;\n  border-bottom: 1px solid #ccc;\n  background-color: #ddd;\n  border-radius: 5px;\n  -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n}\n  \n.vclTourHintWrapper .content {\n  padding: 10px;\n}\n\n.vclTourHintWrapper .footer {\n  padding: 10px;\n}\n\n.vclTourHintWrapper .vclButton:first {\n  margin-left: 0;\n}\n  \n.vclTourHintWrapper.transformX_50.transformY_100 {\n  -webkit-transform: translateX(-50%) translateY(-100%);\n  transform: translateX(-50%) translateY(-100%);\n}\n  \n.vclTourHintWrapper.transformX_50 {\n  -webkit-transform: translateX(-50%);\n  transform: translateX(-50%);\n}\n  \n.vclTourHintWrapper.transformY_50 {\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n  \n.vclTourHintWrapper.transformY_50.transformX_100 {\n  -webkit-transform: translateX(-100%) translateY(-50%);\n  transform: translateX(-100%) translateY(-50%);\n}\n  "]
+            template: "<div *ngIf=\"showMe\"\n  class=\"vclTourContainer {{ transformClass }} step{{ order }} {{ position }}\"\n  [ngStyle]=\"{'top': topPos+'px', 'left': leftPos+'px'}\" >\n\n    <div class=\"vclTourContainerHeader\" *ngIf=\"title\">\n      {{ title }}\n    </div>\n\n    <div class=\"vclTourContainerContent\">\n      <ng-content></ng-content>\n    </div>\n\n    <div class=\"vclTourContainerFooter\">\n      \n      <button vcl-button *ngIf=\"hasPrevious\"\n        [label]=\"hint.options.previousLabel\"\n        [prepIcon]=\"hint.options.previousIcon\"\n        (click)=\"previous()\">\n      </button>\n\n      <button vcl-button *ngIf=\"hasNext\"\n        [label]=\"hint.options.nextLabel\"\n        [prepIcon]=\"hint.options.nextIcon\"\n        (click)=\"next()\">\n      </button>\n\n      <button vcl-button\n        [label]=\"hint.options.exitLabel\"\n        [prepIcon]=\"hint.options.exitIcon\"\n        (click)=\"exit()\">\n      </button>\n\n    </div>\n  </div>",
+            styles: [".vclTourContainer {\n    position: absolute !important;\n    background-color: #fff;\n    z-index: 999;\n    text-align: center;\n    font-size: 14px;\n    color: #000;\n    border-radius: 5px;\n    -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n    box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  }\n  \n.vclTourContainer .vclTourContainerHeader {\n  padding: 10px;\n  border-bottom: 1px solid #ccc;\n  background-color: #ddd;\n  border-radius: 5px;\n  -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n}\n  \n.vclTourContainer .vclTourContainerContent {\n  padding: 10px;\n}\n\n.vclTourContainer .vclTourContainerFooter {\n  padding: 10px;\n}\n\n.vclTourContainer .vclButton:first {\n  margin-left: 0;\n}\n  \n.vclTourContainer.transformX_50.transformY_100 {\n  -webkit-transform: translateX(-50%) translateY(-100%);\n  transform: translateX(-50%) translateY(-100%);\n}\n  \n.vclTourContainer.transformX_50 {\n  -webkit-transform: translateX(-50%);\n  transform: translateX(-50%);\n}\n  \n.vclTourContainer.transformY_50 {\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n  \n.vclTourContainer.transformY_50.transformX_100 {\n  -webkit-transform: translateX(-100%) translateY(-50%);\n  transform: translateX(-100%) translateY(-50%);\n}\n  "]
         }),
         __metadata$1y("design:paramtypes", [HintService])
     ], TourComponent);
@@ -12800,7 +12807,7 @@ var VCLTourModule = /** @class */ (function () {
     }
     VCLTourModule = __decorate$2f([
         NgModule({
-            imports: [CommonModule],
+            imports: [CommonModule, VCLButtonModule],
             exports: [TourComponent, TourOverlayComponent],
             declarations: [TourComponent, TourOverlayComponent],
             providers: [HintService],
@@ -12809,4 +12816,4 @@ var VCLTourModule = /** @class */ (function () {
     return VCLTourModule;
 }());
 
-export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, HintService, TourComponent, VCLTourModule };
+export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule$1 as VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, HintService, TourComponent, VCLTourModule };

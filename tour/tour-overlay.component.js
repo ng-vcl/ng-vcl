@@ -10,14 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { HintService } from './hint.service';
 var TourOverlayComponent = /** @class */ (function () {
-    function TourOverlayComponent(hintService) {
+    function TourOverlayComponent(hint) {
         var _this = this;
-        this.hintService = hintService;
-        this.hintService.overlay$.subscribe(function (data) { return _this.show = data; });
+        this.hint = hint;
+        this.hint.overlay$.subscribe(function (data) { return _this.show = data; });
     }
     TourOverlayComponent.prototype.dismiss = function () {
-        if (this.hintService.hintOptions.dismissOnOverlay)
-            this.hintService.overlayNext();
+        if (this.hint.options.dismissOnOverlay)
+            this.hint.overlayNext();
     };
     TourOverlayComponent = __decorate([
         Component({

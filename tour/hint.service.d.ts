@@ -4,7 +4,7 @@ import { IHintService, IHintOptions, HintOptions, Step } from './types';
 export declare class HintService implements IHintService {
     currentStep: Step | undefined;
     steps: Step[];
-    hintOptions: HintOptions;
+    options: HintOptions;
     anchors: {
         [selectorOrderCombination: string]: TourComponent;
     };

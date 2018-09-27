@@ -1,7 +1,7 @@
 import { HintService } from './hint.service';
 export declare class TourOverlayComponent {
-    hintService: HintService;
+    hint: HintService;
     show: boolean;
-    constructor(hintService: HintService);
+    constructor(hint: HintService);
     dismiss(): void;
 }

@@ -9,6 +9,12 @@ export interface IHintOptions {
     applyRelative: boolean;
     stepTag: string;
     dismissOnOverlay: boolean;
+    previousLabel: string;
+    nextLabel: string;
+    exitLabel: string;
+    previousIcon: string;
+    nextIcon: string;
+    exitIcon: string;
 }
 export declare class HintOptions implements IHintOptions {
     elementsDisabled: boolean;
@@ -18,6 +24,12 @@ export declare class HintOptions implements IHintOptions {
     applyRelative: boolean;
     stepTag: string;
     dismissOnOverlay: boolean;
+    previousLabel: string;
+    nextLabel: string;
+    exitLabel: string;
+    previousIcon: string;
+    nextIcon: string;
+    exitIcon: string;
 }
 export declare const HintConfig: {
     HINT_TAG: string;
