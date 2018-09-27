@@ -12816,4 +12816,191 @@ var VCLTourModule = /** @class */ (function () {
     return VCLTourModule;
 }());
 
-export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule$1 as VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, HintService, TourComponent, VCLTourModule };
+var __decorate$2g = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$1z = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$e = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(function () { return RatingComponent; }),
+    multi: true
+};
+var RatingComponent = /** @class */ (function () {
+    function RatingComponent(cdRef) {
+        this.cdRef = cdRef;
+        this.tabindex = 0;
+        this.type = 'horizontal';
+        this.fullStar = 'fa fa-star';
+        this.halfStar = 'fa fa-star-half-o';
+        this.emptyStar = 'fa fa-star-o';
+        this.starCount = 5;
+        this.halves = true;
+        this.value = 0;
+        this.readonly = false;
+        this.iconSize = undefined;
+        this.textSize = undefined;
+        this.showText = true;
+        this.disabled = false;
+        this.valueChange = new EventEmitter();
+    }
+    RatingComponent.prototype.clickStar = function (star) {
+        if (this.disabled || this.readonly) {
+            return;
+        }
+        this.value = star;
+        this.valueChange.emit(this.value);
+        this.onChangeCallback && this.onChangeCallback(this.value);
+    };
+    RatingComponent.prototype.isHalfStar = function (star) {
+        return this.halves ? (Math.round(this.value * 2) / 2) == star - 0.5 : false;
+    };
+    RatingComponent.prototype.round = function (x) {
+        return Math.round(x);
+    };
+    RatingComponent.prototype.getIcon = function (stars, small) {
+        if (small === void 0) { small = false; }
+        var classes = [
+            'vclRatingItem',
+            'vclIcon'
+        ];
+        if (small) {
+            if (this.value >= this.starCount) {
+                classes.push.apply(classes, this.fullStar.split(' '));
+            }
+            else if (this.value >= this.starCount / 2 && this.value < this.starCount) {
+                classes.push.apply(classes, this.halfStar.split(' '));
+            }
+            else {
+                classes.push.apply(classes, this.emptyStar.split(' '));
+            }
+        }
+        else {
+            if (this.round(this.value) >= stars && !this.isHalfStar(stars)) {
+                classes.push.apply(classes, this.fullStar.split(' '));
+            }
+            else if (this.isHalfStar(stars)) {
+                classes.push.apply(classes, this.halfStar.split(' '));
+            }
+            else {
+                classes.push.apply(classes, this.emptyStar.split(' '));
+            }
+        }
+        return classes;
+    };
+    Object.defineProperty(RatingComponent.prototype, "starArray", {
+        get: function () {
+            return Array(this.starCount).fill(0).map(function (x, i) { return i + 1; });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RatingComponent.prototype.writeValue = function (value) {
+        this.value = value;
+        this.cdRef.markForCheck();
+    };
+    RatingComponent.prototype.registerOnChange = function (fn) {
+        this.onChangeCallback = fn;
+    };
+    RatingComponent.prototype.registerOnTouched = function (fn) {
+        this.onTouchedCallback = fn;
+    };
+    RatingComponent.prototype.setDisabledState = function (isDisabled) {
+        this.disabled = isDisabled;
+        this.cdRef.markForCheck();
+    };
+    __decorate$2g([
+        HostBinding(),
+        __metadata$1z("design:type", Object)
+    ], RatingComponent.prototype, "tabindex", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", String)
+    ], RatingComponent.prototype, "type", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", String)
+    ], RatingComponent.prototype, "fullStar", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", String)
+    ], RatingComponent.prototype, "halfStar", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", String)
+    ], RatingComponent.prototype, "emptyStar", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", Number)
+    ], RatingComponent.prototype, "starCount", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", Boolean)
+    ], RatingComponent.prototype, "halves", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", Number)
+    ], RatingComponent.prototype, "value", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", Boolean)
+    ], RatingComponent.prototype, "readonly", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", String)
+    ], RatingComponent.prototype, "iconSize", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", String)
+    ], RatingComponent.prototype, "textSize", void 0);
+    __decorate$2g([
+        Input(),
+        __metadata$1z("design:type", Boolean)
+    ], RatingComponent.prototype, "showText", void 0);
+    __decorate$2g([
+        HostBinding('class.vclDisabled'),
+        Input(),
+        __metadata$1z("design:type", Boolean)
+    ], RatingComponent.prototype, "disabled", void 0);
+    __decorate$2g([
+        Output(),
+        __metadata$1z("design:type", Object)
+    ], RatingComponent.prototype, "valueChange", void 0);
+    RatingComponent = __decorate$2g([
+        Component({
+            selector: 'vcl-rating',
+            template: "<ng-container *ngIf=\"type === 'horizontal' || type === 'vertical'\">\n  <span class=\"vclRating\"\n        [class.vclDisabled]=\"disabled\"\n        [class.vclRatingVertical]=\"type === 'vertical'\"\n        style=\"height: unset\">\n    <span *ngFor=\"let star of starArray\"\n          [ngClass]=\"getIcon(star)\"\n          [attr.tabindex]=\"readonly ? undefined : 0\"\n          (mousedown)=\"clickStar(star)\"\n          [ngStyle]=\"{'font-size': iconSize}\">\n    </span>\n  </span>\n</ng-container>\n<ng-container *ngIf=\"type === 'small'\">\n  <span class=\"vclRating\" [class.vclDisabled]=\"disabled\" style=\"height: unset\">\n    <span [ngClass]=\"getIcon(star, true)\" [ngStyle]=\"{'font-size': iconSize}\">\n    </span>\n    <strong *ngIf=\"showText\" [ngStyle]=\"{'font-size': textSize}\">{{ value }}</strong>\n  </span>\n</ng-container>\n",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$e],
+            styles: ["\n      .vclRatingVertical {\n        flex-direction: column;\n      }\n    "]
+        }),
+        __metadata$1z("design:paramtypes", [ChangeDetectorRef])
+    ], RatingComponent);
+    return RatingComponent;
+}());
+
+var __decorate$2h = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var VCLRatingModule = /** @class */ (function () {
+    function VCLRatingModule() {
+    }
+    VCLRatingModule = __decorate$2h([
+        NgModule({
+            imports: [CommonModule],
+            exports: [RatingComponent],
+            declarations: [RatingComponent],
+            providers: [],
+        })
+    ], VCLRatingModule);
+    return VCLRatingModule;
+}());
+
+export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule$1 as VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, HintService, TourComponent, VCLTourModule, VCLRatingModule };
