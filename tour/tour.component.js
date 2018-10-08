@@ -17,10 +17,10 @@ var TourComponent = /** @class */ (function () {
         this.tag = TourComponent_1.Tag;
         this.debug = true;
         this.debugPopover = true;
-        this.targetX = AttachmentX.Left;
-        this.attachmentX = AttachmentX.Right;
-        this.targetY = AttachmentY.Center;
-        this.attachmentY = AttachmentY.Center;
+        this.targetX = AttachmentX.Center;
+        this.attachmentX = AttachmentX.Center;
+        this.targetY = AttachmentY.Bottom;
+        this.attachmentY = AttachmentY.Top;
         var tag = this.tag + ".constructor()";
         var debug = this.debug || false;
         if (debug)
