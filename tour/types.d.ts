@@ -1,9 +1,7 @@
-export interface IHintService {
-    initialize(IHintOptions: any): void;
-}
-export interface IHintOptions {
+import { ElementRef } from '@angular/core';
+export interface IHintOptionsFull {
+    debug: boolean;
     elementsDisabled: boolean;
-    defaultPosition: string;
     defaultOrder: number;
     defaultLayer: number;
     applyRelative: boolean;
@@ -15,10 +13,12 @@ export interface IHintOptions {
     previousIcon: string;
     nextIcon: string;
     exitIcon: string;
+    buttonClass: string;
 }
+export declare type IHintOptions = Partial<IHintOptionsFull>;
 export declare class HintOptions implements IHintOptions {
+    debug: boolean;
     elementsDisabled: boolean;
-    defaultPosition: string;
     defaultOrder: number;
     defaultLayer: number;
     applyRelative: boolean;
@@ -30,23 +30,17 @@ export declare class HintOptions implements IHintOptions {
     previousIcon: string;
     nextIcon: string;
     exitIcon: string;
+    buttonClass: string;
 }
 export declare const HintConfig: {
     HINT_TAG: string;
-    DEFAULT_POSITION: string;
     Z_INDEX: string;
     DEFAULT_ORDER: number;
     DEFAULT_PX_LAYER: number;
     APPLY_RELATIVE: boolean;
     DISMISS_ON_OVERLAY: boolean;
 };
-export declare enum Placement {
-    Top = "top",
-    Bottom = "bottom",
-    Left = "left",
-    Right = "right",
-}
 export interface Step {
-    selector: string;
+    target: string | ElementRef | Element;
     order: number;
 }

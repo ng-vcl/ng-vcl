@@ -145,7 +145,7 @@ var TooltipComponent = /** @class */ (function () {
     TooltipComponent = TooltipComponent_1 = __decorate([
         Component({
             selector: 'vcl-tooltip',
-            template: "<div [@enterAnimation]=\"animationState || _animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\"\n  style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\">\n  <div class=\"vclTooltipContent\">\n    {{ content }}\n    <ng-content></ng-content>\n  </div>\n  <div [class.vclArrowPointer]=\"showArrowPointer\"></div>\n</div>\n",
+            template: "<div [@enterAnimation]=\"animationState || _animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\"\r\n  style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\">\r\n  <div class=\"vclTooltipContent\">\r\n    {{ content }}\r\n    <ng-content></ng-content>\r\n  </div>\r\n  <div [class.vclArrowPointer]=\"showArrowPointer\"></div>\r\n</div>\r\n",
             host: {
                 '[class.vclTooltip]': 'true',
             },

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, InjectionToken, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, EventEmitter, InjectionToken, SimpleChanges, AfterViewInit } from '@angular/core';
 import { AnimationBuilder, AnimationFactory, AnimationMetadata } from '@angular/animations';
 import { ObservableComponent } from '../core/index';
 export declare type AttachmentX = 'left' | 'center' | 'right';
@@ -24,7 +24,7 @@ export interface PopoverAnimationConfig {
     enter?: AnimationMetadata | AnimationMetadata[];
     leave?: AnimationMetadata | AnimationMetadata[];
 }
-export declare class PopoverComponent extends ObservableComponent {
+export declare class PopoverComponent extends ObservableComponent implements AfterViewInit {
     protected readonly me: ElementRef;
     private builder;
     private cdRef;
@@ -33,8 +33,8 @@ export declare class PopoverComponent extends ObservableComponent {
     private tag;
     enableStyling: boolean;
     debug: boolean;
-    target?: string | ElementRef | Element;
-    private targetElement?;
+    target: string | ElementRef | Element;
+    targetElement: Element;
     targetX: AttachmentX;
     targetY: AttachmentY;
     attachmentX: AttachmentX;
@@ -53,11 +53,13 @@ export declare class PopoverComponent extends ObservableComponent {
     enterAnimationFactory: AnimationFactory | undefined;
     leaveAnimationFactory: AnimationFactory | undefined;
     constructor(me: ElementRef, builder: AnimationBuilder, cdRef: ChangeDetectorRef, animations: PopoverAnimationConfig);
-    private setTarget(value);
+    private onChange(changes?);
+    private setTarget(value?);
+    getTargetElement(value: Element | ElementRef | string): Element | undefined;
     private setTag();
     reposition(): void;
     private ngOnInit();
-    private ngAfterViewInit();
+    ngAfterViewInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
     open(): void;
     close(): void;

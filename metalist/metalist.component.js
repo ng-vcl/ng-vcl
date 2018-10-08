@@ -276,7 +276,7 @@ var MetalistComponent = /** @class */ (function () {
     MetalistComponent = __decorate([
         Component({
             selector: 'vcl-metalist, [vcl-metalist]',
-            template: "<ng-content></ng-content>\n",
+            template: "<ng-content></ng-content>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             changeDetection: ChangeDetectionStrategy.OnPush
         }),

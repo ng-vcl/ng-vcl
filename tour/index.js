@@ -6,17 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VCLButtonModule } from '@ng-vcl/ng-vcl';
+import { VCLPopoverModule, VCLButtonModule } from '@ng-vcl/ng-vcl';
 import { TourOverlayComponent } from './tour-overlay.component';
 import { HintService } from './hint.service';
 import { TourComponent } from './tour.component';
-export { HintService, TourComponent };
+import { HintConfig } from './types';
+export { HintService, HintConfig, TourComponent };
 var VCLTourModule = /** @class */ (function () {
     function VCLTourModule() {
     }
     VCLTourModule = __decorate([
         NgModule({
-            imports: [CommonModule, VCLButtonModule],
+            imports: [CommonModule, VCLPopoverModule, VCLButtonModule],
             exports: [TourComponent, TourOverlayComponent],
             declarations: [TourComponent, TourOverlayComponent],
             providers: [HintService],

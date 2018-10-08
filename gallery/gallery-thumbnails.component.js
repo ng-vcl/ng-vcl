@@ -29,7 +29,7 @@ var GalleryThumbnailsComponent = /** @class */ (function () {
     GalleryThumbnailsComponent = __decorate([
         Component({
             selector: 'vcl-gallery-thumbnails',
-            template: "<div class=\"vclGalleryThumbs vclLayoutHorizontal vclLayoutCenterJustified\" touch-action=\"pan-y\">\n  <div *ngFor=\"let image of target.images; let i = index\" class=\"vclGalleryThumbWrapper\" [ngClass]=\"{'vclSelected': i == target.selectedImage}\" (click)=\"target.selectImage(i)\">\n    <img class=\"vclGalleryThumb\" [src]=\"image.thumbnail || image.image\" [alt]=\"image.alt\">\n  </div>\n</div>\n"
+            template: "<div class=\"vclGalleryThumbs vclLayoutHorizontal vclLayoutCenterJustified\" touch-action=\"pan-y\">\r\n  <div *ngFor=\"let image of target.images; let i = index\" class=\"vclGalleryThumbWrapper\" [ngClass]=\"{'vclSelected': i == target.selectedImage}\" (click)=\"target.selectImage(i)\">\r\n    <img class=\"vclGalleryThumb\" [src]=\"image.thumbnail || image.image\" [alt]=\"image.alt\">\r\n  </div>\r\n</div>\r\n"
         }),
         __param(0, Optional()),
         __metadata("design:paramtypes", [GalleryComponent])

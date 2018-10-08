@@ -9,12 +9,14 @@ import { Subject } from 'rxjs';
 import { HintOptions } from './types';
 var HintService = /** @class */ (function () {
     function HintService() {
+        this.tag = HintService_1.Tag;
         this.anchors = {};
         this.overlay$ = new Subject();
         this.registration$ = new Subject();
         this.finish$ = new Subject();
         this.showingStep$ = new Subject();
     }
+    HintService_1 = HintService;
     /**
      * Initialize hint service
      * @method initialize
@@ -23,11 +25,20 @@ var HintService = /** @class */ (function () {
      */
     HintService.prototype.initialize = function (options) {
         if (options === void 0) { options = new HintOptions(); }
+        var tag = this.tag + ".initialize()";
+        var debug = this.debug || false;
         this.options = Object.assign(new HintOptions(), options);
+        if (debug)
+            console.log(tag, 'this.options:', this.options);
+        this.debug = this.options.debug || false;
+        if (debug)
+            console.log(tag, 'this.options.stepTag:', this.options.stepTag);
         var nodes = document.getElementsByTagName(this.options.stepTag);
+        if (debug)
+            console.log(tag, 'nodes:', nodes);
         this.steps = this.initSteps(nodes);
-        this.startAt(0);
-        this.overlay$.next(true);
+        if (debug)
+            console.log(tag, 'this.steps:', this.steps);
     };
     /**
      * Show step
@@ -35,7 +46,13 @@ var HintService = /** @class */ (function () {
      * @param  step [description]
      */
     HintService.prototype.show = function (step) {
-        var anchor = this.anchors[step.selector + "_" + step.order];
+        var tag = this.tag + ".show()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'step:', step);
+        if (!step)
+            return;
+        var anchor = this.anchors[step.target + "_" + step.order];
         if (!anchor) {
             return;
         }
@@ -46,8 +63,12 @@ var HintService = /** @class */ (function () {
      * @method showNext
      */
     HintService.prototype.showNext = function () {
+        var tag = this.tag + ".showNext()";
+        var debug = this.debug || false;
         this.currentStep = this.currentStep != undefined ? this.steps[this.steps.indexOf(this.currentStep) + 1] : undefined;
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.selector + "_" + this.currentStep.order] : null;
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
+        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
         if (!anchor) {
             return;
         }
@@ -58,8 +79,12 @@ var HintService = /** @class */ (function () {
      * @method overlayNext
      */
     HintService.prototype.overlayNext = function () {
+        var tag = this.tag + ".overlayNext()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
         if (this.hasNext() && this.currentStep != undefined) {
-            this.anchors[this.currentStep.selector + "_" + this.currentStep.order].hideStep();
+            this.anchors[this.currentStep.target + "_" + this.currentStep.order].hideStep();
             this.showNext();
         }
         else {
@@ -71,8 +96,12 @@ var HintService = /** @class */ (function () {
      * @method showPrevious
      */
     HintService.prototype.showPrevious = function () {
+        var tag = this.tag + ".showPrevious()";
+        var debug = this.debug || false;
         this.currentStep = this.currentStep != undefined ? this.steps[this.steps.indexOf(this.currentStep) - 1] : undefined;
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.selector + "_" + this.currentStep.order] : null;
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
+        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
         if (!anchor) {
             return;
         }
@@ -81,14 +110,14 @@ var HintService = /** @class */ (function () {
     /**
      * Register hint component
      * @method register
-     * @param  selector  bonded to
+     * @param  target  bonded to
      * @param  component itself
      */
-    HintService.prototype.register = function (selector, component) {
-        if (this.anchors[selector]) {
-            throw 'selector ' + selector + ' already registered!';
+    HintService.prototype.register = function (target, component) {
+        if (this.anchors[target]) {
+            throw 'target ' + target + ' already registered!';
         }
-        this.anchors[selector] = component;
+        this.anchors[target] = component;
         this.registration$.next(true);
     };
     /**
@@ -112,8 +141,12 @@ var HintService = /** @class */ (function () {
      * @method end
      */
     HintService.prototype.end = function () {
+        var tag = this.tag + ".end()";
+        var debug = this.debug || false;
         this.overlay$.next(false);
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.selector + "_" + this.currentStep.order] : null;
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
+        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
         if (!anchor) {
             return;
         }
@@ -123,12 +156,26 @@ var HintService = /** @class */ (function () {
     };
     /**
      * Start hint tour at some position
-     * @method startAt
+     * @method start
      * @param  stepId position in this.steps
      */
-    HintService.prototype.startAt = function (stepId) {
+    HintService.prototype.start = function (stepId) {
+        if (stepId === void 0) { stepId = 0; }
+        var tag = this.tag + ".start()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'stepId:', stepId);
+        if (debug)
+            console.log(tag, 'this.steps:', this.steps);
+        if (!this.steps)
+            this.initialize();
         this.currentStep = this.steps[stepId];
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
+        if (!this.currentStep)
+            return;
         this.show(this.currentStep);
+        this.overlay$.next(true);
     };
     /**
      * Convert Element[] to Step[]
@@ -140,20 +187,20 @@ var HintService = /** @class */ (function () {
         var steps = [];
         for (var i = 0; i < nodes.length; i++) {
             steps.push({
-                selector: nodes[i].getAttribute('selector'),
+                target: nodes[i].getAttribute('target'),
                 order: Number(nodes[i].getAttribute('order')) || this.options.defaultOrder,
             });
         }
-        return steps = steps.sort(function (el1, el2) {
-            return el1.order - el2.order;
-        });
+        return steps.sort(function (el1, el2) { return el1.order - el2.order; });
     };
     HintService.prototype.putOverlay = function () {
         document.getElementsByTagName('body');
     };
-    HintService = __decorate([
+    HintService.Tag = 'HintService';
+    HintService = HintService_1 = __decorate([
         Injectable()
     ], HintService);
     return HintService;
+    var HintService_1;
 }());
 export { HintService };

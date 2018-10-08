@@ -77,7 +77,7 @@ var ZoomBoxComponent = /** @class */ (function () {
     ZoomBoxComponent = __decorate([
         Component({
             selector: 'vcl-zoom-box',
-            template: "<div class=\"vclZoomBox\" [ngStyle]=\"{\n'position': 'static',\n'background-image': 'url(' + zoomedSource + ')',\n'width': zoomedWidth + 'px',\n'height': zoomedHeight + 'px',\n'background-position-x': '-' + zoomedX + 'px',\n'background-position-y': '-' + zoomedY + 'px'}\"></div>\n\n",
+            template: "<div class=\"vclZoomBox\" [ngStyle]=\"{\r\n'position': 'static',\r\n'background-image': 'url(' + zoomedSource + ')',\r\n'width': zoomedWidth + 'px',\r\n'height': zoomedHeight + 'px',\r\n'background-position-x': '-' + zoomedX + 'px',\r\n'background-position-y': '-' + zoomedY + 'px'}\"></div>\r\n\r\n",
             host: {
                 '[attr.role]': '"zoombox"',
             },

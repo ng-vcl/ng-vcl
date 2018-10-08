@@ -27,7 +27,7 @@ var ButtonIconComponent = /** @class */ (function () {
     ButtonIconComponent = __decorate([
         Component({
             selector: 'button[vcl-button][icon], button[vcl-button][iconSrc]',
-            template: "<span vcl-icogram [appIcon]=\"icon\" [appIconSrc]=\"iconSrc\"></span>\n\n",
+            template: "<span vcl-icogram [appIcon]=\"icon\" [appIconSrc]=\"iconSrc\"></span>\r\n\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
                 '[class.vclSquare]': 'true'

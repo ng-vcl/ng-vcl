@@ -1,7 +1,7 @@
 var HintOptions = /** @class */ (function () {
     function HintOptions() {
+        this.debug = false;
         this.elementsDisabled = true;
-        this.defaultPosition = HintConfig.DEFAULT_POSITION;
         this.defaultOrder = HintConfig.DEFAULT_ORDER;
         this.defaultLayer = HintConfig.DEFAULT_PX_LAYER;
         this.applyRelative = HintConfig.APPLY_RELATIVE;
@@ -12,24 +12,17 @@ var HintOptions = /** @class */ (function () {
         this.exitLabel = 'Exit';
         this.previousIcon = 'fa fa-chevron-left';
         this.nextIcon = 'fa fa-chevron-right';
-        this.exitIcon = 'fa fa-chevron-close';
+        this.exitIcon = 'fa fa-close';
+        this.buttonClass = '';
     }
     return HintOptions;
 }());
 export { HintOptions };
 export var HintConfig = {
     HINT_TAG: 'vcl-tour-step',
-    DEFAULT_POSITION: 'bottom',
     Z_INDEX: '999',
     DEFAULT_ORDER: 99,
     DEFAULT_PX_LAYER: 15,
     APPLY_RELATIVE: true,
     DISMISS_ON_OVERLAY: false,
 };
-export var Placement;
-(function (Placement) {
-    Placement["Top"] = "top";
-    Placement["Bottom"] = "bottom";
-    Placement["Left"] = "left";
-    Placement["Right"] = "right";
-})(Placement || (Placement = {}));

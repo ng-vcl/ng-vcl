@@ -66,13 +66,7 @@ var PopoverComponent = /** @class */ (function (_super) {
         _this.state = PopoverState.hidden;
         _this.translateX = 1;
         _this.translateY = 0;
-        _this.observeChanges('target', 'targetX', 'targetY', 'attachmentX', 'attachmentY').subscribe(function (changes) {
-            if (changes.target) {
-                _this.setTarget(changes.target.currentValue);
-                _this.setTag();
-            }
-            _this.reposition();
-        });
+        _this.observeChanges('target', 'targetX', 'targetY', 'attachmentX', 'attachmentY').subscribe(_this.onChange.bind(_this));
         return _this;
     }
     PopoverComponent_1 = PopoverComponent;
@@ -112,19 +106,46 @@ var PopoverComponent = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
+    PopoverComponent.prototype.onChange = function (changes) {
+        if (changes === void 0) { changes = { target: { currentValue: this.target } }; }
+        if (changes.target) {
+            this.setTarget(changes.target.currentValue);
+            this.setTag();
+        }
+        this.reposition();
+    };
     PopoverComponent.prototype.setTarget = function (value) {
+        if (value === void 0) { value = this.target; }
+        this.targetElement = this.getTargetElement(value);
+    };
+    PopoverComponent.prototype.getTargetElement = function (value) {
+        var tag = PopoverComponent_1.Tag + ".getTargetElement()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'value:', value);
+        var el = undefined;
         if (typeof value === 'string') {
-            this.targetElement = document.querySelector(value) || undefined;
+            if (debug)
+                console.log(tag, 'typeof value === string');
+            el = document.querySelector(value);
         }
         else if (value instanceof Element) {
-            this.targetElement = value;
+            if (debug)
+                console.log(tag, 'value instanceof Element');
+            el = value;
         }
         else if (value instanceof ElementRef) {
-            this.targetElement = value.nativeElement || undefined;
+            if (debug)
+                console.log(tag, 'value instanceof ElementRef');
+            el = value.nativeElement;
         }
         else {
-            this.targetElement = undefined;
+            if (debug)
+                console.log(tag, 'value is undefined');
         }
+        if (debug)
+            console.log(tag, 'el:', el);
+        return el;
     };
     PopoverComponent.prototype.setTag = function () {
         this.tag = PopoverComponent_1.Tag + "." + this.target;
@@ -176,7 +197,7 @@ var PopoverComponent = /** @class */ (function (_super) {
     };
     PopoverComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        setTimeout(function () { return _this.reposition(); });
+        setTimeout(function () { return _this.onChange(); });
         if (this.animations) {
             if (this.animations.enter) {
                 this.enterAnimationFactory = this.builder.build(this.animations.enter);
@@ -187,11 +208,10 @@ var PopoverComponent = /** @class */ (function (_super) {
         }
     };
     PopoverComponent.prototype.ngOnChanges = function (changes) {
-        if (this.debug) {
-            var tag = this.tag + ".ngOnChanges()";
-            console.log(tag, 'changes:', changes);
-        }
         _super.prototype.ngOnChanges.call(this, changes);
+        var tag = this.tag + ".ngOnChanges()";
+        if (this.debug)
+            console.log(tag, 'changes:', changes);
     };
     PopoverComponent.prototype.open = function () {
         var _this = this;

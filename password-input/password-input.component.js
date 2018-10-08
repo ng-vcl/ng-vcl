@@ -48,7 +48,7 @@ var PasswordInputComponent = /** @class */ (function () {
     ], PasswordInputComponent.prototype, "disabled", void 0);
     PasswordInputComponent = __decorate([
         Component({
-            template: "<ng-content></ng-content>\n<button vcl-button\n        [icon]=\"buttonIcon\" \n        [disabled]=\"disabled\"\n        class=\"vclSquare\" \n        (click)=\"toggle()\">\n</button>\n",
+            template: "<ng-content></ng-content>\r\n<button vcl-button\r\n        [icon]=\"buttonIcon\" \r\n        [disabled]=\"disabled\"\r\n        class=\"vclSquare\" \r\n        (click)=\"toggle()\">\r\n</button>\r\n",
             selector: 'vcl-password-input',
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {

@@ -6,7 +6,7 @@ import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { AnimationBuilder, trigger, state, transition, animate, style } from '@angular/animations';
 import { Router, NavigationEnd } from '@angular/router';
 import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
-import { VCLButtonModule } from '@ng-vcl/ng-vcl';
+import { AttachmentX, AttachmentY, PopoverComponent, VCLPopoverModule, VCLButtonModule } from '@ng-vcl/ng-vcl';
 
 var ObservableComponent = /** @class */ (function () {
     function ObservableComponent() {
@@ -484,7 +484,7 @@ var FileInputComponent = /** @class */ (function () {
     FileInputComponent = __decorate$3([
         Component({
             selector: 'vcl-file-input',
-            template: "<input #input type=\"file\" [style.display]=\"'none'\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" />\n<div class=\"vclFileInputIcon vclIcon {{ icon }}\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div>\n<div class=\"vclFileInputPlaceholder\">\n  <ng-container *ngIf=\"filename\">{{ filename }}</ng-container>\n  <div *ngIf=\"!filename\">\n    <ng-content></ng-content>\n  </div>\n</div>\n",
+            template: "<input #input type=\"file\" [style.display]=\"'none'\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" />\r\n<div class=\"vclFileInputIcon vclIcon {{ icon }}\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div>\r\n<div class=\"vclFileInputPlaceholder\">\r\n  <ng-container *ngIf=\"filename\">{{ filename }}</ng-container>\r\n  <div *ngIf=\"!filename\">\r\n    <ng-content></ng-content>\r\n  </div>\r\n</div>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {
@@ -744,7 +744,7 @@ var FlipSwitchComponent = /** @class */ (function () {
     FlipSwitchComponent = __decorate$7([
         Component({
             selector: 'vcl-flip-switch',
-            template: "<label class=\"vclFlipSwitchLabel\">\n  <div class=\"vclFlipSwitchTrack\">\n    <div class=\"vclFlipSwitchActive\" [attr.aria-hidden]=\"!value\">{{onLabel}}</div>\n    <div class=\"vclFlipSwitchInactive\" [attr.aria-hidden]=\"value\">{{offLabel}}</div>\n  </div>\n  <div class=\"vclFlipSwitchKnob\"></div>\n</label>\n",
+            template: "<label class=\"vclFlipSwitchLabel\">\r\n  <div class=\"vclFlipSwitchTrack\">\r\n    <div class=\"vclFlipSwitchActive\" [attr.aria-hidden]=\"!value\">{{onLabel}}</div>\r\n    <div class=\"vclFlipSwitchInactive\" [attr.aria-hidden]=\"value\">{{offLabel}}</div>\r\n  </div>\r\n  <div class=\"vclFlipSwitchKnob\"></div>\r\n</label>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$1],
             host: {
@@ -1556,7 +1556,7 @@ var MetalistComponent = /** @class */ (function () {
     MetalistComponent = __decorate$a([
         Component({
             selector: 'vcl-metalist, [vcl-metalist]',
-            template: "<ng-content></ng-content>\n",
+            template: "<ng-content></ng-content>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$2],
             changeDetection: ChangeDetectionStrategy.OnPush
         }),
@@ -2153,7 +2153,7 @@ var DropdownComponent = /** @class */ (function () {
     DropdownComponent = __decorate$h([
         Component({
             selector: 'vcl-dropdown',
-            template: "<ul vcl-metalist #metalist\n  class=\"vclDropdown vclOpen\"\n  role=\"listbox\"\n  [class.vclLayoutHidden]=\"state === DropdownState.Closed\" \n  [value]=\"value\"\n  [mode]=\"mode\"\n  [maxSelectableItems]=\"maxSelectableItems\"\n  [class.vclDisabled]=\"disabled\"\n  [attr.tabindex]=\"tabindex\"\n  [attr.aria-multiselectable]=\"mode === 'multiple'\"\n  [style.position]=\"'static'\"\n  (change)=\"onMetalistChange($event)\"\n  (focus)=\"onMetalistFocus()\"\n  (blur)=\"onMetalistBlur()\"\n  (keydown)=\"onMetalistKeydown($event)\"\n  (itemsChange)=\"onItemsChange()\"\n  >\n    <li \n      *ngFor=\"let item of items\" \n      vcl-metalist-item\n      #meta=meta\n      [metadata]=\"item\"\n      [disabled]=\"disabled || item.disabled\"\n      [value]=\"item.value\"\n      role=\"option\"\n      class=\"vclDropdownItem\"\n      [class.vclSelected]=\"meta.selected\"\n      [class.vclDisabled]=\"disabled || meta.disabled\"\n      [class.vclHighlighted]=\"focused && meta.marked\"\n      [attr.aria-selected]=\"meta.selected\"\n      (click)=\"onMetalistItemTap(meta)\">\n      <div vcl-icogram *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"\n         [prepIcon]=\"item.prepIcon\"\n         [appIcon]=\"item.appIcon\"\n         [appIconSrc]=\"item.appIconSrc\"\n         [prepIconSrc]=\"item.prepIconSrc\"\n      >\n        {{item.label}}\n      </div>\n      <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\">\n        {{item.sublabel}}\n      </div>\n      <wormhole *ngIf=\"item._content\" [connect]=\"item._content\"></wormhole>\n    </li>\n</ul>\n",
+            template: "<ul vcl-metalist #metalist\r\n  class=\"vclDropdown vclOpen\"\r\n  role=\"listbox\"\r\n  [class.vclLayoutHidden]=\"state === DropdownState.Closed\" \r\n  [value]=\"value\"\r\n  [mode]=\"mode\"\r\n  [maxSelectableItems]=\"maxSelectableItems\"\r\n  [class.vclDisabled]=\"disabled\"\r\n  [attr.tabindex]=\"tabindex\"\r\n  [attr.aria-multiselectable]=\"mode === 'multiple'\"\r\n  [style.position]=\"'static'\"\r\n  (change)=\"onMetalistChange($event)\"\r\n  (focus)=\"onMetalistFocus()\"\r\n  (blur)=\"onMetalistBlur()\"\r\n  (keydown)=\"onMetalistKeydown($event)\"\r\n  (itemsChange)=\"onItemsChange()\"\r\n  >\r\n    <li \r\n      *ngFor=\"let item of items\" \r\n      vcl-metalist-item\r\n      #meta=meta\r\n      [metadata]=\"item\"\r\n      [disabled]=\"disabled || item.disabled\"\r\n      [value]=\"item.value\"\r\n      role=\"option\"\r\n      class=\"vclDropdownItem\"\r\n      [class.vclSelected]=\"meta.selected\"\r\n      [class.vclDisabled]=\"disabled || meta.disabled\"\r\n      [class.vclHighlighted]=\"focused && meta.marked\"\r\n      [attr.aria-selected]=\"meta.selected\"\r\n      (click)=\"onMetalistItemTap(meta)\">\r\n      <div vcl-icogram *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"\r\n         [prepIcon]=\"item.prepIcon\"\r\n         [appIcon]=\"item.appIcon\"\r\n         [appIconSrc]=\"item.appIconSrc\"\r\n         [prepIconSrc]=\"item.prepIconSrc\"\r\n      >\r\n        {{item.label}}\r\n      </div>\r\n      <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\">\r\n        {{item.sublabel}}\r\n      </div>\r\n      <wormhole *ngIf=\"item._content\" [connect]=\"item._content\"></wormhole>\r\n    </li>\r\n</ul>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3],
             host: {
@@ -2207,7 +2207,7 @@ var IcogramComponent = /** @class */ (function () {
                 '[class.vclIcogram]': 'true',
                 '[attr.role]': '"img"',
             },
-            template: "<div vclLayoutTarget=\"prepIcon\" vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\">\n  <ng-content select=\"[prepIcon]\"></ng-content>\n</div>\n<div vclLayoutTarget=\"label\" *ngIf=\"!!label\" class=\"vclText\">{{label}}</div>\n<ng-content></ng-content>\n<div vclLayoutTarget=\"appIcon\" vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\">\n  <ng-content select=\"[appIcon]\"></ng-content>\n</div>\n",
+            template: "<div vclLayoutTarget=\"prepIcon\" vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\">\r\n  <ng-content select=\"[prepIcon]\"></ng-content>\r\n</div>\r\n<div vclLayoutTarget=\"label\" *ngIf=\"!!label\" class=\"vclText\">{{label}}</div>\r\n<ng-content></ng-content>\r\n<div vclLayoutTarget=\"appIcon\" vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\">\r\n  <ng-content select=\"[appIcon]\"></ng-content>\r\n</div>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], IcogramComponent);
@@ -2243,7 +2243,7 @@ var IcogramSpanComponent = /** @class */ (function () {
                 '[class.vclIcogram]': 'true',
                 '[attr.role]': '"img"',
             },
-            template: "<span vclLayoutTarget=\"prepIcon\" vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\">\n  <ng-content select=\"[prepIcon]\"></ng-content>\n</span>\n<span vclLayoutTarget=\"label\" *ngIf=\"!!label\" class=\"vclText\">{{label}}</span>\n<ng-content></ng-content>\n<span vclLayoutTarget=\"appIcon\" vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\">\n  <ng-content select=\"[appIcon]\"></ng-content>\n</span>\n  ",
+            template: "<span vclLayoutTarget=\"prepIcon\" vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\">\r\n  <ng-content select=\"[prepIcon]\"></ng-content>\r\n</span>\r\n<span vclLayoutTarget=\"label\" *ngIf=\"!!label\" class=\"vclText\">{{label}}</span>\r\n<ng-content></ng-content>\r\n<span vclLayoutTarget=\"appIcon\" vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\">\r\n  <ng-content select=\"[appIcon]\"></ng-content>\r\n</span>\r\n  ",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], IcogramSpanComponent);
@@ -2406,7 +2406,7 @@ var ButtonLabelComponent = /** @class */ (function () {
     ButtonLabelComponent = __decorate$m([
         Component({
             selector: 'button[vcl-button][label]',
-            template: "<span vcl-icogram\n  [label]=\"label\"\n  [prepIcon]=\"prepIcon\"\n  [appIcon]=\"appIcon\"\n  [appIconSrc]=\"appIconSrc\"\n  [prepIconSrc]=\"prepIconSrc\">\n  <ng-content></ng-content>\n</span>\n",
+            template: "<span vcl-icogram\r\n  [label]=\"label\"\r\n  [prepIcon]=\"prepIcon\"\r\n  [appIcon]=\"appIcon\"\r\n  [appIconSrc]=\"appIconSrc\"\r\n  [prepIconSrc]=\"prepIconSrc\">\r\n  <ng-content></ng-content>\r\n</span>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], ButtonLabelComponent);
@@ -2494,7 +2494,7 @@ var ButtonIconComponent = /** @class */ (function () {
     ButtonIconComponent = __decorate$o([
         Component({
             selector: 'button[vcl-button][icon], button[vcl-button][iconSrc]',
-            template: "<span vcl-icogram [appIcon]=\"icon\" [appIconSrc]=\"iconSrc\"></span>\n\n",
+            template: "<span vcl-icogram [appIcon]=\"icon\" [appIconSrc]=\"iconSrc\"></span>\r\n\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
                 '[class.vclSquare]': 'true'
@@ -2636,12 +2636,12 @@ var __metadata$g = (this && this.__metadata) || function (k, v) {
 var __param$4 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var AttachmentX = {
+var AttachmentX$1 = {
     Left: 'left',
     Center: 'center',
     Right: 'right',
 };
-var AttachmentY = {
+var AttachmentY$1 = {
     Top: 'top',
     Center: 'center',
     Bottom: 'bottom',
@@ -2658,9 +2658,9 @@ var PopoverState;
     PopoverState[PopoverState["closing"] = 3] = "closing";
 })(PopoverState || (PopoverState = {}));
 var POPOVER_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#popover_animations');
-var PopoverComponent = /** @class */ (function (_super) {
-    __extends$6(PopoverComponent, _super);
-    function PopoverComponent(me, builder, cdRef, animations) {
+var PopoverComponent$1 = /** @class */ (function (_super) {
+    __extends$6(PopoverComponent$$1, _super);
+    function PopoverComponent$$1(me, builder, cdRef, animations) {
         var _this = _super.call(this) || this;
         _this.me = me;
         _this.builder = builder;
@@ -2668,28 +2668,22 @@ var PopoverComponent = /** @class */ (function (_super) {
         _this.animations = animations;
         _this.enableStyling = true;
         _this.debug = false;
-        _this.targetX = AttachmentX.Left;
-        _this.targetY = AttachmentY.Bottom;
-        _this.attachmentX = AttachmentX.Left;
+        _this.targetX = AttachmentX$1.Left;
+        _this.targetY = AttachmentY$1.Bottom;
+        _this.attachmentX = AttachmentX$1.Left;
         _this.offsetAttachmentX = 0;
-        _this.attachmentY = AttachmentY.Top;
+        _this.attachmentY = AttachmentY$1.Top;
         _this.offsetAttachmentY = 0;
         _this.willClose = new EventEmitter();
         _this.willOpen = new EventEmitter();
         _this.state = PopoverState.hidden;
         _this.translateX = 1;
         _this.translateY = 0;
-        _this.observeChanges('target', 'targetX', 'targetY', 'attachmentX', 'attachmentY').subscribe(function (changes) {
-            if (changes.target) {
-                _this.setTarget(changes.target.currentValue);
-                _this.setTag();
-            }
-            _this.reposition();
-        });
+        _this.observeChanges('target', 'targetX', 'targetY', 'attachmentX', 'attachmentY').subscribe(_this.onChange.bind(_this));
         return _this;
     }
-    PopoverComponent_1 = PopoverComponent;
-    Object.defineProperty(PopoverComponent.prototype, "visible", {
+    PopoverComponent_1 = PopoverComponent$$1;
+    Object.defineProperty(PopoverComponent$$1.prototype, "visible", {
         get: function () {
             return (this.state === PopoverState.opening || this.state === PopoverState.visible);
         },
@@ -2704,45 +2698,72 @@ var PopoverComponent = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PopoverComponent.prototype, "classHidden", {
+    Object.defineProperty(PopoverComponent$$1.prototype, "classHidden", {
         get: function () {
             return this.state === PopoverState.hidden;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PopoverComponent.prototype, "styleVisibility", {
+    Object.defineProperty(PopoverComponent$$1.prototype, "styleVisibility", {
         get: function () {
             return this.state === PopoverState.opening ? 'hidden' : 'visible';
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PopoverComponent.prototype, "transform", {
+    Object.defineProperty(PopoverComponent$$1.prototype, "transform", {
         get: function () {
             return "translate(" + String(this.translateX) + "px, " + String(this.translateY) + "px)";
         },
         enumerable: true,
         configurable: true
     });
-    PopoverComponent.prototype.setTarget = function (value) {
+    PopoverComponent$$1.prototype.onChange = function (changes) {
+        if (changes === void 0) { changes = { target: { currentValue: this.target } }; }
+        if (changes.target) {
+            this.setTarget(changes.target.currentValue);
+            this.setTag();
+        }
+        this.reposition();
+    };
+    PopoverComponent$$1.prototype.setTarget = function (value) {
+        if (value === void 0) { value = this.target; }
+        this.targetElement = this.getTargetElement(value);
+    };
+    PopoverComponent$$1.prototype.getTargetElement = function (value) {
+        var tag = PopoverComponent_1.Tag + ".getTargetElement()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'value:', value);
+        var el = undefined;
         if (typeof value === 'string') {
-            this.targetElement = document.querySelector(value) || undefined;
+            if (debug)
+                console.log(tag, 'typeof value === string');
+            el = document.querySelector(value);
         }
         else if (value instanceof Element) {
-            this.targetElement = value;
+            if (debug)
+                console.log(tag, 'value instanceof Element');
+            el = value;
         }
         else if (value instanceof ElementRef) {
-            this.targetElement = value.nativeElement || undefined;
+            if (debug)
+                console.log(tag, 'value instanceof ElementRef');
+            el = value.nativeElement;
         }
         else {
-            this.targetElement = undefined;
+            if (debug)
+                console.log(tag, 'value is undefined');
         }
+        if (debug)
+            console.log(tag, 'el:', el);
+        return el;
     };
-    PopoverComponent.prototype.setTag = function () {
+    PopoverComponent$$1.prototype.setTag = function () {
         this.tag = PopoverComponent_1.Tag + "." + this.target;
     };
-    PopoverComponent.prototype.reposition = function () {
+    PopoverComponent$$1.prototype.reposition = function () {
         var tag = this.tag + ".reposition()";
         var targetPos = this.targetElement ? this.targetElement.getBoundingClientRect() : undefined;
         if (this.debug)
@@ -2752,19 +2773,19 @@ var PopoverComponent = /** @class */ (function (_super) {
         var ownPos = this.getAttachmentPosition();
         if (this.debug)
             console.log(tag, 'ownPos:', ownPos);
-        var mustX = this.targetX === AttachmentX.Center ?
-            targetPos[AttachmentX.Left] + targetPos[Dimension.Width] / 2 :
+        var mustX = this.targetX === AttachmentX$1.Center ?
+            targetPos[AttachmentX$1.Left] + targetPos[Dimension.Width] / 2 :
             targetPos[this.targetX];
-        var isX = this.attachmentX === AttachmentX.Center ?
-            ownPos[AttachmentX.Left] + ownPos[Dimension.Width] / 2 :
+        var isX = this.attachmentX === AttachmentX$1.Center ?
+            ownPos[AttachmentX$1.Left] + ownPos[Dimension.Width] / 2 :
             ownPos[this.attachmentX];
         var diffX = mustX - isX;
         this.translateX = this.translateX + diffX + this.offsetAttachmentX;
-        var mustY = this.targetY === AttachmentY.Center ?
-            targetPos[AttachmentY.Top] + targetPos[Dimension.Height] / 2 :
+        var mustY = this.targetY === AttachmentY$1.Center ?
+            targetPos[AttachmentY$1.Top] + targetPos[Dimension.Height] / 2 :
             targetPos[this.targetY];
-        var isY = this.attachmentY === AttachmentY.Center ?
-            ownPos[AttachmentY.Top] + ownPos[Dimension.Height] / 2 :
+        var isY = this.attachmentY === AttachmentY$1.Center ?
+            ownPos[AttachmentY$1.Top] + ownPos[Dimension.Height] / 2 :
             ownPos[this.attachmentY];
         var diffY = mustY - isY + +this.offsetAttachmentY;
         if (this.debug) {
@@ -2781,15 +2802,15 @@ var PopoverComponent = /** @class */ (function (_super) {
         }
         this.translateY = this.translateY + diffY;
     };
-    PopoverComponent.prototype.ngOnInit = function () {
+    PopoverComponent$$1.prototype.ngOnInit = function () {
         this.setTag();
         var tag = this.tag + ".ngOnInit()";
         if (this.debug)
             console.log(tag, 'this:', this);
     };
-    PopoverComponent.prototype.ngAfterViewInit = function () {
+    PopoverComponent$$1.prototype.ngAfterViewInit = function () {
         var _this = this;
-        setTimeout(function () { return _this.reposition(); });
+        setTimeout(function () { return _this.onChange(); });
         if (this.animations) {
             if (this.animations.enter) {
                 this.enterAnimationFactory = this.builder.build(this.animations.enter);
@@ -2799,14 +2820,13 @@ var PopoverComponent = /** @class */ (function (_super) {
             }
         }
     };
-    PopoverComponent.prototype.ngOnChanges = function (changes) {
-        if (this.debug) {
-            var tag = this.tag + ".ngOnChanges()";
-            console.log(tag, 'changes:', changes);
-        }
+    PopoverComponent$$1.prototype.ngOnChanges = function (changes) {
         _super.prototype.ngOnChanges.call(this, changes);
+        var tag = this.tag + ".ngOnChanges()";
+        if (this.debug)
+            console.log(tag, 'changes:', changes);
     };
-    PopoverComponent.prototype.open = function () {
+    PopoverComponent$$1.prototype.open = function () {
         var _this = this;
         if (this.state === PopoverState.visible || this.state === PopoverState.opening) {
             return;
@@ -2828,7 +2848,7 @@ var PopoverComponent = /** @class */ (function (_super) {
             _this.cdRef.markForCheck();
         }, 0);
     };
-    PopoverComponent.prototype.close = function () {
+    PopoverComponent$$1.prototype.close = function () {
         var _this = this;
         if (this.state === PopoverState.hidden || this.state === PopoverState.opening || this.state === PopoverState.closing) {
             return;
@@ -2849,7 +2869,7 @@ var PopoverComponent = /** @class */ (function (_super) {
             this.cdRef.markForCheck();
         }
     };
-    PopoverComponent.prototype.toggle = function () {
+    PopoverComponent$$1.prototype.toggle = function () {
         if (this.visible) {
             this.close();
         }
@@ -2857,85 +2877,85 @@ var PopoverComponent = /** @class */ (function (_super) {
             this.open();
         }
     };
-    PopoverComponent.prototype.onWindowResize = function (ev) {
+    PopoverComponent$$1.prototype.onWindowResize = function (ev) {
         this.reposition();
     };
-    PopoverComponent.prototype.getAttachmentPosition = function () {
+    PopoverComponent$$1.prototype.getAttachmentPosition = function () {
         return this.me.nativeElement.getBoundingClientRect();
     };
-    PopoverComponent.Tag = 'PopoverComponent';
+    PopoverComponent$$1.Tag = 'PopoverComponent';
     __decorate$s([
         HostBinding('class.vclPopOver'),
         Input(),
         __metadata$g("design:type", Object)
-    ], PopoverComponent.prototype, "enableStyling", void 0);
+    ], PopoverComponent$$1.prototype, "enableStyling", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", Object)
-    ], PopoverComponent.prototype, "debug", void 0);
+    ], PopoverComponent$$1.prototype, "debug", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", Object)
-    ], PopoverComponent.prototype, "target", void 0);
+    ], PopoverComponent$$1.prototype, "target", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", String)
-    ], PopoverComponent.prototype, "targetX", void 0);
+    ], PopoverComponent$$1.prototype, "targetX", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", String)
-    ], PopoverComponent.prototype, "targetY", void 0);
+    ], PopoverComponent$$1.prototype, "targetY", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", String)
-    ], PopoverComponent.prototype, "attachmentX", void 0);
+    ], PopoverComponent$$1.prototype, "attachmentX", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", Number)
-    ], PopoverComponent.prototype, "offsetAttachmentX", void 0);
+    ], PopoverComponent$$1.prototype, "offsetAttachmentX", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", String)
-    ], PopoverComponent.prototype, "attachmentY", void 0);
+    ], PopoverComponent$$1.prototype, "attachmentY", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", Number)
-    ], PopoverComponent.prototype, "offsetAttachmentY", void 0);
+    ], PopoverComponent$$1.prototype, "offsetAttachmentY", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", Object),
         __metadata$g("design:paramtypes", [Object])
-    ], PopoverComponent.prototype, "visible", null);
+    ], PopoverComponent$$1.prototype, "visible", null);
     __decorate$s([
         Output(),
         __metadata$g("design:type", Object)
-    ], PopoverComponent.prototype, "willClose", void 0);
+    ], PopoverComponent$$1.prototype, "willClose", void 0);
     __decorate$s([
         Output(),
         __metadata$g("design:type", Object)
-    ], PopoverComponent.prototype, "willOpen", void 0);
+    ], PopoverComponent$$1.prototype, "willOpen", void 0);
     __decorate$s([
         HostBinding('class.vclLayoutHidden'),
         __metadata$g("design:type", Object),
         __metadata$g("design:paramtypes", [])
-    ], PopoverComponent.prototype, "classHidden", null);
+    ], PopoverComponent$$1.prototype, "classHidden", null);
     __decorate$s([
         HostBinding('style.visibility'),
         __metadata$g("design:type", Object),
         __metadata$g("design:paramtypes", [])
-    ], PopoverComponent.prototype, "styleVisibility", null);
+    ], PopoverComponent$$1.prototype, "styleVisibility", null);
     __decorate$s([
         HostBinding('style.transform'),
         __metadata$g("design:type", Object),
         __metadata$g("design:paramtypes", [])
-    ], PopoverComponent.prototype, "transform", null);
+    ], PopoverComponent$$1.prototype, "transform", null);
     __decorate$s([
         HostListener('window:resize', ['$event']),
         __metadata$g("design:type", Function),
         __metadata$g("design:paramtypes", [Object]),
         __metadata$g("design:returntype", void 0)
-    ], PopoverComponent.prototype, "onWindowResize", null);
-    PopoverComponent = PopoverComponent_1 = __decorate$s([
+    ], PopoverComponent$$1.prototype, "onWindowResize", null);
+    PopoverComponent$$1 = PopoverComponent_1 = __decorate$s([
         Component({
             selector: 'vcl-popover',
             template: '<ng-content></ng-content>',
@@ -2948,8 +2968,8 @@ var PopoverComponent = /** @class */ (function (_super) {
         __metadata$g("design:paramtypes", [ElementRef,
             AnimationBuilder,
             ChangeDetectorRef, Object])
-    ], PopoverComponent);
-    return PopoverComponent;
+    ], PopoverComponent$$1);
+    return PopoverComponent$$1;
     var PopoverComponent_1;
 }(ObservableComponent));
 
@@ -2959,21 +2979,21 @@ var __decorate$t = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLPopoverModule = /** @class */ (function () {
-    function VCLPopoverModule() {
+var VCLPopoverModule$1 = /** @class */ (function () {
+    function VCLPopoverModule$$1() {
     }
-    VCLPopoverModule = __decorate$t([
+    VCLPopoverModule$$1 = __decorate$t([
         NgModule({
             imports: [
                 CommonModule,
                 VCLOffClickModule
             ],
             providers: [],
-            exports: [PopoverComponent],
-            declarations: [PopoverComponent]
+            exports: [PopoverComponent$1],
+            declarations: [PopoverComponent$1]
         })
-    ], VCLPopoverModule);
-    return VCLPopoverModule;
+    ], VCLPopoverModule$$1);
+    return VCLPopoverModule$$1;
 }());
 
 var __decorate$u = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3070,7 +3090,7 @@ var TokenComponent = /** @class */ (function () {
     TokenComponent = __decorate$u([
         Component({
             selector: 'vcl-token',
-            template: "<div *ngIf=\"tokenIcon\" vcl-icogram [appIcon]=\"tokenIcon\" ></div>\n<span class=\"vclTokenLabel\">{{label}}</span>\n<button vcl-button\n        [disabled]=\"isDisabled\"\n        *ngIf=\"removable\" \n        class=\"vclTransparent\"\n        type=\"button\" \n        title=\"Remove\"\n        [icon]=\"icon\"\n        (click)=\"onRemoveClick($event)\">\n</button>\n",
+            template: "<div *ngIf=\"tokenIcon\" vcl-icogram [appIcon]=\"tokenIcon\" ></div>\r\n<span class=\"vclTokenLabel\">{{label}}</span>\r\n<button vcl-button\r\n        [disabled]=\"isDisabled\"\r\n        *ngIf=\"removable\" \r\n        class=\"vclTransparent\"\r\n        type=\"button\" \r\n        title=\"Remove\"\r\n        [icon]=\"icon\"\r\n        (click)=\"onRemoveClick($event)\">\r\n</button>\r\n",
             host: {
                 '[class.vclToken]': 'true',
             }
@@ -3391,7 +3411,7 @@ var TokenInputContainerComponent = /** @class */ (function () {
     TokenInputContainerComponent = __decorate$w([
         Component({
             selector: 'vcl-token-input-container',
-            template: "<div class=\"vclTokenContainer\">\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\n  <vcl-token *ngFor=\"let token of tokens\"\n             (remove)=\"onTokenRemove(token)\"\n             (click)=\"select(token)\"\n             [tokenIcon]=\"token.tokenIcon\"\n             [disabled]=\"disabled\"\n             [ngClass]=\"tokenClass\"\n             [selected]=\"token.selected\"\n             [removable]=\"true\"\n             [icon]=\"removeIcon\"\n             [attr.tabindex]=\"-1\"\n             [label]=\"token.label\">\n  </vcl-token>\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\n</div>\n<ng-content></ng-content>\n",
+            template: "<div class=\"vclTokenContainer\">\r\n  <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole>\r\n  <vcl-token *ngFor=\"let token of tokens\"\r\n             (remove)=\"onTokenRemove(token)\"\r\n             (click)=\"select(token)\"\r\n             [tokenIcon]=\"token.tokenIcon\"\r\n             [disabled]=\"disabled\"\r\n             [ngClass]=\"tokenClass\"\r\n             [selected]=\"token.selected\"\r\n             [removable]=\"true\"\r\n             [icon]=\"removeIcon\"\r\n             [attr.tabindex]=\"-1\"\r\n             [label]=\"token.label\">\r\n  </vcl-token>\r\n  <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole>\r\n</div>\r\n<ng-content></ng-content>\r\n",
             host: {
                 '[class.vclInput]': 'true',
                 '[class.vclTokenInput]': 'true',
@@ -3955,7 +3975,7 @@ var SelectComponent = /** @class */ (function () {
     SelectComponent = SelectComponent_1 = __decorate$z([
         Component({
             selector: 'vcl-select',
-            template: "<div (offClick)=\"close()\">\n  <div\n    #select\n    class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\"\n    [style.marginBottom]=\"0\"\n    >\n    <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\n      {{displayValue}}\n    </div>\n    <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\n      <vcl-token-list [disabled]=\"disabled\">\n        <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item.metaItem)\"></vcl-token>\n      </vcl-token-list>\n    </div>\n\n    <button vcl-button\n      [disabled]=\"disabled\"\n      type=\"button\"\n      tabindex=\"-1\"\n      class=\"vclTransparent vclAppended\"\n      [icon]=\"expanded ? expandedIcon : collapsedIcon\"\n      (click)=\"toggle()\">\n    </button>\n  </div>\n\n  <vcl-dropdown \n      #dropdown\n      tabindex=\"-1\"\n      [disabled]=\"disabled\"\n      [expanded]=\"expanded\"\n      [value]=\"value\"\n      [mode]=\"mode\"\n      [maxSelectableItems]=\"maxSelectableItems\"\n      [style.position]=\"'relative'\"\n      [style.top.px]=\"dropdownTop\"\n      [style.width]=\"'100%'\"\n      [style.position]=\"'absolute'\"\n      [style.zIndex]=\"zIndex\"\n      (change)=\"onDropdownChange($event)\"\n      (itemsChange)=\"onItemsChange()\"\n  >\n    <vcl-dropdown-option\n      *ngFor=\"let item of items\" \n      [metadata]=\"item\" \n      [value]=\"item.value\" \n      [disabled]=\"disabled || item.disabled\" \n      [label]=\"item.label\" \n      [sublabel]=\"item.sublabel\"\n      [prepIcon]=\"item.prepIcon\"\n      [appIcon]=\"item.appIcon\"\n      [appIconSrc]=\"item.appIconSrc\"\n      [prepIconSrc]=\"item.prepIconSrc\"\n      >\n    </vcl-dropdown-option>\n  </vcl-dropdown>\n</div>\n",
+            template: "<div (offClick)=\"close()\">\r\n  <div\r\n    #select\r\n    class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\"\r\n    [style.marginBottom]=\"0\"\r\n    >\r\n    <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\r\n      {{displayValue}}\r\n    </div>\r\n    <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\r\n      <vcl-token-list [disabled]=\"disabled\">\r\n        <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item.metaItem)\"></vcl-token>\r\n      </vcl-token-list>\r\n    </div>\r\n\r\n    <button vcl-button\r\n      [disabled]=\"disabled\"\r\n      type=\"button\"\r\n      tabindex=\"-1\"\r\n      class=\"vclTransparent vclAppended\"\r\n      [icon]=\"expanded ? expandedIcon : collapsedIcon\"\r\n      (click)=\"toggle()\">\r\n    </button>\r\n  </div>\r\n\r\n  <vcl-dropdown \r\n      #dropdown\r\n      tabindex=\"-1\"\r\n      [disabled]=\"disabled\"\r\n      [expanded]=\"expanded\"\r\n      [value]=\"value\"\r\n      [mode]=\"mode\"\r\n      [maxSelectableItems]=\"maxSelectableItems\"\r\n      [style.position]=\"'relative'\"\r\n      [style.top.px]=\"dropdownTop\"\r\n      [style.width]=\"'100%'\"\r\n      [style.position]=\"'absolute'\"\r\n      [style.zIndex]=\"zIndex\"\r\n      (change)=\"onDropdownChange($event)\"\r\n      (itemsChange)=\"onItemsChange()\"\r\n  >\r\n    <vcl-dropdown-option\r\n      *ngFor=\"let item of items\" \r\n      [metadata]=\"item\" \r\n      [value]=\"item.value\" \r\n      [disabled]=\"disabled || item.disabled\" \r\n      [label]=\"item.label\" \r\n      [sublabel]=\"item.sublabel\"\r\n      [prepIcon]=\"item.prepIcon\"\r\n      [appIcon]=\"item.appIcon\"\r\n      [appIconSrc]=\"item.appIconSrc\"\r\n      [prepIconSrc]=\"item.prepIconSrc\"\r\n      >\r\n    </vcl-dropdown-option>\r\n  </vcl-dropdown>\r\n</div>\r\n",
             // changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$6],
             host: {
@@ -3981,7 +4001,7 @@ var VCLSelectModule = /** @class */ (function () {
     }
     VCLSelectModule = __decorate$A([
         NgModule({
-            imports: [CommonModule, VCLDropdownModule, VCLButtonModule$1, VCLOffClickModule, VCLPopoverModule, VCLTokenModule],
+            imports: [CommonModule, VCLDropdownModule, VCLButtonModule$1, VCLOffClickModule, VCLPopoverModule$1, VCLTokenModule],
             exports: [SelectComponent, SelectOption],
             declarations: [SelectComponent, SelectOption],
             providers: []
@@ -4454,7 +4474,7 @@ var LayerContainerComponent = /** @class */ (function () {
     ], LayerContainerComponent.prototype, "layerContentContainer", void 0);
     LayerContainerComponent = __decorate$D([
         Component({
-            template: "<div \n  #container \n  class=\"vclLayer\"\n  [ngClass]=\"layerOpts.customClass\"\n  [class.vclTransparent]=\"layerOpts.transparent\"\n  [class.vclLayerFill]=\"layerOpts.fill\"\n  [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\"\n  [style.z-index]=\"zIndex + 1\"\n  [style.pointer-events]=\"'all'\" \n  role=\"dialog\" \n  (click)='triggerOffClick($event)'\n  >\n  <div *ngIf=\"layerOpts.noLayerBox\" #layerContent></div>\n  <div *ngIf=\"!layerOpts.noLayerBox\" #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\">\n    <div #layerContent></div>\n  </div>\n</div>\n<div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div>\n"
+            template: "<div \r\n  #container \r\n  class=\"vclLayer\"\r\n  [ngClass]=\"layerOpts.customClass\"\r\n  [class.vclTransparent]=\"layerOpts.transparent\"\r\n  [class.vclLayerFill]=\"layerOpts.fill\"\r\n  [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\"\r\n  [style.z-index]=\"zIndex + 1\"\r\n  [style.pointer-events]=\"'all'\" \r\n  role=\"dialog\" \r\n  (click)='triggerOffClick($event)'\r\n  >\r\n  <div *ngIf=\"layerOpts.noLayerBox\" #layerContent></div>\r\n  <div *ngIf=\"!layerOpts.noLayerBox\" #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\">\r\n    <div #layerContent></div>\r\n  </div>\r\n</div>\r\n<div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div>\r\n"
         }),
         __param$7(3, Optional()), __param$7(3, Inject(LAYER_ANIMATIONS)),
         __metadata$n("design:paramtypes", [ChangeDetectorRef,
@@ -4927,7 +4947,7 @@ var TabNavComponent = /** @class */ (function () {
     TabNavComponent = __decorate$J([
         Component({
             selector: 'vcl-tab-nav',
-            template: "<div class=\"vclTabbable {{tabbableClass}}\"\n     [class.vclTabsLeft]=\"layout==='left'\"\n     [class.vclTabsRight]=\"layout==='right'\">\n  <div class=\"vclTabs {{tabsClass}}\" [class.vclTabStyleUni]=\"!!borders\" role=\"tablist\">\n    <div *ngFor=\"let tab of tabs; let i = index\"\n         class=\"vclTab {{tab.tabClass}}\" \n         role=\"tab\"\n         [class.vclDisabled]=\"tab.disabled\"\n         [class.vclSelected]=\"selectedTabIndex===i\"\n         [class.aria-selected]=\"selectedTabIndex===i\"\n         (click)=\"onTabClick(tab)\">\n        <span class=\"vclTabLabel\"> \n          <wormhole [connect]=\"tab.label\"></wormhole>\n        </span>\n    </div>\n  </div>\n  <div [style.display]=\"hideContent === true ? 'none' : null\" class=\"vclTabContent {{tabContentClass}}\" [class.vclNoBorder]=\"!borders\">\n      <div role=\"tabpanel\" class=\"vclTabPanel\">\n          <div #tabContent></div>\n    </div>\n    <div role=\"tabpanel\" class=\"vclTabPanel\">\n        <ng-content></ng-content>\n    </div>\n  </div>\n</div>\n"
+            template: "<div class=\"vclTabbable {{tabbableClass}}\"\r\n     [class.vclTabsLeft]=\"layout==='left'\"\r\n     [class.vclTabsRight]=\"layout==='right'\">\r\n  <div class=\"vclTabs {{tabsClass}}\" [class.vclTabStyleUni]=\"!!borders\" role=\"tablist\">\r\n    <div *ngFor=\"let tab of tabs; let i = index\"\r\n         class=\"vclTab {{tab.tabClass}}\" \r\n         role=\"tab\"\r\n         [class.vclDisabled]=\"tab.disabled\"\r\n         [class.vclSelected]=\"selectedTabIndex===i\"\r\n         [class.aria-selected]=\"selectedTabIndex===i\"\r\n         (click)=\"onTabClick(tab)\">\r\n        <span class=\"vclTabLabel\"> \r\n          <wormhole [connect]=\"tab.label\"></wormhole>\r\n        </span>\r\n    </div>\r\n  </div>\r\n  <div [style.display]=\"hideContent === true ? 'none' : null\" class=\"vclTabContent {{tabContentClass}}\" [class.vclNoBorder]=\"!borders\">\r\n      <div role=\"tabpanel\" class=\"vclTabPanel\">\r\n          <div #tabContent></div>\r\n    </div>\r\n    <div role=\"tabpanel\" class=\"vclTabPanel\">\r\n        <ng-content></ng-content>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
         })
     ], TabNavComponent);
     return TabNavComponent;
@@ -5032,7 +5052,7 @@ var LinkComponent = /** @class */ (function () {
     LinkComponent = __decorate$L([
         Component({
             selector: 'a[vcl-link]',
-            template: "<span vcl-icogram\n  [label]=\"label || href\"\n  [prepIcon]=\"prepIcon\"\n  [appIcon]=\"appIcon\">\n  <ng-content></ng-content>\n</span>\n"
+            template: "<span vcl-icogram\r\n  [label]=\"label || href\"\r\n  [prepIcon]=\"prepIcon\"\r\n  [appIcon]=\"appIcon\">\r\n  <ng-content></ng-content>\r\n</span>\r\n"
         })
     ], LinkComponent);
     return LinkComponent;
@@ -5364,7 +5384,7 @@ var NavigationComponent = /** @class */ (function () {
             host: {
                 '[class.vclNavigation]': 'true'
             },
-            template: "<ul [class.vclLayoutHorizontal]=\"type === 'horizontal'\">\n  <li *ngFor=\"let item of navigationItems\"\n      [class.vclSelected]=\"(item.showActive || item.selectable) && item.selected\"\n      [class.vclOpen]=\"item.opened\"\n      [class.vclClose]=\"!item.opened\"\n      [class.vclNavigationHeading]=\"item.heading\"\n      [class.vclNavigationItem]=\"!item.heading\"\n      [attr.aria-selected]=\"item.selectable && item.selected\"\n      [attr.role]=\"item.heading && 'sectionhead' || ariaRole\"\n      [attr.tabindex]=\"tabindex\"\n      [ngClass]=\"item.class\"\n      (mouseleave)=\"mouseLeave(item)\"\n      (mouseover)=\"mouseOver(item)\">\n\n      <span *ngIf=\"item.heading\">\n        {{item.label}}\n      </span>\n\n    <a vcl-link class=\"vclNavigationItemLabel\"\n       *ngIf=\"!item.heading\"\n       [label]=\"item.label\"\n       [prepIcon]=\"item.calcPrepIcon\"\n       [appIcon]=\"item.calcAppIcon\"\n       (click)=\"selectItem(item)\">\n    </a>\n\n    <nav vcl-navigation *ngIf=\"item.items && item.items.length > 0\"\n         [inputItems]=\"item.items\"\n         [type]=\"type\"\n         [useRouter]=\"useRouter\"\n         [subLevelHintIconOpened]=\"subLevelHintIconOpened\"\n         [subLevelHintIconClosed]=\"subLevelHintIconClosed\"\n         [subLevelHintIconSide]=\"subLevelHintIconSide\"\n         (select)=\"onSubItemSelect($event)\">\n    </nav>\n  </li>\n</ul>\n"
+            template: "<ul [class.vclLayoutHorizontal]=\"type === 'horizontal'\">\r\n  <li *ngFor=\"let item of navigationItems\"\r\n      [class.vclSelected]=\"(item.showActive || item.selectable) && item.selected\"\r\n      [class.vclOpen]=\"item.opened\"\r\n      [class.vclClose]=\"!item.opened\"\r\n      [class.vclNavigationHeading]=\"item.heading\"\r\n      [class.vclNavigationItem]=\"!item.heading\"\r\n      [attr.aria-selected]=\"item.selectable && item.selected\"\r\n      [attr.role]=\"item.heading && 'sectionhead' || ariaRole\"\r\n      [attr.tabindex]=\"tabindex\"\r\n      [ngClass]=\"item.class\"\r\n      (mouseleave)=\"mouseLeave(item)\"\r\n      (mouseover)=\"mouseOver(item)\">\r\n\r\n      <span *ngIf=\"item.heading\">\r\n        {{item.label}}\r\n      </span>\r\n\r\n    <a vcl-link class=\"vclNavigationItemLabel\"\r\n       *ngIf=\"!item.heading\"\r\n       [label]=\"item.label\"\r\n       [prepIcon]=\"item.calcPrepIcon\"\r\n       [appIcon]=\"item.calcAppIcon\"\r\n       (click)=\"selectItem(item)\">\r\n    </a>\r\n\r\n    <nav vcl-navigation *ngIf=\"item.items && item.items.length > 0\"\r\n         [inputItems]=\"item.items\"\r\n         [type]=\"type\"\r\n         [useRouter]=\"useRouter\"\r\n         [subLevelHintIconOpened]=\"subLevelHintIconOpened\"\r\n         [subLevelHintIconClosed]=\"subLevelHintIconClosed\"\r\n         [subLevelHintIconSide]=\"subLevelHintIconSide\"\r\n         (select)=\"onSubItemSelect($event)\">\r\n    </nav>\r\n  </li>\r\n</ul>\r\n"
         }),
         __metadata$v("design:paramtypes", [Router])
     ], NavigationComponent);
@@ -5556,7 +5576,7 @@ var ProgressBarComponent = /** @class */ (function () {
     ProgressBarComponent = __decorate$R([
         Component({
             selector: 'vcl-progress-bar',
-            template: "<div class=\"vclProgressBar\"\n     [attr.aria-valuenow]=\"value\" \n     [attr.aria-valuemin]=\"minValue\" \n     [attr.aria-valuemax]=\"maxValue\" \n     [attr.aria-valuetext]=\"label\"\n     [class.vclIndeterminate]=\"showIndeterminate\"\n     >\n  <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div>\n  <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div>\n  <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.animation-duration]=\"animationDurationValue\"></div>\n</div>\n\n",
+            template: "<div class=\"vclProgressBar\"\r\n     [attr.aria-valuenow]=\"value\" \r\n     [attr.aria-valuemin]=\"minValue\" \r\n     [attr.aria-valuemax]=\"maxValue\" \r\n     [attr.aria-valuetext]=\"label\"\r\n     [class.vclIndeterminate]=\"showIndeterminate\"\r\n     >\r\n  <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div>\r\n  <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div>\r\n  <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.animation-duration]=\"animationDurationValue\"></div>\r\n</div>\r\n\r\n",
             host: {
                 '[attr.role]': '"progressbar"',
             },
@@ -5755,7 +5775,7 @@ var RadioButtonComponent = /** @class */ (function () {
     RadioButtonComponent = __decorate$T([
         Component({
             selector: 'vcl-radio-button',
-            template: "<ng-template #rb>\n  <div class=\"vclRadioButton\" \n      [class.vclDisabled]=\"isDisabled\" \n      role=\"radio\" \n      [attr.tabindex]=\"tabindex\" \n      [attr.aria-checked]=\"checked\"\n      [attr.aria-disabled]=\"isDisabled\"\n      (keyup)=\"onKeyup($event)\"\n      (blur)=\"onBlur()\"\n      >\n  <div vcl-icon [icon]=\"icon\"></div>\n</div>  \n</ng-template>\n\n<label vcl-form-control-label [wrapping]=\"true\">\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"rb\"></ng-container>\n  {{label}}  \n  <ng-content></ng-content>\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"rb\"></ng-container>\n</label>\n  ",
+            template: "<ng-template #rb>\r\n  <div class=\"vclRadioButton\" \r\n      [class.vclDisabled]=\"isDisabled\" \r\n      role=\"radio\" \r\n      [attr.tabindex]=\"tabindex\" \r\n      [attr.aria-checked]=\"checked\"\r\n      [attr.aria-disabled]=\"isDisabled\"\r\n      (keyup)=\"onKeyup($event)\"\r\n      (blur)=\"onBlur()\"\r\n      >\r\n  <div vcl-icon [icon]=\"icon\"></div>\r\n</div>  \r\n</ng-template>\r\n\r\n<label vcl-form-control-label [wrapping]=\"true\">\r\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"rb\"></ng-container>\r\n  {{label}}  \r\n  <ng-content></ng-content>\r\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"rb\"></ng-container>\r\n</label>\r\n  ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$8],
             host: {
@@ -5986,7 +6006,7 @@ var FormControlLabelComponent = /** @class */ (function () {
     FormControlLabelComponent = __decorate$V([
         Component({
             selector: 'label[vcl-form-control-label]',
-            template: "{{label}}\n<em *ngIf=\"required\" class=\"vclRequiredIndicator\" aria-hidden=\"true\" [attr.aria-label]=\"requiredIndLabel\">\n  {{requiredIndicatorCharacter}}\n</em>\n<span *ngIf=\"subLabel\" class=\"vclFormControlSubLabel\">{{subLabel}}</span>\n<div #content><ng-content></ng-content></div>\n",
+            template: "{{label}}\r\n<em *ngIf=\"required\" class=\"vclRequiredIndicator\" aria-hidden=\"true\" [attr.aria-label]=\"requiredIndLabel\">\r\n  {{requiredIndicatorCharacter}}\r\n</em>\r\n<span *ngIf=\"subLabel\" class=\"vclFormControlSubLabel\">{{subLabel}}</span>\r\n<div #content><ng-content></ng-content></div>\r\n",
             host: {
                 '[class.vclFormControlLabel]': 'true',
             },
@@ -6181,7 +6201,7 @@ var CheckboxComponent = /** @class */ (function () {
     CheckboxComponent = __decorate$Y([
         Component({
             selector: 'vcl-checkbox',
-            template: "<ng-template #cb>\n  <div class=\"vclCheckbox\" \n      [class.vclDisabled]=\"isDisabled\" \n      role=\"checkbox\" \n      [attr.tabindex]=\"tabindex\" \n      [attr.aria-checked]=\"checked\"\n      [attr.aria-disabled]=\"isDisabled\"\n      (keyup)=\"onKeyup($event)\"\n      (blur)=\"onBlur()\"\n      >\n  <div vcl-icon [icon]=\"icon\"></div>\n</div>  \n</ng-template>\n\n<label vcl-form-control-label [wrapping]=\"true\" [label]=\"hideLabel ? '' : label\">\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n  {{label }}\n  <ng-content></ng-content>\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"cb\"></ng-container>\n</label>\n",
+            template: "<ng-template #cb>\r\n  <div class=\"vclCheckbox\" \r\n      [class.vclDisabled]=\"isDisabled\" \r\n      role=\"checkbox\" \r\n      [attr.tabindex]=\"tabindex\" \r\n      [attr.aria-checked]=\"checked\"\r\n      [attr.aria-disabled]=\"isDisabled\"\r\n      (keyup)=\"onKeyup($event)\"\r\n      (blur)=\"onBlur()\"\r\n      >\r\n  <div vcl-icon [icon]=\"icon\"></div>\r\n</div>  \r\n</ng-template>\r\n\r\n<label vcl-form-control-label [wrapping]=\"true\" [label]=\"hideLabel ? '' : label\">\r\n  <ng-container *ngIf=\"iconPosition==='left'\" [ngTemplateOutlet]=\"cb\"></ng-container>\r\n  {{label }}\r\n  <ng-content></ng-content>\r\n  <ng-container *ngIf=\"iconPosition==='right'\" [ngTemplateOutlet]=\"cb\"></ng-container>\r\n</label>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$a],
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
@@ -6716,7 +6736,7 @@ var DatePickerComponent = /** @class */ (function () {
     DatePickerComponent = __decorate$_([
         Component({
             selector: 'vcl-date-picker',
-            template: "<div class=\"vclLayoutHorizontal\">\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" style=\"min-width: 18em;\" *ngIf=\"displayDate\">\n    <div class=\"vclDGRow\">\n      <div class=\"vclDGCell vclToolbar\">\n        <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\n          <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"prevMonth()\">\n                <div class=\"vclIcogram\">\n                  <div class=\"vclIcon fa fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div>\n                </div>\n              </button>\n          <span class=\"vclCalHeaderLabel\" (click)=\"showYear()\" [class.date-picker-pointer]=\"!showYearPick\">\n            {{viewDate?.getMonthString()}}&nbsp;&nbsp;{{viewDate?.getYearString()}}\n          </span>\n            <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"nextMonth()\">\n              <div class=\"vclIcogram\">\n                <div class=\"vclIcon fa fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div>\n              </div>\n            </button>\n          </div>\n        </div>\n      </div>\n\n      <ng-container *ngIf=\"!showYearPick\">\n        <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\">\n          <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\">\n            {{'week'}}\n          </div>\n          <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\">\n            <ng-container *ngIf=\"displayWeekdays\">\n              {{day}}\n            </ng-container>\n          </div>\n        </div>\n\n        <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\">\n          <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\">\n            {{week[5].getWeekNumber()}}\n          </div>\n          <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"disabled || isDayDisabled(day)\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\" [class.vclSelected]=\"isMarked(day)\" (click)=\"onDateTap(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\">\n            {{day.date.getDate()}}\n          </div>\n        </div>\n\n        <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\">\n          <div class=\"vclDGCell\">\n            <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\">\n              <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoToday()\">\n                <div class=\" vclIcogram\">\n                  <span class=\"vclText \">go to today</span>\n                </div>\n              </button>\n              <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoSelected()\">\n                <div class=\" vclIcogram\">\n                  <span class=\"vclText \">go to selected</span>\n                </div>\n              </button>\n            </div>\n          </div>\n        </div>\n      </ng-container>\n\n      <ng-container *ngIf=\"showYearPick\">\n        <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\">\n          <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\">\n            {{year}}\n          </div>\n        </div>\n      </ng-container>\n    </div>\n    <vcl-time-picker *ngIf=\"displayTime\"\n                     [(ngModel)]=\"selectedDate\"\n                     (ngModelChange)=\"timeChange($event)\"\n                     [displayHours]=\"displayHours\"\n                     [displayMinutes]=\"displayMinutes\"\n                     [displaySeconds]=\"displaySeconds\"\n                     [displayHours24]=\"displayHours24\"\n                     [ngStyle]=\"{'margin-left': displayDate ? '10px' : 0}\">\n    </vcl-time-picker>\n</div>\n",
+            template: "<div class=\"vclLayoutHorizontal\">\r\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" style=\"min-width: 18em;\" *ngIf=\"displayDate\">\r\n    <div class=\"vclDGRow\">\r\n      <div class=\"vclDGCell vclToolbar\">\r\n        <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n          <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"prevMonth()\">\r\n                <div class=\"vclIcogram\">\r\n                  <div class=\"vclIcon fa fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div>\r\n                </div>\r\n              </button>\r\n          <span class=\"vclCalHeaderLabel\" (click)=\"showYear()\" [class.date-picker-pointer]=\"!showYearPick\">\r\n            {{viewDate?.getMonthString()}}&nbsp;&nbsp;{{viewDate?.getYearString()}}\r\n          </span>\r\n            <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"nextMonth()\">\r\n              <div class=\"vclIcogram\">\r\n                <div class=\"vclIcon fa fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div>\r\n              </div>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <ng-container *ngIf=\"!showYearPick\">\r\n        <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\">\r\n          <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\">\r\n            {{'week'}}\r\n          </div>\r\n          <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\">\r\n            <ng-container *ngIf=\"displayWeekdays\">\r\n              {{day}}\r\n            </ng-container>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\">\r\n          <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\">\r\n            {{week[5].getWeekNumber()}}\r\n          </div>\r\n          <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"disabled || isDayDisabled(day)\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\" [class.vclSelected]=\"isMarked(day)\" (click)=\"onDateTap(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\">\r\n            {{day.date.getDate()}}\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\">\r\n          <div class=\"vclDGCell\">\r\n            <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\">\r\n              <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoToday()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to today</span>\r\n                </div>\r\n              </button>\r\n              <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoSelected()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to selected</span>\r\n                </div>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showYearPick\">\r\n        <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\">\r\n          <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\">\r\n            {{year}}\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n    <vcl-time-picker *ngIf=\"displayTime\"\r\n                     [(ngModel)]=\"selectedDate\"\r\n                     (ngModelChange)=\"timeChange($event)\"\r\n                     [displayHours]=\"displayHours\"\r\n                     [displayMinutes]=\"displayMinutes\"\r\n                     [displaySeconds]=\"displaySeconds\"\r\n                     [displayHours24]=\"displayHours24\"\r\n                     [ngStyle]=\"{'margin-left': displayDate ? '10px' : 0}\">\r\n    </vcl-time-picker>\r\n</div>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$b],
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
@@ -6850,7 +6870,7 @@ var TimePickerComponent = /** @class */ (function () {
     TimePickerComponent = __decorate$10([
         Component({
             selector: 'vcl-time-picker',
-            template: "<div class=\"vclLayoutHorizontal\">\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" style=\"width: 18em;\" *ngIf=\"displayHours\">\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" *ngIf=\"displayHours24\">\n      <div class=\"vclDGRow vclToolbar\">\n        <button type=\"button\" class=\"vclButton vclSquare\" style=\"visibility: hidden\">12h</button>\n        <div class=\"vclDGCell\">\n          <span class=\"vclCalHeaderLabel\">Hour</span>\n        </div>\n        <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"onSwitch24h()\" style=\"height: 100%\">12h</button>\n      </div>\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3]\">\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i * 6 + x)\" (tap)=\"onHourTap(i * 6 + x)\">{{ i * 6 + x }}</div>\n      </div>\n    </div>\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" *ngIf=\"!displayHours24\">\n      <div class=\"vclDGRow vclToolbar\">\n        <button type=\"button\" class=\"vclButton vclSquare\" style=\"visibility: hidden\">24h</button>\n        <div class=\"vclDGCell\">\n          <span class=\"vclCalHeaderLabel\">AM</span>\n        </div>\n        <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"onSwitch24h()\" style=\"height: 100%\">24h</button>\n      </div>\n      <div class=\"vclDGRow\" role=\"row\">\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [12, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i % 12)\" (tap)=\"onHourTap(i % 12)\">{{ i }}</div>\n      </div>\n      <div class=\"vclDGRow\" role=\"row\">\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [6, 7, 8, 9, 10, 11]\" [class.vclSelected]=\"isHourMarked(i % 12)\" (tap)=\"onHourTap(i % 12)\">{{ i }}</div>\n      </div>\n      <div class=\"vclDGRow vclToolbar\">\n        <div class=\"vclDGCell\">\n          <span class=\"vclCalHeaderLabel\">PM</span>\n        </div>\n      </div>\n      <div class=\"vclDGRow\" role=\"row\">\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [12, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i % 12 + 12)\" (tap)=\"onHourTap(i % 12 + 12)\">{{ i }}</div>\n      </div>\n      <div class=\"vclDGRow\" role=\"row\">\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [6, 7, 8, 9, 10, 11]\" [class.vclSelected]=\"isHourMarked(i % 12 + 12)\" (tap)=\"onHourTap(i % 12 + 12)\">{{ i }}</div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" [ngStyle]=\"{width: '18em', 'margin-left': displayHours ? '10px' : 0}\" *ngIf=\"displayMinutes\">\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\n      <div class=\"vclDGRow\">\n        <div class=\"vclDGCell vclToolbar\">\n          <span class=\"vclCalHeaderLabel\">Minute</span>\n        </div>\n      </div>\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3, 4, 5]\">\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\" [class.vclSelected]=\"isMinuteMarked(i * 10 + x)\" (tap)=\"onMinuteTap(i * 10 + x)\">:{{ i * 10 + x }}</div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" [ngStyle]=\"{width: '18em', 'margin-left': displayHours || displayMinutes ? '10px' : 0}\" *ngIf=\"displaySeconds\">\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\n      <div class=\"vclDGRow\">\n        <div class=\"vclDGCell vclToolbar\">\n          <span class=\"vclCalHeaderLabel\">Second</span>\n        </div>\n      </div>\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3, 4, 5]\">\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\" [class.vclSelected]=\"isSecondMarked(i * 10 + x)\" (tap)=\"onSecondTap(i * 10 + x)\">:{{ i * 10 + x }}</div>\n      </div>\n    </div>\n  </div>\n</div>\n",
+            template: "<div class=\"vclLayoutHorizontal\">\r\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" style=\"width: 18em;\" *ngIf=\"displayHours\">\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" *ngIf=\"displayHours24\">\r\n      <div class=\"vclDGRow vclToolbar\">\r\n        <button type=\"button\" class=\"vclButton vclSquare\" style=\"visibility: hidden\">12h</button>\r\n        <div class=\"vclDGCell\">\r\n          <span class=\"vclCalHeaderLabel\">Hour</span>\r\n        </div>\r\n        <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"onSwitch24h()\" style=\"height: 100%\">12h</button>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i * 6 + x)\" (tap)=\"onHourTap(i * 6 + x)\">{{ i * 6 + x }}</div>\r\n      </div>\r\n    </div>\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" *ngIf=\"!displayHours24\">\r\n      <div class=\"vclDGRow vclToolbar\">\r\n        <button type=\"button\" class=\"vclButton vclSquare\" style=\"visibility: hidden\">24h</button>\r\n        <div class=\"vclDGCell\">\r\n          <span class=\"vclCalHeaderLabel\">AM</span>\r\n        </div>\r\n        <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"onSwitch24h()\" style=\"height: 100%\">24h</button>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [12, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i % 12)\" (tap)=\"onHourTap(i % 12)\">{{ i }}</div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [6, 7, 8, 9, 10, 11]\" [class.vclSelected]=\"isHourMarked(i % 12)\" (tap)=\"onHourTap(i % 12)\">{{ i }}</div>\r\n      </div>\r\n      <div class=\"vclDGRow vclToolbar\">\r\n        <div class=\"vclDGCell\">\r\n          <span class=\"vclCalHeaderLabel\">PM</span>\r\n        </div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [12, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i % 12 + 12)\" (tap)=\"onHourTap(i % 12 + 12)\">{{ i }}</div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [6, 7, 8, 9, 10, 11]\" [class.vclSelected]=\"isHourMarked(i % 12 + 12)\" (tap)=\"onHourTap(i % 12 + 12)\">{{ i }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" [ngStyle]=\"{width: '18em', 'margin-left': displayHours ? '10px' : 0}\" *ngIf=\"displayMinutes\">\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\r\n      <div class=\"vclDGRow\">\r\n        <div class=\"vclDGCell vclToolbar\">\r\n          <span class=\"vclCalHeaderLabel\">Minute</span>\r\n        </div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3, 4, 5]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\" [class.vclSelected]=\"isMinuteMarked(i * 10 + x)\" (tap)=\"onMinuteTap(i * 10 + x)\">:{{ i * 10 + x }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" [ngStyle]=\"{width: '18em', 'margin-left': displayHours || displayMinutes ? '10px' : 0}\" *ngIf=\"displaySeconds\">\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\r\n      <div class=\"vclDGRow\">\r\n        <div class=\"vclDGCell vclToolbar\">\r\n          <span class=\"vclCalHeaderLabel\">Second</span>\r\n        </div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3, 4, 5]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\" [class.vclSelected]=\"isSecondMarked(i * 10 + x)\" (tap)=\"onSecondTap(i * 10 + x)\">:{{ i * 10 + x }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$c],
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
@@ -7363,7 +7383,7 @@ var MonthPickerComponent = /** @class */ (function () {
     MonthPickerComponent = MonthPickerComponent_1 = __decorate$12([
         Component({
             selector: 'vcl-month-picker',
-            template: "<div class=\"vclDatePicker\">\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput vclNoMargin\"\n    [attr.role]=\"'grid'\"\n    [attr.tabindex]=\"tabindex\"\n    [attr.aria-multiselectable]=\"maxSelectableMonths > 1\"\n    [attr.aria-expanded]=\"expanded\">\n\n    <div class=\"vclDGRow\">\n      <div class=\"vclToolbar vclLayoutHorizontal vclLayoutFlex vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\n        <div class=\"vclLayoutHorizontal vclLayoutCenter\">\n          <button vcl-button class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\n            type=\"button\"\n            [class.vclDisabled]=\"!prevYearAvailable\"\n            [icon]=\"prevYearBtnIcon\"\n            (click)=\"onPrevYearTap()\">\n          </button>\n\n          <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span>\n\n          <button vcl-button\n            type=\"button\"\n            class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\n            [class.vclDisabled]=\"!nextYearAvailable\"\n            [icon]=\"nextYearBtnIcon\"\n            (click)=\"onNextYearTap()\">\n          </button>\n        </div>\n\n        <div class=\"vclLayoutHorizontal vclLayoutFlex vclLayoutEndJustified\">\n          <button vcl-button *ngIf=\"expandable\"\n            type=\"button\"\n            class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\n            [icon]=\"closeBtnIcon\"\n            (click)=\"onCloseBtnTap()\">\n          </button>\n        </div>\n\n      </div>\n    </div>\n\n    <div class=\"vclSeparator\"></div>\n\n    <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\">\n      <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclDGRow\" role=\"row\">\n        <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\"\n          (click)=\"selectMonth(currentYear, i+j)\"\n          class=\"vclDGCell vclCalItem\"\n          [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\"\n          [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\"\n          [class.vclToday]=\"isCurrentMonth(i+j)\"\n          [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\"\n          [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\"\n          [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\"\n          [style.background-color]=\"currentMeta[i+j].color\"\n          [style.order]=\"i+j\"\n          [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\"\n          [tabindex]=\"i+j\"\n          role=\"gridcell\">\n            <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\">\n              {{months[i + j]}}\n            </div>\n        </div>\n      </div>\n    </ng-template>\n  </div>\n</div>\n",
+            template: "<div class=\"vclDatePicker\">\r\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput vclNoMargin\"\r\n    [attr.role]=\"'grid'\"\r\n    [attr.tabindex]=\"tabindex\"\r\n    [attr.aria-multiselectable]=\"maxSelectableMonths > 1\"\r\n    [attr.aria-expanded]=\"expanded\">\r\n\r\n    <div class=\"vclDGRow\">\r\n      <div class=\"vclToolbar vclLayoutHorizontal vclLayoutFlex vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n        <div class=\"vclLayoutHorizontal vclLayoutCenter\">\r\n          <button vcl-button class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\r\n            type=\"button\"\r\n            [class.vclDisabled]=\"!prevYearAvailable\"\r\n            [icon]=\"prevYearBtnIcon\"\r\n            (click)=\"onPrevYearTap()\">\r\n          </button>\r\n\r\n          <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span>\r\n\r\n          <button vcl-button\r\n            type=\"button\"\r\n            class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\r\n            [class.vclDisabled]=\"!nextYearAvailable\"\r\n            [icon]=\"nextYearBtnIcon\"\r\n            (click)=\"onNextYearTap()\">\r\n          </button>\r\n        </div>\r\n\r\n        <div class=\"vclLayoutHorizontal vclLayoutFlex vclLayoutEndJustified\">\r\n          <button vcl-button *ngIf=\"expandable\"\r\n            type=\"button\"\r\n            class=\"vclButton vclTransparent vclLayoutHorizontal vclLayoutCenterCenter\"\r\n            [icon]=\"closeBtnIcon\"\r\n            (click)=\"onCloseBtnTap()\">\r\n          </button>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"vclSeparator\"></div>\r\n\r\n    <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\">\r\n      <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclDGRow\" role=\"row\">\r\n        <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\"\r\n          (click)=\"selectMonth(currentYear, i+j)\"\r\n          class=\"vclDGCell vclCalItem\"\r\n          [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\"\r\n          [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\"\r\n          [class.vclToday]=\"isCurrentMonth(i+j)\"\r\n          [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\"\r\n          [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\"\r\n          [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\"\r\n          [style.background-color]=\"currentMeta[i+j].color\"\r\n          [style.order]=\"i+j\"\r\n          [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\"\r\n          [tabindex]=\"i+j\"\r\n          role=\"gridcell\">\r\n            <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\">\r\n              {{months[i + j]}}\r\n            </div>\r\n        </div>\r\n      </div>\r\n    </ng-template>\r\n  </div>\r\n</div>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [
                 {
@@ -7881,7 +7901,7 @@ var SliderComponent = /** @class */ (function () {
     SliderComponent = __decorate$16([
         Component({
             selector: 'vcl-slider',
-            template: "<div class=\"vclSliderRail\">\n  <div class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\" #scale>\n    <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointMark\"></div>\n  </div>\n  <div *ngIf=\"valueValid\" class=\"vclSliderKnobContainer\" [style.left]=\"percentLeftKnob + '%'\" (pan)=\"onPan($event)\">\n    <div  class=\"vclSliderKnob\"></div>\n  </div>\n</div>\n<div *ngIf=\"showScale\" class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\">\n  <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointLabel\" (click)=\"selectPoint(point)\">{{point.label}}</div>\n</div>\n",
+            template: "<div class=\"vclSliderRail\">\r\n  <div class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\" #scale>\r\n    <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointMark\"></div>\r\n  </div>\r\n  <div *ngIf=\"valueValid\" class=\"vclSliderKnobContainer\" [style.left]=\"percentLeftKnob + '%'\" (pan)=\"onPan($event)\">\r\n    <div  class=\"vclSliderKnob\"></div>\r\n  </div>\r\n</div>\r\n<div *ngIf=\"showScale\" class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\">\r\n  <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointLabel\" (click)=\"selectPoint(point)\">{{point.label}}</div>\r\n</div>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$d],
             host: {
                 '[class.vclSlider]': 'true'
@@ -7955,7 +7975,7 @@ var InputControlGroup = /** @class */ (function () {
         Component({
             selector: 'vcl-input-control-group, [vcl-input-control-group]',
             changeDetection: ChangeDetectionStrategy.OnPush,
-            template: "<ng-content></ng-content>\n\n<div *ngIf=\"type!==null && label!==null && label!==''\" class=\"vclFormControlHint\"\n  [class.vclError]=\"type=='error'\"\n  [class.vclWarning]=\"type=='warning'\"\n  [class.vclSuccess]=\"type=='success'\">\n  {{label}}\n</div>\n"
+            template: "<ng-content></ng-content>\r\n\r\n<div *ngIf=\"type!==null && label!==null && label!==''\" class=\"vclFormControlHint\"\r\n  [class.vclError]=\"type=='error'\"\r\n  [class.vclWarning]=\"type=='warning'\"\r\n  [class.vclSuccess]=\"type=='success'\">\r\n  {{label}}\r\n</div>\r\n"
         })
     ], InputControlGroup);
     return InputControlGroup;
@@ -8228,7 +8248,7 @@ var AlertComponent = /** @class */ (function () {
     ], AlertComponent.prototype, "onKeyUp", null);
     AlertComponent = __decorate$1a([
         Component({
-            template: "<div class=\"vclNotification\" [ngClass]=\"alertClass\">\n\n  <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" [ngClass]=\"titleAlignmentClass\" *ngIf=\"alert.title\">\n    <div class=\"vclLayoutFlex\">{{alert.title}}</div>\n    <button *ngIf=\"alert.showCloseButton\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"close()\"><i class=\"fa fa-times\"></i></button>\n  </div>\n\n  <div class=\"vclNotificationContent vclLayoutVertical vclLayoutCenterJustified \">\n\n    <div *ngIf=\"iconClass\" class=\"vclNotificationIconContainer\" [ngClass]=\"iconAlignmentClass\">\n      <span class=\"vclIcon vclNotificationIcon\" [ngClass]=\"iconClass\"></span>\n    </div>\n\n    <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" *ngIf=\"alert.text && !alert.html\">{{alert.text}}</div>\n    <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" [innerHtml]=\"alert.text\" *ngIf=\"alert.text && alert.html\"></div>\n\n    <div style=\"padding-bottom: 0.5em\" *ngIf=\"alert.input\"><alert-input [alert]=\"alert\" (valueChange)=\"valueChange($event)\"></alert-input></div>\n\n    <div *ngIf=\"validationError\" class=\"vclNotification vclError\">\n      <div class=\"vclNotificationContent\">\n        <vcl-icogram label=\"{{validationError}}\" prepIcon=\"fa:exclamation-circle\"></vcl-icogram>\n      </div>\n    </div>\n\n    <div class=\"vclLayoutHorizontal vclLooseButtonGroup\" [ngClass]=\"buttonAlignmentClass\">\n      <button vcl-button\n        *ngIf=\"!!alert.showConfirmButton\"\n        type=\"button\"\n        (click)=\"confirm()\"\n        [style.background-color]=\"alert.confirmButtonColor\"\n        [ngClass]=\"alert.confirmButtonClass\"\n        [disabled]=\"alert.loader\"        \n        [appIcon]=\"alert.loader ? null : alert.confirmButtonAppIcon\"\n        [prepIcon]=\"alert.loader ? 'fa:refresh fa-spin' : alert.confirmButtonPrepIcon\"\n        [label]=\"alert.confirmButtonLabel\"\n        >\n      </button>\n      <button vcl-button\n        *ngIf=\"!!alert.showCancelButton\"\n        type=\"button\"\n        [style.background-color]=\"!!alert.cancelButtonColor\"\n        [ngClass]=\"alert.cancelButtonClass\"\n        [appIcon]=\"alert.cancelButtonAppIcon\"\n        [prepIcon]=\"alert.cancelButtonPrepIcon\"\n        [disabled]=\"(!alert.showConfirmButton && !!alert.loader)\"\n        [appIcon]=\"(!alert.showConfirmButton && !!alert.loader) ? null : alert.cancelButtonAppIcon\"\n        [prepIcon]=\"(!alert.showConfirmButton && !!alert.loader) ? 'fa:refresh fa-spin' : alert.cancelButtonPrepIcon\"        \n        [label]=\"alert.cancelButtonLabel\"        \n        (click)=\"cancel()\"\n        >\n      </button>\n    </div>\n    <div *ngIf=\"!alert.showCancelButton && !alert.showConfirmButton && !!alert.loader\">\n      <div class=\"vclLayoutHorizontal vclLayoutCenterJustified\">\n        <div class=\"vclBusyIndicator vclIcogram vclLayoutVertical vclLayoutJustified\" role=\"status\">\n            <div class=\"vclIcon fa fa-circle-o-notch fa-spin fa-3x fa-fw\" aria-hidden=\"true\" aria-label=\"loading\u2026\" role=\"img\"></div>\n          <div class=\"vclText\">Loading\u2026</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n",
+            template: "<div class=\"vclNotification\" [ngClass]=\"alertClass\">\r\n\r\n  <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" [ngClass]=\"titleAlignmentClass\" *ngIf=\"alert.title\">\r\n    <div class=\"vclLayoutFlex\">{{alert.title}}</div>\r\n    <button *ngIf=\"alert.showCloseButton\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"close()\"><i class=\"fa fa-times\"></i></button>\r\n  </div>\r\n\r\n  <div class=\"vclNotificationContent vclLayoutVertical vclLayoutCenterJustified \">\r\n\r\n    <div *ngIf=\"iconClass\" class=\"vclNotificationIconContainer\" [ngClass]=\"iconAlignmentClass\">\r\n      <span class=\"vclIcon vclNotificationIcon\" [ngClass]=\"iconClass\"></span>\r\n    </div>\r\n\r\n    <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" *ngIf=\"alert.text && !alert.html\">{{alert.text}}</div>\r\n    <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" [innerHtml]=\"alert.text\" *ngIf=\"alert.text && alert.html\"></div>\r\n\r\n    <div style=\"padding-bottom: 0.5em\" *ngIf=\"alert.input\"><alert-input [alert]=\"alert\" (valueChange)=\"valueChange($event)\"></alert-input></div>\r\n\r\n    <div *ngIf=\"validationError\" class=\"vclNotification vclError\">\r\n      <div class=\"vclNotificationContent\">\r\n        <vcl-icogram label=\"{{validationError}}\" prepIcon=\"fa:exclamation-circle\"></vcl-icogram>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"vclLayoutHorizontal vclLooseButtonGroup\" [ngClass]=\"buttonAlignmentClass\">\r\n      <button vcl-button\r\n        *ngIf=\"!!alert.showConfirmButton\"\r\n        type=\"button\"\r\n        (click)=\"confirm()\"\r\n        [style.background-color]=\"alert.confirmButtonColor\"\r\n        [ngClass]=\"alert.confirmButtonClass\"\r\n        [disabled]=\"alert.loader\"        \r\n        [appIcon]=\"alert.loader ? null : alert.confirmButtonAppIcon\"\r\n        [prepIcon]=\"alert.loader ? 'fa:refresh fa-spin' : alert.confirmButtonPrepIcon\"\r\n        [label]=\"alert.confirmButtonLabel\"\r\n        >\r\n      </button>\r\n      <button vcl-button\r\n        *ngIf=\"!!alert.showCancelButton\"\r\n        type=\"button\"\r\n        [style.background-color]=\"!!alert.cancelButtonColor\"\r\n        [ngClass]=\"alert.cancelButtonClass\"\r\n        [appIcon]=\"alert.cancelButtonAppIcon\"\r\n        [prepIcon]=\"alert.cancelButtonPrepIcon\"\r\n        [disabled]=\"(!alert.showConfirmButton && !!alert.loader)\"\r\n        [appIcon]=\"(!alert.showConfirmButton && !!alert.loader) ? null : alert.cancelButtonAppIcon\"\r\n        [prepIcon]=\"(!alert.showConfirmButton && !!alert.loader) ? 'fa:refresh fa-spin' : alert.cancelButtonPrepIcon\"        \r\n        [label]=\"alert.cancelButtonLabel\"        \r\n        (click)=\"cancel()\"\r\n        >\r\n      </button>\r\n    </div>\r\n    <div *ngIf=\"!alert.showCancelButton && !alert.showConfirmButton && !!alert.loader\">\r\n      <div class=\"vclLayoutHorizontal vclLayoutCenterJustified\">\r\n        <div class=\"vclBusyIndicator vclIcogram vclLayoutVertical vclLayoutJustified\" role=\"status\">\r\n            <div class=\"vclIcon fa fa-circle-o-notch fa-spin fa-3x fa-fw\" aria-hidden=\"true\" aria-label=\"loading\u2026\" role=\"img\"></div>\r\n          <div class=\"vclText\">Loading\u2026</div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
                 '[tabindex]': '0',
@@ -8301,7 +8321,7 @@ var AlertInputComponent = /** @class */ (function () {
     ], AlertInputComponent.prototype, "valueChange", void 0);
     AlertInputComponent = __decorate$1b([
         Component({
-            template: "<input #input *ngIf=\"control==='input'\" class=\"vclInput\" [placeholder]=\"placeholder\" [ngModel]=\"inputValue\" (ngModelChange)=\"inputValueChange($event)\" autofocus>\n",
+            template: "<input #input *ngIf=\"control==='input'\" class=\"vclInput\" [placeholder]=\"placeholder\" [ngModel]=\"inputValue\" (ngModelChange)=\"inputValueChange($event)\" autofocus>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             selector: 'alert-input'
         })
@@ -8466,7 +8486,7 @@ var BusyIndicatorComponent = /** @class */ (function () {
     BusyIndicatorComponent = __decorate$1e([
         Component({
             selector: 'vcl-busy-indicator',
-            template: "<div class=\"vclLayoutCenterJustified vclIcogram {{layout == 'vertical' ? 'vclLayoutVertical' : 'vclLayoutHorizontal'}}\" role=\"status\">\n  <div class=\"vclIcon vclLayoutSelfCenter {{classSrc}}\" [attr.aria-label]=\"label\" role=\"img\">\n    <img *ngIf=\"!classSrc\" [style.height]=\"iconHeight\" [style.width]=\"iconWidth\" [src]=\"indicatorSrc\" role=\u201Dpresentation\u201D>\n  </div>\n  <div class=\"vclLayoutSelfCenter\">\n    <ng-content></ng-content>\n  </div>\n</div>\n\n"
+            template: "<div class=\"vclLayoutCenterJustified vclIcogram {{layout == 'vertical' ? 'vclLayoutVertical' : 'vclLayoutHorizontal'}}\" role=\"status\">\r\n  <div class=\"vclIcon vclLayoutSelfCenter {{classSrc}}\" [attr.aria-label]=\"label\" role=\"img\">\r\n    <img *ngIf=\"!classSrc\" [style.height]=\"iconHeight\" [style.width]=\"iconWidth\" [src]=\"indicatorSrc\" role=\u201Dpresentation\u201D>\r\n  </div>\r\n  <div class=\"vclLayoutSelfCenter\">\r\n    <ng-content></ng-content>\r\n  </div>\r\n</div>\r\n\r\n"
         }),
         __metadata$L("design:paramtypes", [DomSanitizer])
     ], BusyIndicatorComponent);
@@ -8518,7 +8538,7 @@ var BusyIndicatorCoverComponent = /** @class */ (function () {
     BusyIndicatorCoverComponent = __decorate$1f([
         Component({
             selector: '[vclBusyIndicatorCover]',
-            template: "<ng-content></ng-content>\n<div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\">\n  <div class=\"vclLoadingLayerContent\">\n    <vcl-busy-indicator [type]=\"busyIndicatorType\" [label]=\"busyLabel\" [iconHeight]=\"busyIconHeight\" [iconWidth]=\"busyIconWidth\"\n                        [layout]=\"busyIndicatorDirection\">\n      <span *ngIf=\"busyLabel\">{{busyLabel}}</span>\n    </vcl-busy-indicator>\n  </div>\n</div>\n",
+            template: "<ng-content></ng-content>\r\n<div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\">\r\n  <div class=\"vclLoadingLayerContent\">\r\n    <vcl-busy-indicator [type]=\"busyIndicatorType\" [label]=\"busyLabel\" [iconHeight]=\"busyIconHeight\" [iconWidth]=\"busyIconWidth\"\r\n                        [layout]=\"busyIndicatorDirection\">\r\n      <span *ngIf=\"busyLabel\">{{busyLabel}}</span>\r\n    </vcl-busy-indicator>\r\n  </div>\r\n</div>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], BusyIndicatorCoverComponent);
@@ -8563,7 +8583,7 @@ var NotifierComponent = /** @class */ (function () {
     ], NotifierComponent.prototype, "notifiers", void 0);
     NotifierComponent = __decorate$1h([
         Component({
-            template: "<ng-container *ngFor=\"let notifier of notifiers\">\n  <vcl-notification (mouseenter)=\"notifier.mouseEnter()\"\n                    (mouseleave)=\"notifier.mouseLeave()\"\n                    button=\"fa:times\"\n                    (buttonClick)=\"notifier.close()\"\n                    [showButton]=\"notifier.showCloseButton\"\n                    [iconClass]=\"notifier.iconClass\"\n                    [styleClass]=\"notifier.layerClass\"\n                    [textColor]=\"notifier.textColor\"\n                    [backgroundColor]=\"notifier.backgroundColor\">\n  <vcl-notification-body>\n      <div *ngIf=\"notifier.text && !notifier.html && !notifier.opts.contentComponentDetails\">{{notifier.text}}</div>\n      <div *ngIf=\"notifier.text && notifier.html && !notifier.opts.contentComponentDetails\" [innerHtml]=\"notifier.text\"></div>\n      <vcl-notifier-content-component *ngIf=\"notifier.opts.contentComponentDetails\" [wormholeComponentDetails]=\"notifier.opts.contentComponentDetails\"></vcl-notifier-content-component>\n    </vcl-notification-body>\n  </vcl-notification>\n</ng-container>\n",
+            template: "<ng-container *ngFor=\"let notifier of notifiers\">\r\n  <vcl-notification (mouseenter)=\"notifier.mouseEnter()\"\r\n                    (mouseleave)=\"notifier.mouseLeave()\"\r\n                    button=\"fa:times\"\r\n                    (buttonClick)=\"notifier.close()\"\r\n                    [showButton]=\"notifier.showCloseButton\"\r\n                    [iconClass]=\"notifier.iconClass\"\r\n                    [styleClass]=\"notifier.layerClass\"\r\n                    [textColor]=\"notifier.textColor\"\r\n                    [backgroundColor]=\"notifier.backgroundColor\">\r\n  <vcl-notification-body>\r\n      <div *ngIf=\"notifier.text && !notifier.html && !notifier.opts.contentComponentDetails\">{{notifier.text}}</div>\r\n      <div *ngIf=\"notifier.text && notifier.html && !notifier.opts.contentComponentDetails\" [innerHtml]=\"notifier.text\"></div>\r\n      <vcl-notifier-content-component *ngIf=\"notifier.opts.contentComponentDetails\" [wormholeComponentDetails]=\"notifier.opts.contentComponentDetails\"></vcl-notifier-content-component>\r\n    </vcl-notification-body>\r\n  </vcl-notification>\r\n</ng-container>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             encapsulation: ViewEncapsulation.None,
             animations: [
@@ -8896,7 +8916,7 @@ var VCLNotifierContentComponent = /** @class */ (function () {
     VCLNotifierContentComponent = __decorate$1j([
         Component({
             selector: 'vcl-notifier-content-component',
-            template: "<div #wormholeHost></div>\n"
+            template: "<div #wormholeHost></div>\r\n"
         })
     ], VCLNotifierContentComponent);
     return VCLNotifierContentComponent;
@@ -9328,7 +9348,7 @@ var NotificationComponent = /** @class */ (function () {
     NotificationComponent = __decorate$1n([
         Component({
             selector: 'vcl-notification',
-            template: "<div #notification class=\"vclNotification\" [ngClass]=\"notificationStyleClass\" [ngStyle]=\"notificationStyles\">\n\n  <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" *ngIf=\"header || (nested && headerComponent != null)\" [ngStyle]=\"headerStyle\">\n    <div class=\"vclLayoutFlex\" *ngIf=\"!nested\">{{ header }}</div>\n    <button vcl-button class=\"vclTransparent\" *ngIf=\"(button && showButton) && !nested\" (click)=\"onClick()\" [icon]=\"button\"></button>\n\n    <ng-content *ngIf=\"nested && headerComponent != null\" select=\"vcl-notification-header\"></ng-content>\n  </div>\n\n  <div [ngClass]=\"{'vclLayoutHorizontal': !verticalBody, 'vlcLayoutVertical': verticalBody}\" [ngStyle]=\"bodyStyle\">\n    <div class=\"vclNotificationIconContainer\" *ngIf=\"drawIcon\" [ngStyle]=\"bodyIconStyle\">\n      <span class=\"vclIcon vclNotificationIcon {{ eIconClass }}\" *ngIf=\"iconType == 'fa' || iconType == 'custom'\"></span>\n      <img class=\"vclIcon vclNotificationIcon\" [src]=\"iconImage\" *ngIf=\"iconType == 'image'\">\n    </div>\n\n    <div class=\"vclNotificationContent vclLayoutFlex\">\n      <ng-content *ngIf=\"!nested\"></ng-content>\n\n      <ng-content *ngIf=\"nested && bodyComponent != null\" select=\"vcl-notification-body\"></ng-content>\n    </div>\n\n    <button vcl-button class=\"vclTransparent vclLayoutSelfStart\" *ngIf=\"(button && showButton) && !header\" (click)=\"onClick()\" [icon]=\"button\"></button>\n  </div>\n\n  <div class=\"vclNotificationFooter vclLayoutHorizontal vclLayoutCenter\" [ngStyle]=\"footerStyle\" *ngIf=\"footer || (nested && footerComponent != null)\">\n    <ng-container *ngIf=\"footer && !nested\">{{ footer }}</ng-container>\n    <ng-content *ngIf=\"nested && footerComponent != null\" select=\"vcl-notification-footer\"></ng-content>\n  </div>\n\n</div>\n"
+            template: "<div #notification class=\"vclNotification\" [ngClass]=\"notificationStyleClass\" [ngStyle]=\"notificationStyles\">\r\n\r\n  <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" *ngIf=\"header || (nested && headerComponent != null)\" [ngStyle]=\"headerStyle\">\r\n    <div class=\"vclLayoutFlex\" *ngIf=\"!nested\">{{ header }}</div>\r\n    <button vcl-button class=\"vclTransparent\" *ngIf=\"(button && showButton) && !nested\" (click)=\"onClick()\" [icon]=\"button\"></button>\r\n\r\n    <ng-content *ngIf=\"nested && headerComponent != null\" select=\"vcl-notification-header\"></ng-content>\r\n  </div>\r\n\r\n  <div [ngClass]=\"{'vclLayoutHorizontal': !verticalBody, 'vlcLayoutVertical': verticalBody}\" [ngStyle]=\"bodyStyle\">\r\n    <div class=\"vclNotificationIconContainer\" *ngIf=\"drawIcon\" [ngStyle]=\"bodyIconStyle\">\r\n      <span class=\"vclIcon vclNotificationIcon {{ eIconClass }}\" *ngIf=\"iconType == 'fa' || iconType == 'custom'\"></span>\r\n      <img class=\"vclIcon vclNotificationIcon\" [src]=\"iconImage\" *ngIf=\"iconType == 'image'\">\r\n    </div>\r\n\r\n    <div class=\"vclNotificationContent vclLayoutFlex\">\r\n      <ng-content *ngIf=\"!nested\"></ng-content>\r\n\r\n      <ng-content *ngIf=\"nested && bodyComponent != null\" select=\"vcl-notification-body\"></ng-content>\r\n    </div>\r\n\r\n    <button vcl-button class=\"vclTransparent vclLayoutSelfStart\" *ngIf=\"(button && showButton) && !header\" (click)=\"onClick()\" [icon]=\"button\"></button>\r\n  </div>\r\n\r\n  <div class=\"vclNotificationFooter vclLayoutHorizontal vclLayoutCenter\" [ngStyle]=\"footerStyle\" *ngIf=\"footer || (nested && footerComponent != null)\">\r\n    <ng-container *ngIf=\"footer && !nested\">{{ footer }}</ng-container>\r\n    <ng-content *ngIf=\"nested && footerComponent != null\" select=\"vcl-notification-footer\"></ng-content>\r\n  </div>\r\n\r\n</div>\r\n"
         })
     ], NotificationComponent);
     return NotificationComponent;
@@ -9645,7 +9665,7 @@ var TooltipComponent = /** @class */ (function () {
     TooltipComponent = TooltipComponent_1 = __decorate$1r([
         Component({
             selector: 'vcl-tooltip',
-            template: "<div [@enterAnimation]=\"animationState || _animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\"\n  style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\">\n  <div class=\"vclTooltipContent\">\n    {{ content }}\n    <ng-content></ng-content>\n  </div>\n  <div [class.vclArrowPointer]=\"showArrowPointer\"></div>\n</div>\n",
+            template: "<div [@enterAnimation]=\"animationState || _animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\"\r\n  style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\">\r\n  <div class=\"vclTooltipContent\">\r\n    {{ content }}\r\n    <ng-content></ng-content>\r\n  </div>\r\n  <div [class.vclArrowPointer]=\"showArrowPointer\"></div>\r\n</div>\r\n",
             host: {
                 '[class.vclTooltip]': 'true',
             },
@@ -10809,7 +10829,7 @@ var PasswordInputComponent = /** @class */ (function () {
     ], PasswordInputComponent.prototype, "disabled", void 0);
     PasswordInputComponent = __decorate$1S([
         Component({
-            template: "<ng-content></ng-content>\n<button vcl-button\n        [icon]=\"buttonIcon\" \n        [disabled]=\"disabled\"\n        class=\"vclSquare\" \n        (click)=\"toggle()\">\n</button>\n",
+            template: "<ng-content></ng-content>\r\n<button vcl-button\r\n        [icon]=\"buttonIcon\" \r\n        [disabled]=\"disabled\"\r\n        class=\"vclSquare\" \r\n        (click)=\"toggle()\">\r\n</button>\r\n",
             selector: 'vcl-password-input',
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
@@ -11122,7 +11142,7 @@ var ZoomBoxComponent = /** @class */ (function () {
     ZoomBoxComponent = __decorate$1X([
         Component({
             selector: 'vcl-zoom-box',
-            template: "<div class=\"vclZoomBox\" [ngStyle]=\"{\n'position': 'static',\n'background-image': 'url(' + zoomedSource + ')',\n'width': zoomedWidth + 'px',\n'height': zoomedHeight + 'px',\n'background-position-x': '-' + zoomedX + 'px',\n'background-position-y': '-' + zoomedY + 'px'}\"></div>\n\n",
+            template: "<div class=\"vclZoomBox\" [ngStyle]=\"{\r\n'position': 'static',\r\n'background-image': 'url(' + zoomedSource + ')',\r\n'width': zoomedWidth + 'px',\r\n'height': zoomedHeight + 'px',\r\n'background-position-x': '-' + zoomedX + 'px',\r\n'background-position-y': '-' + zoomedY + 'px'}\"></div>\r\n\r\n",
             host: {
                 '[attr.role]': '"zoombox"',
             },
@@ -11274,7 +11294,7 @@ var GalleryComponent = /** @class */ (function () {
     GalleryComponent = __decorate$1_([
         Component({
             selector: 'vcl-gallery',
-            template: "<div class=\"vclGallery\" touch-action=\"pan-y\">\n  <ng-content></ng-content>\n</div>\n",
+            template: "<div class=\"vclGallery\" touch-action=\"pan-y\">\r\n  <ng-content></ng-content>\r\n</div>\r\n",
             host: {
                 '[attr.role]': '"gallery"',
             }
@@ -11395,7 +11415,7 @@ var GalleryBodyComponent = /** @class */ (function () {
     GalleryBodyComponent = __decorate$20([
         Component({
             selector: 'vcl-gallery-body',
-            template: "<div class=\"vclGalleryContent\" style=\"overflow: hidden;\">\n  <button *ngIf=\"target.selectedImage > 0 || target.wrap\" vcl-button class=\"vclButton vclGalleryPrevButton\" (click)=\"selectPrevious()\">\n    <div class=\"vclIcon fa fa-caret-left\" aria-hidden=\"true\" aria-label=\"Previous\" role=\"img\"></div>\n  </button>\n\n  <div #imageContainer style=\"position: relative; width: 100%; height: 100%; transition: transform 0.5s\" [ngStyle]=\"imageContainerStyle\">\n    <img *ngFor=\"let img of target.imageArray; let i = index\" [attr.data-index]=\"i\" (click)=\"target.selectImage(i)\" (load)=\"imageLoaded()\" [src]=\"img.image\" [alt]=\"img.alt\" style=\"touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: absolute; left: 0; top: 0\">\n  </div>\n\n  <button *ngIf=\"target.selectedImage < (target.images ? target.images.length - 1 : 0) || target.wrap\" vcl-button class=\"vclButton vclGalleryNextButton\" (click)=\"selectNext()\">\n    <div class=\"vclIcon fa fa-caret-right\" aria-hidden=\"true\" aria-label=\"Previous\" role=\"img\"></div>\n  </button>\n</div>\n"
+            template: "<div class=\"vclGalleryContent\" style=\"overflow: hidden;\">\r\n  <button *ngIf=\"target.selectedImage > 0 || target.wrap\" vcl-button class=\"vclButton vclGalleryPrevButton\" (click)=\"selectPrevious()\">\r\n    <div class=\"vclIcon fa fa-caret-left\" aria-hidden=\"true\" aria-label=\"Previous\" role=\"img\"></div>\r\n  </button>\r\n\r\n  <div #imageContainer style=\"position: relative; width: 100%; height: 100%; transition: transform 0.5s\" [ngStyle]=\"imageContainerStyle\">\r\n    <img *ngFor=\"let img of target.imageArray; let i = index\" [attr.data-index]=\"i\" (click)=\"target.selectImage(i)\" (load)=\"imageLoaded()\" [src]=\"img.image\" [alt]=\"img.alt\" style=\"touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: absolute; left: 0; top: 0\">\r\n  </div>\r\n\r\n  <button *ngIf=\"target.selectedImage < (target.images ? target.images.length - 1 : 0) || target.wrap\" vcl-button class=\"vclButton vclGalleryNextButton\" (click)=\"selectNext()\">\r\n    <div class=\"vclIcon fa fa-caret-right\" aria-hidden=\"true\" aria-label=\"Previous\" role=\"img\"></div>\r\n  </button>\r\n</div>\r\n"
         }),
         __param$e(0, Optional()),
         __metadata$1p("design:paramtypes", [GalleryComponent, ElementRef])
@@ -11428,7 +11448,7 @@ var GalleryFooterComponent = /** @class */ (function () {
     GalleryFooterComponent = __decorate$21([
         Component({
             selector: 'vcl-gallery-footer',
-            template: "<div class=\"vclGalleryFooter vclAlignCentered\">\n  {{ target.selectedImage + 1 }}&nbsp;/&nbsp;{{ target.images ? target.images.length : 0 }}\n</div>\n"
+            template: "<div class=\"vclGalleryFooter vclAlignCentered\">\r\n  {{ target.selectedImage + 1 }}&nbsp;/&nbsp;{{ target.images ? target.images.length : 0 }}\r\n</div>\r\n"
         }),
         __param$f(0, Optional()),
         __metadata$1q("design:paramtypes", [GalleryComponent])
@@ -11465,7 +11485,7 @@ var GalleryThumbnailsComponent = /** @class */ (function () {
     GalleryThumbnailsComponent = __decorate$22([
         Component({
             selector: 'vcl-gallery-thumbnails',
-            template: "<div class=\"vclGalleryThumbs vclLayoutHorizontal vclLayoutCenterJustified\" touch-action=\"pan-y\">\n  <div *ngFor=\"let image of target.images; let i = index\" class=\"vclGalleryThumbWrapper\" [ngClass]=\"{'vclSelected': i == target.selectedImage}\" (click)=\"target.selectImage(i)\">\n    <img class=\"vclGalleryThumb\" [src]=\"image.thumbnail || image.image\" [alt]=\"image.alt\">\n  </div>\n</div>\n"
+            template: "<div class=\"vclGalleryThumbs vclLayoutHorizontal vclLayoutCenterJustified\" touch-action=\"pan-y\">\r\n  <div *ngFor=\"let image of target.images; let i = index\" class=\"vclGalleryThumbWrapper\" [ngClass]=\"{'vclSelected': i == target.selectedImage}\" (click)=\"target.selectImage(i)\">\r\n    <img class=\"vclGalleryThumb\" [src]=\"image.thumbnail || image.image\" [alt]=\"image.alt\">\r\n  </div>\r\n</div>\r\n"
         }),
         __param$g(0, Optional()),
         __metadata$1r("design:paramtypes", [GalleryComponent])
@@ -11654,7 +11674,7 @@ var EmbeddedInputGroupComponent = /** @class */ (function (_super) {
     EmbeddedInputGroupComponent = __decorate$26([
         Component({
             selector: 'vcl-embedded-input-group',
-            template: "<div *ngIf='prepIcon' class=\"vclPrepended\">\n  <vcl-icon [icon]='prepIcon'></vcl-icon>\n</div>\n\n<ng-content select=\"input[vcl-input][vcl-embedded-input-group]\"></ng-content>\n\n<div *ngIf='appIcon' class=\"vclAppended\">\n  <vcl-icon [icon]='appIcon'></vcl-icon>\n</div>\n\n<ng-content select=\"button[vcl-button][vcl-embedded-input-group]\"></ng-content>\n",
+            template: "<div *ngIf='prepIcon' class=\"vclPrepended\">\r\n  <vcl-icon [icon]='prepIcon'></vcl-icon>\r\n</div>\r\n\r\n<ng-content select=\"input[vcl-input][vcl-embedded-input-group]\"></ng-content>\r\n\r\n<div *ngIf='appIcon' class=\"vclAppended\">\r\n  <vcl-icon [icon]='appIcon'></vcl-icon>\r\n</div>\r\n\r\n<ng-content select=\"button[vcl-button][vcl-embedded-input-group]\"></ng-content>\r\n",
             host: {
                 '[class.vclInputGroupEmb]': 'true',
                 '[style.display]': '"block"'
@@ -11921,7 +11941,7 @@ var Autocomplete = /** @class */ (function (_super) {
     };
     __decorate$28([
         ViewChild('popover'),
-        __metadata$1u("design:type", PopoverComponent)
+        __metadata$1u("design:type", PopoverComponent$1)
     ], Autocomplete.prototype, "popover", void 0);
     __decorate$28([
         ContentChildren(forwardRef(function () { return AutocompleteOption; })),
@@ -11943,7 +11963,7 @@ var Autocomplete = /** @class */ (function (_super) {
         Component({
             selector: 'vcl-autocomplete',
             exportAs: 'vclAutocomplete',
-            template: "<ng-container *ngIf=\"(target$ | async) as target\">\n  <vcl-popover #popover \n               *ngIf=\"visible$ | async\"\n               [target]=\"target.element\" \n               [visible]=\"true\" \n               targetX=\"left\" \n               targetY=\"bottom\" \n               attachmentX=\"left\" \n               attachmentY=\"top\" \n               [style.width]=\"popoverWidth$ | async\"\n               (mousedown)=\"$event.preventDefault()\"\n               >\n  \n    <ng-container *ngIf=\"(items$ | async)?.length > 0\">\n      <ul class=\"vclDropdown vclNoBorder vclOpen\" role=\"menu\">\n        <ng-container *ngFor=\"let item of items$ | async; let idx = index\">\n          <li *ngIf=\"item.type==='item'\" \n            class=\"vclDropdownItem\"\n            [class.vclHighlighted]=\"idx === highlightedItem\"\n            [class.vclDisabled]=\"disabled || item.disabled\"\n            role=\"menuitem\"\n            (click)=\"target.select(item)\">\n            <div role=\"menuitem\" class=\"vclDropdownItemLabel\">{{item.label}}</div>\n            <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\">{{item.sublabel}}</div>\n          </li>\n          <li *ngIf=\"item.type==='separator'\" role=\"menuitem\">\n            <div class=\"vclSeparator\" role=\"separator\"></div>\n          </li>\n          <li *ngIf=\"item.type==='header'\" class=\"vclDropdownItemGroupHeader\" role=\"menuitem\">\n            <div class=\"vclDropdownItemGroupHeaderLabel\">{{item.label}}</div>\n          </li>\n        </ng-container>\n      </ul>\n    </ng-container>\n    <ng-container *ngFor=\"let c of content$ | async\">\n      <ng-container *ngTemplateOutlet=\"c.templateRef\"></ng-container>\n    </ng-container>\n  </vcl-popover>\n</ng-container>\n",
+            template: "<ng-container *ngIf=\"(target$ | async) as target\">\r\n  <vcl-popover #popover \r\n               *ngIf=\"visible$ | async\"\r\n               [target]=\"target.element\" \r\n               [visible]=\"true\" \r\n               targetX=\"left\" \r\n               targetY=\"bottom\" \r\n               attachmentX=\"left\" \r\n               attachmentY=\"top\" \r\n               [style.width]=\"popoverWidth$ | async\"\r\n               (mousedown)=\"$event.preventDefault()\"\r\n               >\r\n  \r\n    <ng-container *ngIf=\"(items$ | async)?.length > 0\">\r\n      <ul class=\"vclDropdown vclNoBorder vclOpen\" role=\"menu\">\r\n        <ng-container *ngFor=\"let item of items$ | async; let idx = index\">\r\n          <li *ngIf=\"item.type==='item'\" \r\n            class=\"vclDropdownItem\"\r\n            [class.vclHighlighted]=\"idx === highlightedItem\"\r\n            [class.vclDisabled]=\"disabled || item.disabled\"\r\n            role=\"menuitem\"\r\n            (click)=\"target.select(item)\">\r\n            <div role=\"menuitem\" class=\"vclDropdownItemLabel\">{{item.label}}</div>\r\n            <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\">{{item.sublabel}}</div>\r\n          </li>\r\n          <li *ngIf=\"item.type==='separator'\" role=\"menuitem\">\r\n            <div class=\"vclSeparator\" role=\"separator\"></div>\r\n          </li>\r\n          <li *ngIf=\"item.type==='header'\" class=\"vclDropdownItemGroupHeader\" role=\"menuitem\">\r\n            <div class=\"vclDropdownItemGroupHeaderLabel\">{{item.label}}</div>\r\n          </li>\r\n        </ng-container>\r\n      </ul>\r\n    </ng-container>\r\n    <ng-container *ngFor=\"let c of content$ | async\">\r\n      <ng-container *ngTemplateOutlet=\"c.templateRef\"></ng-container>\r\n    </ng-container>\r\n  </vcl-popover>\r\n</ng-container>\r\n",
             styles: ["\n    .vclDropdown {\n      padding: 0;\n      position: static;\n    }\n    .vclPopOver {\n      padding: 0;\n    }\n  "]
         })
     ], Autocomplete);
@@ -12443,7 +12463,7 @@ var VCLAutocompleteModule = /** @class */ (function () {
     }
     VCLAutocompleteModule = __decorate$2b([
         NgModule({
-            imports: [CommonModule, VCLInputModule, VCLPopoverModule, VCLTokenModule],
+            imports: [CommonModule, VCLInputModule, VCLPopoverModule$1, VCLTokenModule],
             exports: [InputAutocompleteDirective, Autocomplete, AutocompleteOption, AutocompleteContent, TokenInputAutocompleteDirective],
             declarations: [InputAutocompleteDirective, Autocomplete, AutocompleteOption, AutocompleteContent, TokenInputAutocompleteDirective],
             providers: [],
@@ -12454,8 +12474,8 @@ var VCLAutocompleteModule = /** @class */ (function () {
 
 var HintOptions = /** @class */ (function () {
     function HintOptions() {
+        this.debug = false;
         this.elementsDisabled = true;
-        this.defaultPosition = HintConfig.DEFAULT_POSITION;
         this.defaultOrder = HintConfig.DEFAULT_ORDER;
         this.defaultLayer = HintConfig.DEFAULT_PX_LAYER;
         this.applyRelative = HintConfig.APPLY_RELATIVE;
@@ -12466,26 +12486,19 @@ var HintOptions = /** @class */ (function () {
         this.exitLabel = 'Exit';
         this.previousIcon = 'fa fa-chevron-left';
         this.nextIcon = 'fa fa-chevron-right';
-        this.exitIcon = 'fa fa-chevron-close';
+        this.exitIcon = 'fa fa-close';
+        this.buttonClass = '';
     }
     return HintOptions;
 }());
 var HintConfig = {
     HINT_TAG: 'vcl-tour-step',
-    DEFAULT_POSITION: 'bottom',
     Z_INDEX: '999',
     DEFAULT_ORDER: 99,
     DEFAULT_PX_LAYER: 15,
     APPLY_RELATIVE: true,
     DISMISS_ON_OVERLAY: false,
 };
-var Placement$1;
-(function (Placement) {
-    Placement["Top"] = "top";
-    Placement["Bottom"] = "bottom";
-    Placement["Left"] = "left";
-    Placement["Right"] = "right";
-})(Placement$1 || (Placement$1 = {}));
 
 var __decorate$2c = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -12495,12 +12508,14 @@ var __decorate$2c = (this && this.__decorate) || function (decorators, target, k
 };
 var HintService = /** @class */ (function () {
     function HintService() {
+        this.tag = HintService_1.Tag;
         this.anchors = {};
         this.overlay$ = new Subject();
         this.registration$ = new Subject();
         this.finish$ = new Subject();
         this.showingStep$ = new Subject();
     }
+    HintService_1 = HintService;
     /**
      * Initialize hint service
      * @method initialize
@@ -12509,11 +12524,20 @@ var HintService = /** @class */ (function () {
      */
     HintService.prototype.initialize = function (options) {
         if (options === void 0) { options = new HintOptions(); }
+        var tag = this.tag + ".initialize()";
+        var debug = this.debug || false;
         this.options = Object.assign(new HintOptions(), options);
+        if (debug)
+            console.log(tag, 'this.options:', this.options);
+        this.debug = this.options.debug || false;
+        if (debug)
+            console.log(tag, 'this.options.stepTag:', this.options.stepTag);
         var nodes = document.getElementsByTagName(this.options.stepTag);
+        if (debug)
+            console.log(tag, 'nodes:', nodes);
         this.steps = this.initSteps(nodes);
-        this.startAt(0);
-        this.overlay$.next(true);
+        if (debug)
+            console.log(tag, 'this.steps:', this.steps);
     };
     /**
      * Show step
@@ -12521,7 +12545,13 @@ var HintService = /** @class */ (function () {
      * @param  step [description]
      */
     HintService.prototype.show = function (step) {
-        var anchor = this.anchors[step.selector + "_" + step.order];
+        var tag = this.tag + ".show()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'step:', step);
+        if (!step)
+            return;
+        var anchor = this.anchors[step.target + "_" + step.order];
         if (!anchor) {
             return;
         }
@@ -12532,8 +12562,12 @@ var HintService = /** @class */ (function () {
      * @method showNext
      */
     HintService.prototype.showNext = function () {
+        var tag = this.tag + ".showNext()";
+        var debug = this.debug || false;
         this.currentStep = this.currentStep != undefined ? this.steps[this.steps.indexOf(this.currentStep) + 1] : undefined;
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.selector + "_" + this.currentStep.order] : null;
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
+        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
         if (!anchor) {
             return;
         }
@@ -12544,8 +12578,12 @@ var HintService = /** @class */ (function () {
      * @method overlayNext
      */
     HintService.prototype.overlayNext = function () {
+        var tag = this.tag + ".overlayNext()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
         if (this.hasNext() && this.currentStep != undefined) {
-            this.anchors[this.currentStep.selector + "_" + this.currentStep.order].hideStep();
+            this.anchors[this.currentStep.target + "_" + this.currentStep.order].hideStep();
             this.showNext();
         }
         else {
@@ -12557,8 +12595,12 @@ var HintService = /** @class */ (function () {
      * @method showPrevious
      */
     HintService.prototype.showPrevious = function () {
+        var tag = this.tag + ".showPrevious()";
+        var debug = this.debug || false;
         this.currentStep = this.currentStep != undefined ? this.steps[this.steps.indexOf(this.currentStep) - 1] : undefined;
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.selector + "_" + this.currentStep.order] : null;
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
+        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
         if (!anchor) {
             return;
         }
@@ -12567,14 +12609,14 @@ var HintService = /** @class */ (function () {
     /**
      * Register hint component
      * @method register
-     * @param  selector  bonded to
+     * @param  target  bonded to
      * @param  component itself
      */
-    HintService.prototype.register = function (selector, component) {
-        if (this.anchors[selector]) {
-            throw 'selector ' + selector + ' already registered!';
+    HintService.prototype.register = function (target, component) {
+        if (this.anchors[target]) {
+            throw 'target ' + target + ' already registered!';
         }
-        this.anchors[selector] = component;
+        this.anchors[target] = component;
         this.registration$.next(true);
     };
     /**
@@ -12598,8 +12640,12 @@ var HintService = /** @class */ (function () {
      * @method end
      */
     HintService.prototype.end = function () {
+        var tag = this.tag + ".end()";
+        var debug = this.debug || false;
         this.overlay$.next(false);
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.selector + "_" + this.currentStep.order] : null;
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
+        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
         if (!anchor) {
             return;
         }
@@ -12609,12 +12655,26 @@ var HintService = /** @class */ (function () {
     };
     /**
      * Start hint tour at some position
-     * @method startAt
+     * @method start
      * @param  stepId position in this.steps
      */
-    HintService.prototype.startAt = function (stepId) {
+    HintService.prototype.start = function (stepId) {
+        if (stepId === void 0) { stepId = 0; }
+        var tag = this.tag + ".start()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'stepId:', stepId);
+        if (debug)
+            console.log(tag, 'this.steps:', this.steps);
+        if (!this.steps)
+            this.initialize();
         this.currentStep = this.steps[stepId];
+        if (debug)
+            console.log(tag, 'this.currentStep:', this.currentStep);
+        if (!this.currentStep)
+            return;
         this.show(this.currentStep);
+        this.overlay$.next(true);
     };
     /**
      * Convert Element[] to Step[]
@@ -12626,21 +12686,21 @@ var HintService = /** @class */ (function () {
         var steps = [];
         for (var i = 0; i < nodes.length; i++) {
             steps.push({
-                selector: nodes[i].getAttribute('selector'),
+                target: nodes[i].getAttribute('target'),
                 order: Number(nodes[i].getAttribute('order')) || this.options.defaultOrder,
             });
         }
-        return steps = steps.sort(function (el1, el2) {
-            return el1.order - el2.order;
-        });
+        return steps.sort(function (el1, el2) { return el1.order - el2.order; });
     };
     HintService.prototype.putOverlay = function () {
         document.getElementsByTagName('body');
     };
-    HintService = __decorate$2c([
+    HintService.Tag = 'HintService';
+    HintService = HintService_1 = __decorate$2c([
         Injectable()
     ], HintService);
     return HintService;
+    var HintService_1;
 }());
 
 var __decorate$2d = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12666,7 +12726,7 @@ var TourOverlayComponent = /** @class */ (function () {
         Component({
             selector: 'vcl-tour-overlay',
             template: "<div class=\"hintOverlay\" *ngIf=\"show\" (click)=\"dismiss()\"></div>",
-            styles: ["\n.hintOverlay {\n    position: fixed !important ;\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, .5);\n    z-index: 20;\n    top: 0;\n    left: 0;\n}"]
+            styles: ["\r\n.hintOverlay {\r\n    position: fixed !important ;\r\n    width: 100%;\r\n    height: 100%;\r\n    background: rgba(0, 0, 0, .5);\r\n    z-index: 20;\r\n    top: 0;\r\n    left: 0;\r\n}"]
         }),
         __metadata$1x("design:paramtypes", [HintService])
     ], TourOverlayComponent);
@@ -12685,15 +12745,34 @@ var __metadata$1y = (this && this.__metadata) || function (k, v) {
 var TourComponent = /** @class */ (function () {
     function TourComponent(hint) {
         this.hint = hint;
+        this.tag = TourComponent_1.Tag;
+        this.debug = true;
+        this.debugPopover = true;
+        this.targetX = AttachmentX.Left;
+        this.attachmentX = AttachmentX.Right;
+        this.targetY = AttachmentY.Center;
+        this.attachmentY = AttachmentY.Center;
+        var tag = this.tag + ".constructor()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'hint.options:', hint.options);
     }
+    TourComponent_1 = TourComponent;
+    Object.defineProperty(TourComponent.prototype, "classes", {
+        get: function () {
+            return "vclTourContainer step" + this.order;
+        },
+        enumerable: true,
+        configurable: true
+    });
     TourComponent.prototype.ngOnInit = function () {
-        this.hint.register(this.selector + "_" + Number(this.order || 0), this);
+        // this.order = Number(typeof this.order === 'number' ? this.order : this.hint.options.defaultOrder);
+        this.hint.register(this.target + "_" + Number(this.order || 0), this);
     };
     TourComponent.prototype.showStep = function () {
         this.hint.showingStep$.next(this);
-        this.position = this.position || this.hint.options.defaultPosition;
         this.order = +this.order || this.hint.options.defaultOrder;
-        var highlightedElement = document.getElementById(this.selector);
+        var highlightedElement = this.popover.targetElement;
         if (highlightedElement) {
             highlightedElement.style.zIndex = HintConfig.Z_INDEX;
             if (this.hint.options.elementsDisabled) {
@@ -12702,47 +12781,19 @@ var TourComponent = /** @class */ (function () {
             if (this.hint.options.applyRelative) {
                 this.enableHighlight(highlightedElement);
             }
-            switch (this.position) {
-                case Placement$1.Top:
-                    this.transformClass = 'transformX_50 transformY_100';
-                    this.topPos = highlightedElement.offsetTop - this.hint.options.defaultLayer;
-                    this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth / 2;
-                    break;
-                case Placement$1.Bottom:
-                    this.transformClass = 'transformX_50';
-                    this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight + this.hint.options.defaultLayer;
-                    this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth / 2;
-                    break;
-                case Placement$1.Left:
-                    this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-                    this.leftPos = highlightedElement.offsetLeft - this.hint.options.defaultLayer;
-                    this.transformClass = 'transformY_50 transformX_100';
-                    break;
-                case Placement$1.Right:
-                    this.topPos = highlightedElement.offsetTop + highlightedElement.offsetHeight / 2;
-                    this.leftPos = highlightedElement.offsetLeft + highlightedElement.offsetWidth + this.hint.options.defaultLayer;
-                    this.transformClass = 'transformY_50';
-                    break;
-                default:
-                    throw 'Invalid hint position: ' + this.position;
-            }
         }
-        else {
-            this.topPos = 0;
-            this.leftPos = 0;
-        }
-        this.showMe = true;
+        this.visible = true;
         this.hasNext = this.hint.hasNext();
         this.hasPrevious = this.hint.hasPrevious();
     };
     TourComponent.prototype.hideStep = function () {
-        var highlightedElement = document.getElementById(this.selector);
+        var highlightedElement = this.popover.targetElement;
         if (highlightedElement) {
             highlightedElement.style.zIndex = null;
             this.enableClick(highlightedElement);
             this.disableHighlight(highlightedElement);
         }
-        this.showMe = false;
+        this.visible = false;
     };
     TourComponent.prototype.exit = function () {
         this.hint.end();
@@ -12769,31 +12820,62 @@ var TourComponent = /** @class */ (function () {
     TourComponent.prototype.disableHighlight = function (element) {
         element.style.position = null;
     };
+    TourComponent.Tag = 'TourComponent';
+    __decorate$2e([
+        Input(),
+        __metadata$1y("design:type", Boolean)
+    ], TourComponent.prototype, "debug", void 0);
+    __decorate$2e([
+        Input(),
+        __metadata$1y("design:type", Boolean)
+    ], TourComponent.prototype, "debugPopover", void 0);
+    __decorate$2e([
+        ViewChild('popover'),
+        __metadata$1y("design:type", PopoverComponent)
+    ], TourComponent.prototype, "popover", void 0);
+    __decorate$2e([
+        HostBinding('class'),
+        __metadata$1y("design:type", String),
+        __metadata$1y("design:paramtypes", [])
+    ], TourComponent.prototype, "classes", null);
     __decorate$2e([
         Input(),
         __metadata$1y("design:type", String)
     ], TourComponent.prototype, "title", void 0);
     __decorate$2e([
         Input(),
-        __metadata$1y("design:type", String)
-    ], TourComponent.prototype, "selector", void 0);
-    __decorate$2e([
-        Input(),
         __metadata$1y("design:type", Number)
     ], TourComponent.prototype, "order", void 0);
     __decorate$2e([
         Input(),
+        __metadata$1y("design:type", Object)
+    ], TourComponent.prototype, "target", void 0);
+    __decorate$2e([
+        Input(),
         __metadata$1y("design:type", String)
-    ], TourComponent.prototype, "position", void 0);
-    TourComponent = __decorate$2e([
+    ], TourComponent.prototype, "targetX", void 0);
+    __decorate$2e([
+        Input(),
+        __metadata$1y("design:type", String)
+    ], TourComponent.prototype, "attachmentX", void 0);
+    __decorate$2e([
+        Input(),
+        __metadata$1y("design:type", String)
+    ], TourComponent.prototype, "targetY", void 0);
+    __decorate$2e([
+        Input(),
+        __metadata$1y("design:type", String)
+    ], TourComponent.prototype, "attachmentY", void 0);
+    TourComponent = TourComponent_1 = __decorate$2e([
         Component({
             selector: HintConfig.HINT_TAG,
-            template: "<div *ngIf=\"showMe\"\n  class=\"vclTourContainer {{ transformClass }} step{{ order }} {{ position }}\"\n  [ngStyle]=\"{'top': topPos+'px', 'left': leftPos+'px'}\" >\n\n    <div class=\"vclTourContainerHeader\" *ngIf=\"title\">\n      {{ title }}\n    </div>\n\n    <div class=\"vclTourContainerContent\">\n      <ng-content></ng-content>\n    </div>\n\n    <div class=\"vclTourContainerFooter\">\n      \n      <button vcl-button *ngIf=\"hasPrevious\"\n        [label]=\"hint.options.previousLabel\"\n        [prepIcon]=\"hint.options.previousIcon\"\n        (click)=\"previous()\">\n      </button>\n\n      <button vcl-button *ngIf=\"hasNext\"\n        [label]=\"hint.options.nextLabel\"\n        [prepIcon]=\"hint.options.nextIcon\"\n        (click)=\"next()\">\n      </button>\n\n      <button vcl-button\n        [label]=\"hint.options.exitLabel\"\n        [prepIcon]=\"hint.options.exitIcon\"\n        (click)=\"exit()\">\n      </button>\n\n    </div>\n  </div>",
-            styles: [".vclTourContainer {\n    position: absolute !important;\n    background-color: #fff;\n    z-index: 999;\n    text-align: center;\n    font-size: 14px;\n    color: #000;\n    border-radius: 5px;\n    -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n    box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  }\n  \n.vclTourContainer .vclTourContainerHeader {\n  padding: 10px;\n  border-bottom: 1px solid #ccc;\n  background-color: #ddd;\n  border-radius: 5px;\n  -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n  box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\n}\n  \n.vclTourContainer .vclTourContainerContent {\n  padding: 10px;\n}\n\n.vclTourContainer .vclTourContainerFooter {\n  padding: 10px;\n}\n\n.vclTourContainer .vclButton:first {\n  margin-left: 0;\n}\n  \n.vclTourContainer.transformX_50.transformY_100 {\n  -webkit-transform: translateX(-50%) translateY(-100%);\n  transform: translateX(-50%) translateY(-100%);\n}\n  \n.vclTourContainer.transformX_50 {\n  -webkit-transform: translateX(-50%);\n  transform: translateX(-50%);\n}\n  \n.vclTourContainer.transformY_50 {\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n  \n.vclTourContainer.transformY_50.transformX_100 {\n  -webkit-transform: translateX(-100%) translateY(-50%);\n  transform: translateX(-100%) translateY(-50%);\n}\n  "]
+            template: "<vcl-popover #popover\r\n  [debug]=\"debugPopover\"\r\n  [visible]=\"visible\"\r\n  [target]=\"target\"\r\n  [targetX]=\"targetX\"\r\n  [attachmentX]=\"attachmentX\"\r\n  [targetY]=\"targetY\"\r\n  [attachmentY]=\"attachmentY\"\r\n  [style.z-index]=\"20\">\r\n\r\n  <div class=\"vclTourContainer\">\r\n\r\n    <div class=\"vclTourContainerHeader\" *ngIf=\"title\">\r\n      {{ title }}\r\n    </div>\r\n\r\n    <div class=\"vclTourContainerContent\">\r\n      <ng-content></ng-content>\r\n    </div>\r\n\r\n    <div class=\"vclTourContainerFooter\">\r\n      \r\n      <button vcl-button *ngIf=\"hasPrevious\"\r\n        [ngClass]=\"hint.options?.buttonClass\"\r\n        [label]=\"hint.options?.previousLabel\"\r\n        [prepIcon]=\"hint.options?.previousIcon\"\r\n        (click)=\"previous()\">\r\n      </button>\r\n\r\n      <button vcl-button *ngIf=\"hasNext\"\r\n        [ngClass]=\"hint.options?.buttonClass\"\r\n        [label]=\"hint.options?.nextLabel\"\r\n        [appIcon]=\"hint.options?.nextIcon\"\r\n        (click)=\"next()\">\r\n      </button>\r\n\r\n      <button vcl-button\r\n        [ngClass]=\"hint.options?.buttonClass\"\r\n        [label]=\"hint.options?.exitLabel\"\r\n        [prepIcon]=\"hint.options?.exitIcon\"\r\n        (click)=\"exit()\">\r\n      </button>\r\n\r\n    </div>\r\n    \r\n  </div>\r\n\r\n</vcl-popover>",
+            styles: [".vclTourContainer {\r\n    background-color: #fff;\r\n    text-align: center;\r\n    font-size: 14px;\r\n    color: #000;\r\n    border-radius: 5px;\r\n    -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\r\n    box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\r\n  }\r\n  \r\n.vclTourContainer .vclTourContainerHeader {\r\n  padding: 10px;\r\n  border-bottom: 1px solid #ccc;\r\n  background-color: #ddd;\r\n  border-radius: 5px;\r\n  -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\r\n  box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\r\n}\r\n  \r\n.vclTourContainer .vclTourContainerContent {\r\n  padding: 10px;\r\n}\r\n\r\n.vclTourContainer .vclTourContainerFooter {\r\n  padding: 10px;\r\n}\r\n\r\n.vclTourContainer .vclButton:first {\r\n  margin-left: 0;\r\n}"]
         }),
         __metadata$1y("design:paramtypes", [HintService])
     ], TourComponent);
     return TourComponent;
+    var TourComponent_1;
 }());
 
 var __decorate$2f = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -12807,7 +12889,7 @@ var VCLTourModule = /** @class */ (function () {
     }
     VCLTourModule = __decorate$2f([
         NgModule({
-            imports: [CommonModule, VCLButtonModule],
+            imports: [CommonModule, VCLPopoverModule, VCLButtonModule],
             exports: [TourComponent, TourOverlayComponent],
             declarations: [TourComponent, TourOverlayComponent],
             providers: [HintService],
@@ -12973,7 +13055,7 @@ var RatingComponent = /** @class */ (function () {
     RatingComponent = __decorate$2g([
         Component({
             selector: 'vcl-rating',
-            template: "<ng-container *ngIf=\"type === 'horizontal' || type === 'vertical'\">\n  <span class=\"vclRating\"\n        [class.vclDisabled]=\"disabled\"\n        [class.vclRatingVertical]=\"type === 'vertical'\"\n        style=\"height: unset\">\n    <span *ngFor=\"let star of starArray\"\n          [ngClass]=\"getIcon(star)\"\n          [attr.tabindex]=\"readonly ? undefined : 0\"\n          (mousedown)=\"clickStar(star)\"\n          [ngStyle]=\"{'font-size': iconSize}\">\n    </span>\n  </span>\n</ng-container>\n<ng-container *ngIf=\"type === 'small'\">\n  <span class=\"vclRating\" [class.vclDisabled]=\"disabled\" style=\"height: unset\">\n    <span [ngClass]=\"getIcon(star, true)\" [ngStyle]=\"{'font-size': iconSize}\">\n    </span>\n    <strong *ngIf=\"showText\" [ngStyle]=\"{'font-size': textSize}\">{{ value }}</strong>\n  </span>\n</ng-container>\n",
+            template: "<ng-container *ngIf=\"type === 'horizontal' || type === 'vertical'\">\r\n  <span class=\"vclRating\"\r\n        [class.vclDisabled]=\"disabled\"\r\n        [class.vclRatingVertical]=\"type === 'vertical'\"\r\n        style=\"height: unset\">\r\n    <span *ngFor=\"let star of starArray\"\r\n          [ngClass]=\"getIcon(star)\"\r\n          [attr.tabindex]=\"readonly ? undefined : 0\"\r\n          (mousedown)=\"clickStar(star)\"\r\n          [ngStyle]=\"{'font-size': iconSize}\">\r\n    </span>\r\n  </span>\r\n</ng-container>\r\n<ng-container *ngIf=\"type === 'small'\">\r\n  <span class=\"vclRating\" [class.vclDisabled]=\"disabled\" style=\"height: unset\">\r\n    <span [ngClass]=\"getIcon(star, true)\" [ngStyle]=\"{'font-size': iconSize}\">\r\n    </span>\r\n    <strong *ngIf=\"showText\" [ngStyle]=\"{'font-size': textSize}\">{{ value }}</strong>\r\n  </span>\r\n</ng-container>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$e],
             styles: ["\n      .vclRatingVertical {\n        flex-direction: column;\n      }\n    "]
@@ -13003,4 +13085,4 @@ var VCLRatingModule = /** @class */ (function () {
     return VCLRatingModule;
 }());
 
-export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule$1 as VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, HintService, TourComponent, VCLTourModule, VCLRatingModule };
+export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule$1 as VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent$1 as PopoverComponent, AttachmentX$1 as AttachmentX, AttachmentY$1 as AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule$1 as VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, HintService, HintConfig, TourComponent, VCLTourModule, VCLRatingModule };

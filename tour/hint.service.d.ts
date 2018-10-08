@@ -1,7 +1,10 @@
 import { Subject } from 'rxjs';
 import { TourComponent } from './tour.component';
-import { IHintService, IHintOptions, HintOptions, Step } from './types';
-export declare class HintService implements IHintService {
+import { IHintOptions, HintOptions, Step } from './types';
+export declare class HintService {
+    private static readonly Tag;
+    private readonly tag;
+    private debug;
     currentStep: Step | undefined;
     steps: Step[];
     options: HintOptions;
@@ -43,10 +46,10 @@ export declare class HintService implements IHintService {
     /**
      * Register hint component
      * @method register
-     * @param  selector  bonded to
+     * @param  target  bonded to
      * @param  component itself
      */
-    register(selector: string, component: TourComponent): void;
+    register(target: string, component: TourComponent): void;
     /**
      * Is {Step} this.currentStep has next
      * @method hasNext
@@ -66,10 +69,10 @@ export declare class HintService implements IHintService {
     end(): void;
     /**
      * Start hint tour at some position
-     * @method startAt
+     * @method start
      * @param  stepId position in this.steps
      */
-    startAt(stepId: number): void;
+    start(stepId?: number): void;
     /**
      * Convert Element[] to Step[]
      * @method initSteps

@@ -109,7 +109,7 @@ var FlipSwitchComponent = /** @class */ (function () {
     FlipSwitchComponent = __decorate([
         Component({
             selector: 'vcl-flip-switch',
-            template: "<label class=\"vclFlipSwitchLabel\">\n  <div class=\"vclFlipSwitchTrack\">\n    <div class=\"vclFlipSwitchActive\" [attr.aria-hidden]=\"!value\">{{onLabel}}</div>\n    <div class=\"vclFlipSwitchInactive\" [attr.aria-hidden]=\"value\">{{offLabel}}</div>\n  </div>\n  <div class=\"vclFlipSwitchKnob\"></div>\n</label>\n",
+            template: "<label class=\"vclFlipSwitchLabel\">\r\n  <div class=\"vclFlipSwitchTrack\">\r\n    <div class=\"vclFlipSwitchActive\" [attr.aria-hidden]=\"!value\">{{onLabel}}</div>\r\n    <div class=\"vclFlipSwitchInactive\" [attr.aria-hidden]=\"value\">{{offLabel}}</div>\r\n  </div>\r\n  <div class=\"vclFlipSwitchKnob\"></div>\r\n</label>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {

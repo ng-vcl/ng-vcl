@@ -23,7 +23,7 @@ var TourOverlayComponent = /** @class */ (function () {
         Component({
             selector: 'vcl-tour-overlay',
             template: "<div class=\"hintOverlay\" *ngIf=\"show\" (click)=\"dismiss()\"></div>",
-            styles: ["\n.hintOverlay {\n    position: fixed !important ;\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, .5);\n    z-index: 20;\n    top: 0;\n    left: 0;\n}"]
+            styles: ["\r\n.hintOverlay {\r\n    position: fixed !important ;\r\n    width: 100%;\r\n    height: 100%;\r\n    background: rgba(0, 0, 0, .5);\r\n    z-index: 20;\r\n    top: 0;\r\n    left: 0;\r\n}"]
         }),
         __metadata("design:paramtypes", [HintService])
     ], TourOverlayComponent);
