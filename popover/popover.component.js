@@ -130,7 +130,7 @@ var PopoverComponent = /** @class */ (function (_super) {
     };
     PopoverComponent.prototype.onChange = function (changes) {
         if (changes === void 0) { changes = { target: { currentValue: this.target } }; }
-        var tag = PopoverComponent_1.Tag + ".onChange()";
+        var tag = this.tag + ".onChange()";
         var debug = this.debug || false;
         if (debug)
             console.log(tag, 'changes:', changes);
@@ -138,7 +138,7 @@ var PopoverComponent = /** @class */ (function (_super) {
             this.setTarget(changes.target.currentValue);
             this.setTag();
         }
-        this.reposition();
+        // this.reposition();
     };
     PopoverComponent.prototype.setTarget = function (value) {
         if (value === void 0) { value = this.target; }
@@ -178,14 +178,17 @@ var PopoverComponent = /** @class */ (function (_super) {
     };
     PopoverComponent.prototype.reposition = function () {
         var tag = this.tag + ".reposition()";
+        var debug = this.debug || false;
         var targetPos = this.targetElement ? this.targetElement.getBoundingClientRect() : undefined;
-        if (this.debug)
+        if (debug)
             console.log(tag, 'targetPos:', targetPos);
-        if (!this.visible || !targetPos)
+        if (!targetPos)
             return;
         var ownPos = this.getAttachmentPosition();
-        if (this.debug)
+        if (debug)
             console.log(tag, 'ownPos:', ownPos);
+        if (!ownPos)
+            return;
         var mustX = this.targetX === AttachmentX.Center ?
             targetPos[AttachmentX.Left] + targetPos[Dimension.Width] / 2 :
             targetPos[this.targetX];
@@ -201,7 +204,7 @@ var PopoverComponent = /** @class */ (function (_super) {
             ownPos[AttachmentY.Top] + ownPos[Dimension.Height] / 2 :
             ownPos[this.attachmentY];
         var diffY = mustY - isY + this.offsetAttachmentY;
-        if (this.debug) {
+        if (debug) {
             console.log(tag, {
                 targetPos: targetPos,
                 ownPos: ownPos,
@@ -238,7 +241,7 @@ var PopoverComponent = /** @class */ (function (_super) {
             }
             _this.state = PopoverState.visible;
             _this.cd.markForCheck();
-        }, 0);
+        });
     };
     PopoverComponent.prototype.close = function () {
         var _this = this;
