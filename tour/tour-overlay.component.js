@@ -8,24 +8,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { HintService } from './hint.service';
+import { TourService } from './tour.service';
 var TourOverlayComponent = /** @class */ (function () {
-    function TourOverlayComponent(hint) {
-        var _this = this;
-        this.hint = hint;
-        this.hint.overlay$.subscribe(function (data) { return _this.show = data; });
+    function TourOverlayComponent(tour) {
+        this.tour = tour;
     }
-    TourOverlayComponent.prototype.dismiss = function () {
-        if (this.hint.options.dismissOnOverlay)
-            this.hint.overlayNext();
-    };
     TourOverlayComponent = __decorate([
         Component({
             selector: 'vcl-tour-overlay',
-            template: "<div class=\"hintOverlay\" *ngIf=\"show\" (click)=\"dismiss()\"></div>",
-            styles: ["\r\n.hintOverlay {\r\n    position: fixed !important ;\r\n    width: 100%;\r\n    height: 100%;\r\n    background: rgba(0, 0, 0, .5);\r\n    z-index: 20;\r\n    top: 0;\r\n    left: 0;\r\n}"]
+            template: "<div \r\n  class=\"vclTourOverlay\" \r\n  [class.vclLayoutHidden]=\"!tour.showOverlay\"\r\n  (click)=\"tour.onOverlayClick()\">\r\n</div>",
+            styles: ["\r\n.vclTourOverlay {\r\n    position: fixed !important ;\r\n    width: 100%;\r\n    height: 100%;\r\n    background: rgba(0, 0, 0, .5);\r\n    z-index: 20;\r\n    top: 0;\r\n    left: 0;\r\n}"]
         }),
-        __metadata("design:paramtypes", [HintService])
+        __metadata("design:paramtypes", [TourService])
     ], TourOverlayComponent);
     return TourOverlayComponent;
 }());

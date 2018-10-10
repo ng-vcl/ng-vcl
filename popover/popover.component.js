@@ -20,7 +20,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, HostListener, Inject, InjectionToken, Input, Optional, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, HostListener, Inject, InjectionToken, Input, Optional, Output, } from '@angular/core';
 import { AnimationBuilder } from '@angular/animations';
 import { ObservableComponent } from '../core/index';
 export var AttachmentX = {
@@ -47,26 +47,25 @@ export var PopoverState;
 export var POPOVER_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#popover_animations');
 var PopoverComponent = /** @class */ (function (_super) {
     __extends(PopoverComponent, _super);
-    function PopoverComponent(me, builder, cdRef, animations) {
+    function PopoverComponent(ref, builder, cd, animations) {
         var _this = _super.call(this) || this;
-        _this.me = me;
+        _this.ref = ref;
         _this.builder = builder;
-        _this.cdRef = cdRef;
+        _this.cd = cd;
         _this.animations = animations;
+        _this.state = PopoverState.hidden;
+        _this.translateX = 1;
+        _this.translateY = 0;
         _this.enableStyling = true;
         _this.debug = false;
         _this.targetX = AttachmentX.Left;
-        _this.targetY = AttachmentY.Bottom;
         _this.attachmentX = AttachmentX.Left;
         _this.offsetAttachmentX = 0;
+        _this.targetY = AttachmentY.Bottom;
         _this.attachmentY = AttachmentY.Top;
         _this.offsetAttachmentY = 0;
         _this.willClose = new EventEmitter();
         _this.willOpen = new EventEmitter();
-        _this.state = PopoverState.hidden;
-        _this.translateX = 1;
-        _this.translateY = 0;
-        _this.observeChanges('target', 'targetX', 'targetY', 'attachmentX', 'attachmentY').subscribe(_this.onChange.bind(_this));
         return _this;
     }
     PopoverComponent_1 = PopoverComponent;
@@ -75,12 +74,7 @@ var PopoverComponent = /** @class */ (function (_super) {
             return (this.state === PopoverState.opening || this.state === PopoverState.visible);
         },
         set: function (value) {
-            if (value) {
-                this.open();
-            }
-            else {
-                this.close();
-            }
+            value ? this.open() : this.close();
         },
         enumerable: true,
         configurable: true
@@ -106,8 +100,40 @@ var PopoverComponent = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
+    PopoverComponent.prototype.onWindowResize = function (event) {
+        this.reposition();
+    };
+    PopoverComponent.prototype.ngOnChanges = function (changes) {
+        _super.prototype.ngOnChanges.call(this, changes);
+        var tag = this.tag + ".ngOnChanges()";
+        if (this.debug)
+            console.log(tag, 'changes:', changes);
+        this.onChange(changes);
+    };
+    PopoverComponent.prototype.ngOnInit = function () {
+        this.setTag();
+        var tag = this.tag + ".ngOnInit()";
+        if (this.debug)
+            console.log(tag, 'this:', this);
+    };
+    PopoverComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        setTimeout(function () { return _this.onChange(); });
+        if (this.animations) {
+            if (this.animations.enter) {
+                this.enterAnimationFactory = this.builder.build(this.animations.enter);
+            }
+            if (this.animations.leave) {
+                this.leaveAnimationFactory = this.builder.build(this.animations.leave);
+            }
+        }
+    };
     PopoverComponent.prototype.onChange = function (changes) {
         if (changes === void 0) { changes = { target: { currentValue: this.target } }; }
+        var tag = PopoverComponent_1.Tag + ".onChange()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'changes:', changes);
         if (changes.target) {
             this.setTarget(changes.target.currentValue);
             this.setTag();
@@ -117,6 +143,9 @@ var PopoverComponent = /** @class */ (function (_super) {
     PopoverComponent.prototype.setTarget = function (value) {
         if (value === void 0) { value = this.target; }
         this.targetElement = this.getTargetElement(value);
+    };
+    PopoverComponent.prototype.setTag = function () {
+        this.tag = PopoverComponent_1.Tag + "." + this.target;
     };
     PopoverComponent.prototype.getTargetElement = function (value) {
         var tag = PopoverComponent_1.Tag + ".getTargetElement()";
@@ -147,9 +176,6 @@ var PopoverComponent = /** @class */ (function (_super) {
             console.log(tag, 'el:', el);
         return el;
     };
-    PopoverComponent.prototype.setTag = function () {
-        this.tag = PopoverComponent_1.Tag + "." + this.target;
-    };
     PopoverComponent.prototype.reposition = function () {
         var tag = this.tag + ".reposition()";
         var targetPos = this.targetElement ? this.targetElement.getBoundingClientRect() : undefined;
@@ -174,7 +200,7 @@ var PopoverComponent = /** @class */ (function (_super) {
         var isY = this.attachmentY === AttachmentY.Center ?
             ownPos[AttachmentY.Top] + ownPos[Dimension.Height] / 2 :
             ownPos[this.attachmentY];
-        var diffY = mustY - isY + +this.offsetAttachmentY;
+        var diffY = mustY - isY + this.offsetAttachmentY;
         if (this.debug) {
             console.log(tag, {
                 targetPos: targetPos,
@@ -189,29 +215,8 @@ var PopoverComponent = /** @class */ (function (_super) {
         }
         this.translateY = this.translateY + diffY;
     };
-    PopoverComponent.prototype.ngOnInit = function () {
-        this.setTag();
-        var tag = this.tag + ".ngOnInit()";
-        if (this.debug)
-            console.log(tag, 'this:', this);
-    };
-    PopoverComponent.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        setTimeout(function () { return _this.onChange(); });
-        if (this.animations) {
-            if (this.animations.enter) {
-                this.enterAnimationFactory = this.builder.build(this.animations.enter);
-            }
-            if (this.animations.leave) {
-                this.leaveAnimationFactory = this.builder.build(this.animations.leave);
-            }
-        }
-    };
-    PopoverComponent.prototype.ngOnChanges = function (changes) {
-        _super.prototype.ngOnChanges.call(this, changes);
-        var tag = this.tag + ".ngOnChanges()";
-        if (this.debug)
-            console.log(tag, 'changes:', changes);
+    PopoverComponent.prototype.getAttachmentPosition = function () {
+        return this.ref.nativeElement.getBoundingClientRect();
     };
     PopoverComponent.prototype.open = function () {
         var _this = this;
@@ -224,15 +229,15 @@ var PopoverComponent = /** @class */ (function (_super) {
         // Also when opening the popover is hidden via the visibility-style. This avoids flashing up on the wrong position.
         setTimeout(function () {
             _this.reposition();
-            if (_this.enterAnimationFactory && _this.me) {
-                var player_1 = _this.enterAnimationFactory.create(_this.me.nativeElement);
+            if (_this.enterAnimationFactory && _this.ref) {
+                var player_1 = _this.enterAnimationFactory.create(_this.ref.nativeElement);
                 player_1.onDone(function () {
                     player_1.destroy();
                 });
                 player_1.play();
             }
             _this.state = PopoverState.visible;
-            _this.cdRef.markForCheck();
+            _this.cd.markForCheck();
         }, 0);
     };
     PopoverComponent.prototype.close = function () {
@@ -242,18 +247,18 @@ var PopoverComponent = /** @class */ (function (_super) {
         }
         this.state = PopoverState.closing;
         this.willClose.emit();
-        if (this.leaveAnimationFactory && this.me) {
-            var player_2 = this.leaveAnimationFactory.create(this.me.nativeElement);
+        if (this.leaveAnimationFactory && this.ref) {
+            var player_2 = this.leaveAnimationFactory.create(this.ref.nativeElement);
             player_2.onDone(function () {
                 player_2.destroy();
                 _this.state = PopoverState.hidden;
-                _this.cdRef.markForCheck();
+                _this.cd.markForCheck();
             });
             player_2.play();
         }
         else {
             this.state = PopoverState.hidden;
-            this.cdRef.markForCheck();
+            this.cd.markForCheck();
         }
     };
     PopoverComponent.prototype.toggle = function () {
@@ -263,12 +268,6 @@ var PopoverComponent = /** @class */ (function (_super) {
         else {
             this.open();
         }
-    };
-    PopoverComponent.prototype.onWindowResize = function (ev) {
-        this.reposition();
-    };
-    PopoverComponent.prototype.getAttachmentPosition = function () {
-        return this.me.nativeElement.getBoundingClientRect();
     };
     PopoverComponent.Tag = 'PopoverComponent';
     __decorate([
@@ -291,15 +290,15 @@ var PopoverComponent = /** @class */ (function (_super) {
     __decorate([
         Input(),
         __metadata("design:type", String)
-    ], PopoverComponent.prototype, "targetY", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", String)
     ], PopoverComponent.prototype, "attachmentX", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Number)
     ], PopoverComponent.prototype, "offsetAttachmentX", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], PopoverComponent.prototype, "targetY", void 0);
     __decorate([
         Input(),
         __metadata("design:type", String)
@@ -310,8 +309,8 @@ var PopoverComponent = /** @class */ (function (_super) {
     ], PopoverComponent.prototype, "offsetAttachmentY", void 0);
     __decorate([
         Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
     ], PopoverComponent.prototype, "visible", null);
     __decorate([
         Output(),
@@ -339,7 +338,7 @@ var PopoverComponent = /** @class */ (function (_super) {
     __decorate([
         HostListener('window:resize', ['$event']),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object]),
+        __metadata("design:paramtypes", [Event]),
         __metadata("design:returntype", void 0)
     ], PopoverComponent.prototype, "onWindowResize", null);
     PopoverComponent = PopoverComponent_1 = __decorate([

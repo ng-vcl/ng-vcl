@@ -1,1 +1,0 @@
-[{"__symbolic":"module","version":4,"metadata":{"IHintOptionsFull":{"__symbolic":"interface"},"IHintOptions":{"__symbolic":"interface"},"HintOptions":{"__symbolic":"class"},"HintConfig":{"HINT_TAG":"vcl-tour-step","Z_INDEX":"999","DEFAULT_ORDER":99,"DEFAULT_PX_LAYER":15,"APPLY_RELATIVE":true,"DISMISS_ON_OVERLAY":false},"Step":{"__symbolic":"interface"}}}]

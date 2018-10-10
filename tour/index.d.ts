@@ -1,6 +1,5 @@
-import { HintService } from './hint.service';
+import { TourService, TourOptions } from './tour.service';
 import { TourComponent } from './tour.component';
-import { IHintOptions, HintConfig, Step } from './types';
-export { HintService, IHintOptions, HintConfig, Step, TourComponent };
+export { TourService, TourOptions, TourComponent };
 export declare class VCLTourModule {
 }

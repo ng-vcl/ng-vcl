@@ -2660,26 +2660,25 @@ var PopoverState;
 var POPOVER_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#popover_animations');
 var PopoverComponent$1 = /** @class */ (function (_super) {
     __extends$6(PopoverComponent$$1, _super);
-    function PopoverComponent$$1(me, builder, cdRef, animations) {
+    function PopoverComponent$$1(ref, builder, cd, animations) {
         var _this = _super.call(this) || this;
-        _this.me = me;
+        _this.ref = ref;
         _this.builder = builder;
-        _this.cdRef = cdRef;
+        _this.cd = cd;
         _this.animations = animations;
+        _this.state = PopoverState.hidden;
+        _this.translateX = 1;
+        _this.translateY = 0;
         _this.enableStyling = true;
         _this.debug = false;
         _this.targetX = AttachmentX$1.Left;
-        _this.targetY = AttachmentY$1.Bottom;
         _this.attachmentX = AttachmentX$1.Left;
         _this.offsetAttachmentX = 0;
+        _this.targetY = AttachmentY$1.Bottom;
         _this.attachmentY = AttachmentY$1.Top;
         _this.offsetAttachmentY = 0;
         _this.willClose = new EventEmitter();
         _this.willOpen = new EventEmitter();
-        _this.state = PopoverState.hidden;
-        _this.translateX = 1;
-        _this.translateY = 0;
-        _this.observeChanges('target', 'targetX', 'targetY', 'attachmentX', 'attachmentY').subscribe(_this.onChange.bind(_this));
         return _this;
     }
     PopoverComponent_1 = PopoverComponent$$1;
@@ -2688,12 +2687,7 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
             return (this.state === PopoverState.opening || this.state === PopoverState.visible);
         },
         set: function (value) {
-            if (value) {
-                this.open();
-            }
-            else {
-                this.close();
-            }
+            value ? this.open() : this.close();
         },
         enumerable: true,
         configurable: true
@@ -2719,8 +2713,40 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
+    PopoverComponent$$1.prototype.onWindowResize = function (event) {
+        this.reposition();
+    };
+    PopoverComponent$$1.prototype.ngOnChanges = function (changes) {
+        _super.prototype.ngOnChanges.call(this, changes);
+        var tag = this.tag + ".ngOnChanges()";
+        if (this.debug)
+            console.log(tag, 'changes:', changes);
+        this.onChange(changes);
+    };
+    PopoverComponent$$1.prototype.ngOnInit = function () {
+        this.setTag();
+        var tag = this.tag + ".ngOnInit()";
+        if (this.debug)
+            console.log(tag, 'this:', this);
+    };
+    PopoverComponent$$1.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        setTimeout(function () { return _this.onChange(); });
+        if (this.animations) {
+            if (this.animations.enter) {
+                this.enterAnimationFactory = this.builder.build(this.animations.enter);
+            }
+            if (this.animations.leave) {
+                this.leaveAnimationFactory = this.builder.build(this.animations.leave);
+            }
+        }
+    };
     PopoverComponent$$1.prototype.onChange = function (changes) {
         if (changes === void 0) { changes = { target: { currentValue: this.target } }; }
+        var tag = PopoverComponent_1.Tag + ".onChange()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'changes:', changes);
         if (changes.target) {
             this.setTarget(changes.target.currentValue);
             this.setTag();
@@ -2730,6 +2756,9 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
     PopoverComponent$$1.prototype.setTarget = function (value) {
         if (value === void 0) { value = this.target; }
         this.targetElement = this.getTargetElement(value);
+    };
+    PopoverComponent$$1.prototype.setTag = function () {
+        this.tag = PopoverComponent_1.Tag + "." + this.target;
     };
     PopoverComponent$$1.prototype.getTargetElement = function (value) {
         var tag = PopoverComponent_1.Tag + ".getTargetElement()";
@@ -2760,9 +2789,6 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
             console.log(tag, 'el:', el);
         return el;
     };
-    PopoverComponent$$1.prototype.setTag = function () {
-        this.tag = PopoverComponent_1.Tag + "." + this.target;
-    };
     PopoverComponent$$1.prototype.reposition = function () {
         var tag = this.tag + ".reposition()";
         var targetPos = this.targetElement ? this.targetElement.getBoundingClientRect() : undefined;
@@ -2787,7 +2813,7 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
         var isY = this.attachmentY === AttachmentY$1.Center ?
             ownPos[AttachmentY$1.Top] + ownPos[Dimension.Height] / 2 :
             ownPos[this.attachmentY];
-        var diffY = mustY - isY + +this.offsetAttachmentY;
+        var diffY = mustY - isY + this.offsetAttachmentY;
         if (this.debug) {
             console.log(tag, {
                 targetPos: targetPos,
@@ -2802,29 +2828,8 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
         }
         this.translateY = this.translateY + diffY;
     };
-    PopoverComponent$$1.prototype.ngOnInit = function () {
-        this.setTag();
-        var tag = this.tag + ".ngOnInit()";
-        if (this.debug)
-            console.log(tag, 'this:', this);
-    };
-    PopoverComponent$$1.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        setTimeout(function () { return _this.onChange(); });
-        if (this.animations) {
-            if (this.animations.enter) {
-                this.enterAnimationFactory = this.builder.build(this.animations.enter);
-            }
-            if (this.animations.leave) {
-                this.leaveAnimationFactory = this.builder.build(this.animations.leave);
-            }
-        }
-    };
-    PopoverComponent$$1.prototype.ngOnChanges = function (changes) {
-        _super.prototype.ngOnChanges.call(this, changes);
-        var tag = this.tag + ".ngOnChanges()";
-        if (this.debug)
-            console.log(tag, 'changes:', changes);
+    PopoverComponent$$1.prototype.getAttachmentPosition = function () {
+        return this.ref.nativeElement.getBoundingClientRect();
     };
     PopoverComponent$$1.prototype.open = function () {
         var _this = this;
@@ -2837,15 +2842,15 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
         // Also when opening the popover is hidden via the visibility-style. This avoids flashing up on the wrong position.
         setTimeout(function () {
             _this.reposition();
-            if (_this.enterAnimationFactory && _this.me) {
-                var player_1 = _this.enterAnimationFactory.create(_this.me.nativeElement);
+            if (_this.enterAnimationFactory && _this.ref) {
+                var player_1 = _this.enterAnimationFactory.create(_this.ref.nativeElement);
                 player_1.onDone(function () {
                     player_1.destroy();
                 });
                 player_1.play();
             }
             _this.state = PopoverState.visible;
-            _this.cdRef.markForCheck();
+            _this.cd.markForCheck();
         }, 0);
     };
     PopoverComponent$$1.prototype.close = function () {
@@ -2855,18 +2860,18 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
         }
         this.state = PopoverState.closing;
         this.willClose.emit();
-        if (this.leaveAnimationFactory && this.me) {
-            var player_2 = this.leaveAnimationFactory.create(this.me.nativeElement);
+        if (this.leaveAnimationFactory && this.ref) {
+            var player_2 = this.leaveAnimationFactory.create(this.ref.nativeElement);
             player_2.onDone(function () {
                 player_2.destroy();
                 _this.state = PopoverState.hidden;
-                _this.cdRef.markForCheck();
+                _this.cd.markForCheck();
             });
             player_2.play();
         }
         else {
             this.state = PopoverState.hidden;
-            this.cdRef.markForCheck();
+            this.cd.markForCheck();
         }
     };
     PopoverComponent$$1.prototype.toggle = function () {
@@ -2876,12 +2881,6 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
         else {
             this.open();
         }
-    };
-    PopoverComponent$$1.prototype.onWindowResize = function (ev) {
-        this.reposition();
-    };
-    PopoverComponent$$1.prototype.getAttachmentPosition = function () {
-        return this.me.nativeElement.getBoundingClientRect();
     };
     PopoverComponent$$1.Tag = 'PopoverComponent';
     __decorate$s([
@@ -2904,15 +2903,15 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
     __decorate$s([
         Input(),
         __metadata$g("design:type", String)
-    ], PopoverComponent$$1.prototype, "targetY", void 0);
-    __decorate$s([
-        Input(),
-        __metadata$g("design:type", String)
     ], PopoverComponent$$1.prototype, "attachmentX", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", Number)
     ], PopoverComponent$$1.prototype, "offsetAttachmentX", void 0);
+    __decorate$s([
+        Input(),
+        __metadata$g("design:type", String)
+    ], PopoverComponent$$1.prototype, "targetY", void 0);
     __decorate$s([
         Input(),
         __metadata$g("design:type", String)
@@ -2923,8 +2922,8 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
     ], PopoverComponent$$1.prototype, "offsetAttachmentY", void 0);
     __decorate$s([
         Input(),
-        __metadata$g("design:type", Object),
-        __metadata$g("design:paramtypes", [Object])
+        __metadata$g("design:type", Boolean),
+        __metadata$g("design:paramtypes", [Boolean])
     ], PopoverComponent$$1.prototype, "visible", null);
     __decorate$s([
         Output(),
@@ -2952,7 +2951,7 @@ var PopoverComponent$1 = /** @class */ (function (_super) {
     __decorate$s([
         HostListener('window:resize', ['$event']),
         __metadata$g("design:type", Function),
-        __metadata$g("design:paramtypes", [Object]),
+        __metadata$g("design:paramtypes", [Event]),
         __metadata$g("design:returntype", void 0)
     ], PopoverComponent$$1.prototype, "onWindowResize", null);
     PopoverComponent$$1 = PopoverComponent_1 = __decorate$s([
@@ -12472,15 +12471,22 @@ var VCLAutocompleteModule = /** @class */ (function () {
     return VCLAutocompleteModule;
 }());
 
-var HintOptions = /** @class */ (function () {
-    function HintOptions() {
+var __decorate$2c = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var TourOptions = /** @class */ (function () {
+    function TourOptions() {
         this.debug = false;
+        this.debugTour = false;
+        this.debugPopover = false;
+        this.useOrder = false;
         this.elementsDisabled = true;
-        this.defaultOrder = HintConfig.DEFAULT_ORDER;
-        this.defaultLayer = HintConfig.DEFAULT_PX_LAYER;
-        this.applyRelative = HintConfig.APPLY_RELATIVE;
-        this.stepTag = HintConfig.HINT_TAG;
-        this.dismissOnOverlay = HintConfig.DISMISS_ON_OVERLAY;
+        this.applyRelative = true;
+        this.dismissOnOverlay = false;
+        this.zIndex = 21;
         this.previousLabel = 'Previous';
         this.nextLabel = 'Next';
         this.exitLabel = 'Exit';
@@ -12488,220 +12494,163 @@ var HintOptions = /** @class */ (function () {
         this.nextIcon = 'fa fa-chevron-right';
         this.exitIcon = 'fa fa-close';
         this.buttonClass = '';
+        this.offsetAttachmentX = 0;
+        this.offsetAttachmentY = 0;
     }
-    return HintOptions;
+    return TourOptions;
 }());
-var HintConfig = {
-    HINT_TAG: 'vcl-tour-step',
-    Z_INDEX: '999',
-    DEFAULT_ORDER: 99,
-    DEFAULT_PX_LAYER: 15,
-    APPLY_RELATIVE: true,
-    DISMISS_ON_OVERLAY: false,
-};
-
-var __decorate$2c = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var HintService = /** @class */ (function () {
-    function HintService() {
-        this.tag = HintService_1.Tag;
-        this.anchors = {};
-        this.overlay$ = new Subject();
-        this.registration$ = new Subject();
-        this.finish$ = new Subject();
-        this.showingStep$ = new Subject();
+var TourService = /** @class */ (function () {
+    function TourService() {
+        this.tag = TourService_1.Tag;
+        this._tourComponents = [];
+        this.tourComponents = [];
+        this.index = 0;
+        this.end$ = new Subject();
+        this.tourComponent$ = new Subject();
+        this._showOverlay = false;
     }
-    HintService_1 = HintService;
-    /**
-     * Initialize hint service
-     * @method initialize
-     * @param  options init options
-     * @return void
-     */
-    HintService.prototype.initialize = function (options) {
-        if (options === void 0) { options = new HintOptions(); }
-        var tag = this.tag + ".initialize()";
+    TourService_1 = TourService;
+    Object.defineProperty(TourService.prototype, "showOverlay", {
+        get: function () {
+            return this._showOverlay;
+        },
+        set: function (showOverlay) {
+            this._showOverlay = showOverlay;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TourService.prototype, "hasPrevious", {
+        get: function () {
+            var tag = this.tag + ".hasPrevious()";
+            var debug = this.debug || false;
+            var hasPrevious = this.index > 0;
+            if (debug)
+                console.log(tag, 'hasPrevious:', hasPrevious);
+            return hasPrevious;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TourService.prototype, "hasNext", {
+        get: function () {
+            var tag = this.tag + ".hasNext()";
+            var debug = this.debug || false;
+            var hasNext = this.index < this.tourComponents.length - 1;
+            if (debug)
+                console.log(tag, 'hasNext:', hasNext);
+            return hasNext;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TourService.prototype.register = function (tourComponent) {
+        var tag = this.tag + ".register()";
         var debug = this.debug || false;
-        this.options = Object.assign(new HintOptions(), options);
+        if (debug)
+            console.log(tag, 'tourComponent:', tourComponent);
+        this._tourComponents = this._tourComponents.includes(tourComponent) ?
+            this._tourComponents : this._tourComponents.concat([tourComponent]);
+        if (debug)
+            console.log(tag, 'this._tourComponents:', this._tourComponents);
+    };
+    TourService.prototype.initialize = function (options) {
+        if (options === void 0) { options = new TourOptions(); }
+        var tag = this.tag + ".initialize()";
+        this.options = Object.assign(new TourOptions(), options);
+        this.debug = this.options.debug || false;
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'options:', options);
         if (debug)
             console.log(tag, 'this.options:', this.options);
-        this.debug = this.options.debug || false;
-        if (debug)
-            console.log(tag, 'this.options.stepTag:', this.options.stepTag);
-        var nodes = document.getElementsByTagName(this.options.stepTag);
-        if (debug)
-            console.log(tag, 'nodes:', nodes);
-        this.steps = this.initSteps(nodes);
-        if (debug)
-            console.log(tag, 'this.steps:', this.steps);
     };
-    /**
-     * Show step
-     * @method show
-     * @param  step [description]
-     */
-    HintService.prototype.show = function (step) {
-        var tag = this.tag + ".show()";
-        var debug = this.debug || false;
-        if (debug)
-            console.log(tag, 'step:', step);
-        if (!step)
-            return;
-        var anchor = this.anchors[step.target + "_" + step.order];
-        if (!anchor) {
-            return;
-        }
-        anchor.showStep();
-    };
-    /**
-     * Show step next to {Step} this.currentStep
-     * @method showNext
-     */
-    HintService.prototype.showNext = function () {
-        var tag = this.tag + ".showNext()";
-        var debug = this.debug || false;
-        this.currentStep = this.currentStep != undefined ? this.steps[this.steps.indexOf(this.currentStep) + 1] : undefined;
-        if (debug)
-            console.log(tag, 'this.currentStep:', this.currentStep);
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
-        if (!anchor) {
-            return;
-        }
-        anchor.showStep();
-    };
-    /**
-     * On overlay click behavior
-     * @method overlayNext
-     */
-    HintService.prototype.overlayNext = function () {
-        var tag = this.tag + ".overlayNext()";
-        var debug = this.debug || false;
-        if (debug)
-            console.log(tag, 'this.currentStep:', this.currentStep);
-        if (this.hasNext() && this.currentStep != undefined) {
-            this.anchors[this.currentStep.target + "_" + this.currentStep.order].hideStep();
-            this.showNext();
-        }
-        else {
-            this.end();
-        }
-    };
-    /**
-     * Show step previous to {Step} this.currentStep
-     * @method showPrevious
-     */
-    HintService.prototype.showPrevious = function () {
-        var tag = this.tag + ".showPrevious()";
-        var debug = this.debug || false;
-        this.currentStep = this.currentStep != undefined ? this.steps[this.steps.indexOf(this.currentStep) - 1] : undefined;
-        if (debug)
-            console.log(tag, 'this.currentStep:', this.currentStep);
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
-        if (!anchor) {
-            return;
-        }
-        anchor.showStep();
-    };
-    /**
-     * Register hint component
-     * @method register
-     * @param  target  bonded to
-     * @param  component itself
-     */
-    HintService.prototype.register = function (target, component) {
-        if (this.anchors[target]) {
-            throw 'target ' + target + ' already registered!';
-        }
-        this.anchors[target] = component;
-        this.registration$.next(true);
-    };
-    /**
-     * Is {Step} this.currentStep has next
-     * @method hasNext
-     * @return
-     */
-    HintService.prototype.hasNext = function () {
-        return this.currentStep != undefined ? this.steps.indexOf(this.currentStep) < this.steps.length - 1 : false;
-    };
-    /**
-     * Is {Step} this.currentStep has previous
-     * @method hasPrevious
-     * @return
-     */
-    HintService.prototype.hasPrevious = function () {
-        return this.currentStep != undefined ? this.steps.indexOf(this.currentStep) > 0 : false;
-    };
-    /**
-     * Finalize our hint tour.
-     * @method end
-     */
-    HintService.prototype.end = function () {
-        var tag = this.tag + ".end()";
-        var debug = this.debug || false;
-        this.overlay$.next(false);
-        if (debug)
-            console.log(tag, 'this.currentStep:', this.currentStep);
-        var anchor = this.currentStep != undefined ? this.anchors[this.currentStep.target + "_" + this.currentStep.order] : null;
-        if (!anchor) {
-            return;
-        }
-        this.currentStep = undefined;
-        anchor.hideStep();
-        this.finish$.next(true);
-    };
-    /**
-     * Start hint tour at some position
-     * @method start
-     * @param  stepId position in this.steps
-     */
-    HintService.prototype.start = function (stepId) {
-        if (stepId === void 0) { stepId = 0; }
+    TourService.prototype.start = function (index) {
+        var _this = this;
+        if (index === void 0) { index = 0; }
         var tag = this.tag + ".start()";
         var debug = this.debug || false;
         if (debug)
-            console.log(tag, 'stepId:', stepId);
+            console.log(tag, 'index:', index);
+        this.tourComponents = this.options.useOrder ?
+            this._tourComponents.slice().sort(function (s1, s2) { return s1.order - s2.order; }) :
+            this._tourComponents;
         if (debug)
-            console.log(tag, 'this.steps:', this.steps);
-        if (!this.steps)
-            this.initialize();
-        this.currentStep = this.steps[stepId];
+            console.log(tag, 'this.tourComponents:', this.tourComponents);
+        this.tourComponents.forEach(function (tourComponent) {
+            tourComponent.debug = tourComponent.debug || _this.options.debugTour;
+            tourComponent.debugPopover = tourComponent.debugPopover || _this.options.debugPopover;
+            tourComponent.offsetAttachmentX = isNumber(tourComponent.offsetAttachmentX) ?
+                tourComponent.offsetAttachmentX : _this.options.offsetAttachmentX;
+            tourComponent.offsetAttachmentY = isNumber(tourComponent.offsetAttachmentY) ?
+                tourComponent.offsetAttachmentY : _this.options.offsetAttachmentY;
+        });
+        this.show(index);
+    };
+    TourService.prototype.show = function (index) {
+        var tag = this.tag + ".show()";
+        var debug = this.debug || false;
         if (debug)
-            console.log(tag, 'this.currentStep:', this.currentStep);
-        if (!this.currentStep)
+            console.log(tag, 'index:', index);
+        this.tourComponent && this.tourComponent.hide();
+        var tourComponent = this.tourComponents[index];
+        if (debug)
+            console.log(tag, 'tourComponent:', tourComponent);
+        if (!tourComponent) {
+            this.tourComponent = null;
+            this.index = 0;
             return;
-        this.show(this.currentStep);
-        this.overlay$.next(true);
-    };
-    /**
-     * Convert Element[] to Step[]
-     * @method initSteps
-     * @param   nodes
-     * @return
-     */
-    HintService.prototype.initSteps = function (nodes) {
-        var steps = [];
-        for (var i = 0; i < nodes.length; i++) {
-            steps.push({
-                target: nodes[i].getAttribute('target'),
-                order: Number(nodes[i].getAttribute('order')) || this.options.defaultOrder,
-            });
         }
-        return steps.sort(function (el1, el2) { return el1.order - el2.order; });
+        this.tourComponent = tourComponent;
+        this.index = index;
+        this.showOverlay = true;
+        tourComponent.show();
+        this.tourComponent$.next(this.tourComponent);
     };
-    HintService.prototype.putOverlay = function () {
-        document.getElementsByTagName('body');
+    TourService.prototype.showPrevious = function () {
+        var tag = this.tag + ".showPrevious()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'hasPrevious:', this.hasPrevious);
+        if (!this.hasPrevious)
+            return this.end();
+        this.show(this.index - 1);
     };
-    HintService.Tag = 'HintService';
-    HintService = HintService_1 = __decorate$2c([
+    TourService.prototype.showNext = function () {
+        var tag = this.tag + ".showNext()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'hasNext:', this.hasNext);
+        if (!this.hasNext)
+            return this.end();
+        this.show(this.index + 1);
+    };
+    TourService.prototype.end = function () {
+        var tag = this.tag + ".end()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag);
+        this.tourComponent && this.tourComponent.hide();
+        this.showOverlay = false;
+        this.index = 0;
+        this.end$.next(true);
+    };
+    TourService.prototype.onOverlayClick = function () {
+        var tag = this.tag + ".onOverlayClick()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'this.options.dismissOnOverlay:', this.options.dismissOnOverlay);
+        if (this.options.dismissOnOverlay)
+            this.showNext();
+    };
+    TourService.Tag = 'TourService';
+    TourService = TourService_1 = __decorate$2c([
         Injectable()
-    ], HintService);
-    return HintService;
-    var HintService_1;
+    ], TourService);
+    return TourService;
+    var TourService_1;
 }());
+var isNumber = function (v) { return !isNaN(Number(v)) && isFinite(v); };
 
 var __decorate$2d = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -12713,22 +12662,16 @@ var __metadata$1x = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var TourOverlayComponent = /** @class */ (function () {
-    function TourOverlayComponent(hint) {
-        var _this = this;
-        this.hint = hint;
-        this.hint.overlay$.subscribe(function (data) { return _this.show = data; });
+    function TourOverlayComponent(tour) {
+        this.tour = tour;
     }
-    TourOverlayComponent.prototype.dismiss = function () {
-        if (this.hint.options.dismissOnOverlay)
-            this.hint.overlayNext();
-    };
     TourOverlayComponent = __decorate$2d([
         Component({
             selector: 'vcl-tour-overlay',
-            template: "<div class=\"hintOverlay\" *ngIf=\"show\" (click)=\"dismiss()\"></div>",
-            styles: ["\r\n.hintOverlay {\r\n    position: fixed !important ;\r\n    width: 100%;\r\n    height: 100%;\r\n    background: rgba(0, 0, 0, .5);\r\n    z-index: 20;\r\n    top: 0;\r\n    left: 0;\r\n}"]
+            template: "<div \r\n  class=\"vclTourOverlay\" \r\n  [class.vclLayoutHidden]=\"!tour.showOverlay\"\r\n  (click)=\"tour.onOverlayClick()\">\r\n</div>",
+            styles: ["\r\n.vclTourOverlay {\r\n    position: fixed !important ;\r\n    width: 100%;\r\n    height: 100%;\r\n    background: rgba(0, 0, 0, .5);\r\n    z-index: 20;\r\n    top: 0;\r\n    left: 0;\r\n}"]
         }),
-        __metadata$1x("design:paramtypes", [HintService])
+        __metadata$1x("design:paramtypes", [TourService])
     ], TourOverlayComponent);
     return TourOverlayComponent;
 }());
@@ -12742,69 +12685,91 @@ var __decorate$2e = (this && this.__decorate) || function (decorators, target, k
 var __metadata$1y = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var VCLTourStepTag = 'vcl-tour-step';
 var TourComponent = /** @class */ (function () {
-    function TourComponent(hint) {
-        this.hint = hint;
-        this.tag = TourComponent_1.Tag;
-        this.debug = true;
-        this.debugPopover = true;
+    function TourComponent(tour) {
+        this.tour = tour;
+        this.debug = false;
+        this.debugPopover = false;
         this.targetX = AttachmentX.Center;
         this.attachmentX = AttachmentX.Center;
         this.targetY = AttachmentY.Bottom;
         this.attachmentY = AttachmentY.Top;
+        this.visible = false;
+        this.hasNext = false;
+        this.hasPrevious = false;
         var tag = this.tag + ".constructor()";
         var debug = this.debug || false;
         if (debug)
-            console.log(tag, 'hint.options:', hint.options);
+            console.log(tag, 'tour.options:', tour.options);
     }
     TourComponent_1 = TourComponent;
-    Object.defineProperty(TourComponent.prototype, "classes", {
-        get: function () {
-            return "vclTourContainer step" + this.order;
-        },
-        enumerable: true,
-        configurable: true
-    });
     TourComponent.prototype.ngOnInit = function () {
-        // this.order = Number(typeof this.order === 'number' ? this.order : this.hint.options.defaultOrder);
-        this.hint.register(this.target + "_" + Number(this.order || 0), this);
+        this.tag = TourComponent_1.Tag + "." + this.target;
+        var tag = this.tag + ".ngOnInit()";
+        var debug = this.debug || false;
+        this.tour.register(this);
     };
-    TourComponent.prototype.showStep = function () {
-        this.hint.showingStep$.next(this);
-        this.order = +this.order || this.hint.options.defaultOrder;
-        var highlightedElement = this.popover.targetElement;
-        if (highlightedElement) {
-            highlightedElement.style.zIndex = HintConfig.Z_INDEX;
-            if (this.hint.options.elementsDisabled) {
-                this.disableClick(highlightedElement);
+    TourComponent.prototype.show = function () {
+        var tag = this.tag + ".show()";
+        var debug = this.debug || false;
+        var el = this.popover.targetElement;
+        if (debug)
+            console.log(tag, 'el:', el);
+        if (el) {
+            el.style.zIndex = "" + this.tour.options.zIndex;
+            if (debug)
+                console.log(tag, 'tour.options.elementsDisabled:', this.tour.options.elementsDisabled);
+            if (this.tour.options.elementsDisabled) {
+                this.disableClick(el);
             }
-            if (this.hint.options.applyRelative) {
-                this.enableHighlight(highlightedElement);
+            if (debug)
+                console.log(tag, 'tour.options.applyRelative:', this.tour.options.applyRelative);
+            if (this.tour.options.applyRelative) {
+                this.enableHighlight(el);
             }
         }
         this.visible = true;
-        this.hasNext = this.hint.hasNext();
-        this.hasPrevious = this.hint.hasPrevious();
+        this.hasNext = this.tour.hasNext;
+        this.hasPrevious = this.tour.hasPrevious;
+        if (debug)
+            console.log(tag, 'this:', this);
     };
-    TourComponent.prototype.hideStep = function () {
+    TourComponent.prototype.hide = function () {
+        var tag = this.tag + ".hide()";
+        var debug = this.debug || false;
         var highlightedElement = this.popover.targetElement;
+        if (debug)
+            console.log(tag, 'highlightedElement:', highlightedElement);
         if (highlightedElement) {
             highlightedElement.style.zIndex = null;
             this.enableClick(highlightedElement);
             this.disableHighlight(highlightedElement);
         }
         this.visible = false;
-    };
-    TourComponent.prototype.exit = function () {
-        this.hint.end();
-    };
-    TourComponent.prototype.next = function () {
-        this.hideStep();
-        this.hint.showNext();
+        if (debug)
+            console.log(tag, 'this:', this);
     };
     TourComponent.prototype.previous = function () {
-        this.hideStep();
-        this.hint.showPrevious();
+        var tag = this.tag + ".previous()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag);
+        this.tour.showPrevious();
+    };
+    TourComponent.prototype.next = function () {
+        var tag = this.tag + ".next()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag);
+        this.tour.showNext();
+    };
+    TourComponent.prototype.exit = function () {
+        var tag = this.tag + ".exit()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag);
+        this.tour.end();
     };
     TourComponent.prototype.disableClick = function (element) {
         element.style.cursor = 'default';
@@ -12834,11 +12799,6 @@ var TourComponent = /** @class */ (function () {
         __metadata$1y("design:type", PopoverComponent)
     ], TourComponent.prototype, "popover", void 0);
     __decorate$2e([
-        HostBinding('class'),
-        __metadata$1y("design:type", String),
-        __metadata$1y("design:paramtypes", [])
-    ], TourComponent.prototype, "classes", null);
-    __decorate$2e([
         Input(),
         __metadata$1y("design:type", String)
     ], TourComponent.prototype, "title", void 0);
@@ -12860,19 +12820,27 @@ var TourComponent = /** @class */ (function () {
     ], TourComponent.prototype, "attachmentX", void 0);
     __decorate$2e([
         Input(),
+        __metadata$1y("design:type", Number)
+    ], TourComponent.prototype, "offsetAttachmentX", void 0);
+    __decorate$2e([
+        Input(),
         __metadata$1y("design:type", String)
     ], TourComponent.prototype, "targetY", void 0);
     __decorate$2e([
         Input(),
         __metadata$1y("design:type", String)
     ], TourComponent.prototype, "attachmentY", void 0);
+    __decorate$2e([
+        Input(),
+        __metadata$1y("design:type", Number)
+    ], TourComponent.prototype, "offsetAttachmentY", void 0);
     TourComponent = TourComponent_1 = __decorate$2e([
         Component({
-            selector: HintConfig.HINT_TAG,
-            template: "<vcl-popover #popover\r\n  [debug]=\"debugPopover\"\r\n  [visible]=\"visible\"\r\n  [target]=\"target\"\r\n  [targetX]=\"targetX\"\r\n  [attachmentX]=\"attachmentX\"\r\n  [targetY]=\"targetY\"\r\n  [attachmentY]=\"attachmentY\"\r\n  [style.z-index]=\"20\">\r\n\r\n  <div class=\"vclTourContainer\">\r\n\r\n    <div class=\"vclTourContainerHeader\" *ngIf=\"title\">\r\n      {{ title }}\r\n    </div>\r\n\r\n    <div class=\"vclTourContainerContent\">\r\n      <ng-content></ng-content>\r\n    </div>\r\n\r\n    <div class=\"vclTourContainerFooter\">\r\n      \r\n      <button vcl-button *ngIf=\"hasPrevious\"\r\n        [ngClass]=\"hint.options?.buttonClass\"\r\n        [label]=\"hint.options?.previousLabel\"\r\n        [prepIcon]=\"hint.options?.previousIcon\"\r\n        (click)=\"previous()\">\r\n      </button>\r\n\r\n      <button vcl-button *ngIf=\"hasNext\"\r\n        [ngClass]=\"hint.options?.buttonClass\"\r\n        [label]=\"hint.options?.nextLabel\"\r\n        [appIcon]=\"hint.options?.nextIcon\"\r\n        (click)=\"next()\">\r\n      </button>\r\n\r\n      <button vcl-button\r\n        [ngClass]=\"hint.options?.buttonClass\"\r\n        [label]=\"hint.options?.exitLabel\"\r\n        [prepIcon]=\"hint.options?.exitIcon\"\r\n        (click)=\"exit()\">\r\n      </button>\r\n\r\n    </div>\r\n    \r\n  </div>\r\n\r\n</vcl-popover>",
+            selector: VCLTourStepTag,
+            template: "<vcl-popover #popover\r\n  [debug]=\"debugPopover\"\r\n  [visible]=\"visible\"\r\n  [target]=\"target\"\r\n  [targetX]=\"targetX\"\r\n  [attachmentX]=\"attachmentX\"\r\n  [offsetAttachmentX]=\"offsetAttachmentX\"\r\n  [targetY]=\"targetY\"\r\n  [attachmentY]=\"attachmentY\"\r\n  [offsetAttachmentY]=\"offsetAttachmentY\"\r\n  [style.z-index]=\"tour.options?.zIndex\">\r\n\r\n  <div class=\"vclTourContainer\">\r\n\r\n    <div class=\"vclTourContainerHeader\" *ngIf=\"title\">\r\n      {{ title }}\r\n    </div>\r\n\r\n    <div class=\"vclTourContainerContent\">\r\n      <ng-content></ng-content>\r\n    </div>\r\n\r\n    <div class=\"vclTourContainerFooter\">\r\n      \r\n      <button vcl-button *ngIf=\"hasPrevious\"\r\n        [ngClass]=\"tour.options?.buttonClass\"\r\n        [label]=\"tour.options?.previousLabel\"\r\n        [prepIcon]=\"tour.options?.previousIcon\"\r\n        (click)=\"previous()\">\r\n      </button>\r\n\r\n      <button vcl-button *ngIf=\"hasNext\"\r\n        [ngClass]=\"tour.options?.buttonClass\"\r\n        [label]=\"tour.options?.nextLabel\"\r\n        [appIcon]=\"tour.options?.nextIcon\"\r\n        (click)=\"next()\">\r\n      </button>\r\n\r\n      <button vcl-button\r\n        [ngClass]=\"tour.options?.buttonClass\"\r\n        [label]=\"tour.options?.exitLabel\"\r\n        [prepIcon]=\"tour.options?.exitIcon\"\r\n        (click)=\"exit()\">\r\n      </button>\r\n\r\n    </div>\r\n    \r\n  </div>\r\n\r\n</vcl-popover>",
             styles: [".vclTourContainer {\r\n    background-color: #fff;\r\n    text-align: center;\r\n    font-size: 14px;\r\n    color: #000;\r\n    border-radius: 5px;\r\n    -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\r\n    box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\r\n  }\r\n  \r\n.vclTourContainer .vclTourContainerHeader {\r\n  padding: 10px;\r\n  border-bottom: 1px solid #ccc;\r\n  background-color: #ddd;\r\n  border-radius: 5px;\r\n  -webkit-box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\r\n  box-shadow: inset 0 0 30px 0 rgba(0, 0, 0, .5);\r\n}\r\n  \r\n.vclTourContainer .vclTourContainerContent {\r\n  padding: 10px;\r\n}\r\n\r\n.vclTourContainer .vclTourContainerFooter {\r\n  padding: 10px;\r\n}\r\n\r\n.vclTourContainer .vclButton:first {\r\n  margin-left: 0;\r\n}"]
         }),
-        __metadata$1y("design:paramtypes", [HintService])
+        __metadata$1y("design:paramtypes", [TourService])
     ], TourComponent);
     return TourComponent;
     var TourComponent_1;
@@ -12892,7 +12860,7 @@ var VCLTourModule = /** @class */ (function () {
             imports: [CommonModule, VCLPopoverModule, VCLButtonModule],
             exports: [TourComponent, TourOverlayComponent],
             declarations: [TourComponent, TourOverlayComponent],
-            providers: [HintService],
+            providers: [TourService],
         })
     ], VCLTourModule);
     return VCLTourModule;
@@ -13085,4 +13053,4 @@ var VCLRatingModule = /** @class */ (function () {
     return VCLRatingModule;
 }());
 
-export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule$1 as VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent$1 as PopoverComponent, AttachmentX$1 as AttachmentX, AttachmentY$1 as AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule$1 as VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, HintService, HintConfig, TourComponent, VCLTourModule, VCLRatingModule };
+export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule$1 as VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent$1 as PopoverComponent, AttachmentX$1 as AttachmentX, AttachmentY$1 as AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule$1 as VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, TourService, TourOptions, TourComponent, VCLTourModule, VCLRatingModule };

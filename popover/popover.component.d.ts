@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, ElementRef, EventEmitter, InjectionToken, SimpleChanges, AfterViewInit } from '@angular/core';
-import { AnimationBuilder, AnimationFactory, AnimationMetadata } from '@angular/animations';
+import { ChangeDetectorRef, ElementRef, EventEmitter, InjectionToken, SimpleChanges, OnInit, AfterViewInit } from '@angular/core';
+import { AnimationBuilder, AnimationMetadata } from '@angular/animations';
 import { ObservableComponent } from '../core/index';
 export declare type AttachmentX = 'left' | 'center' | 'right';
 export declare const AttachmentX: {
@@ -24,46 +24,46 @@ export interface PopoverAnimationConfig {
     enter?: AnimationMetadata | AnimationMetadata[];
     leave?: AnimationMetadata | AnimationMetadata[];
 }
-export declare class PopoverComponent extends ObservableComponent implements AfterViewInit {
-    protected readonly me: ElementRef;
-    private builder;
-    private cdRef;
-    private animations;
+export declare class PopoverComponent extends ObservableComponent implements OnInit, AfterViewInit {
+    protected readonly ref: ElementRef;
+    protected readonly builder: AnimationBuilder;
+    protected readonly cd: ChangeDetectorRef;
+    protected animations: PopoverAnimationConfig;
     private static readonly Tag;
     private tag;
+    private state;
+    private translateX;
+    private translateY;
+    private enterAnimationFactory;
+    private leaveAnimationFactory;
     enableStyling: boolean;
     debug: boolean;
     target: string | ElementRef | Element;
     targetElement: Element;
     targetX: AttachmentX;
-    targetY: AttachmentY;
     attachmentX: AttachmentX;
     offsetAttachmentX: number;
+    targetY: AttachmentY;
     attachmentY: AttachmentY;
     offsetAttachmentY: number;
     visible: boolean;
     willClose: EventEmitter<any>;
     willOpen: EventEmitter<any>;
-    state: PopoverState;
     readonly classHidden: boolean;
     readonly styleVisibility: string;
-    private translateX;
-    private translateY;
     readonly transform: string;
-    enterAnimationFactory: AnimationFactory | undefined;
-    leaveAnimationFactory: AnimationFactory | undefined;
-    constructor(me: ElementRef, builder: AnimationBuilder, cdRef: ChangeDetectorRef, animations: PopoverAnimationConfig);
+    private onWindowResize(event);
+    constructor(ref: ElementRef, builder: AnimationBuilder, cd: ChangeDetectorRef, animations: PopoverAnimationConfig);
+    ngOnChanges(changes: SimpleChanges): void;
+    ngOnInit(): void;
+    ngAfterViewInit(): void;
     private onChange(changes?);
     private setTarget(value?);
-    getTargetElement(value: Element | ElementRef | string): Element | undefined;
     private setTag();
+    private getTargetElement(value);
     reposition(): void;
-    private ngOnInit();
-    ngAfterViewInit(): void;
-    ngOnChanges(changes: SimpleChanges): void;
+    private getAttachmentPosition();
     open(): void;
     close(): void;
     toggle(): void;
-    onWindowResize(ev: any): void;
-    private getAttachmentPosition();
 }
