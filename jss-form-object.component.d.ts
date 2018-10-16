@@ -1,6 +1,6 @@
-import { EventEmitter } from '@angular/core';
+import { ComponentFactoryResolver, EventEmitter, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { JssFormSchemaOptions, JssFormSchema } from './types';
+import { JssFormSchema, JssFormSchemaOptions } from './types';
 export declare class FormObject {
     schema: JssFormSchema;
     key: string;
@@ -21,7 +21,11 @@ export declare class FormObject {
     readonly hideLabel: boolean;
 }
 export declare function createFormObjects(schema: any, parent?: FormObject): FormObject[] | FormObject[][] | undefined;
-export declare class JssFormObjectComponent {
+export declare class JssFormObjectComponent implements OnInit {
+    private factoryResolver;
+    constructor(factoryResolver: ComponentFactoryResolver);
+    ngOnInit(): void;
+    dynamicViewContainerRef: ViewContainerRef;
     form: FormGroup;
     fo: FormObject;
     formComponent?: any;
@@ -31,4 +35,6 @@ export declare class JssFormObjectComponent {
     removeItem(i: number): void;
     readonly hasError: boolean | null;
     readonly errorLabel: any;
+    readonly isCustom: boolean;
+    validCustom(instance: any): boolean;
 }
