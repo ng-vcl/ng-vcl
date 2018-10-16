@@ -15,7 +15,7 @@ var TokenComponent = /** @class */ (function () {
         this.disabled = false;
         this.selected = false;
         this.removable = false;
-        this.icon = 'fa:remove';
+        this.icon = 'fa:times';
         this.remove = new EventEmitter();
         this.select = new EventEmitter();
         // Store cva disabled state in an extra property to remember the old state after the token-list has been disabled
@@ -93,7 +93,7 @@ var TokenComponent = /** @class */ (function () {
     TokenComponent = __decorate([
         Component({
             selector: 'vcl-token',
-            template: "<div *ngIf=\"tokenIcon\" vcl-icogram [appIcon]=\"tokenIcon\" ></div>\r\n<span class=\"vclTokenLabel\">{{label}}</span>\r\n<button vcl-button\r\n        [disabled]=\"isDisabled\"\r\n        *ngIf=\"removable\" \r\n        class=\"vclTransparent\"\r\n        type=\"button\" \r\n        title=\"Remove\"\r\n        [icon]=\"icon\"\r\n        (click)=\"onRemoveClick($event)\">\r\n</button>\r\n",
+            template: "<div *ngIf=\"tokenIcon\" vcl-icogram [appIcon]=\"tokenIcon\" ></div>\n<span class=\"vclTokenLabel\">{{label}}</span>\n<button vcl-button\n        [disabled]=\"isDisabled\"\n        *ngIf=\"removable\" \n        class=\"vclTransparent\"\n        type=\"button\" \n        title=\"Remove\"\n        [icon]=\"icon\"\n        (click)=\"onRemoveClick($event)\">\n</button>\n",
             host: {
                 '[class.vclToken]': 'true',
             }

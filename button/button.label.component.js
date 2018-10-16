@@ -50,7 +50,7 @@ var ButtonLabelComponent = /** @class */ (function () {
     ButtonLabelComponent = __decorate([
         Component({
             selector: 'button[vcl-button][label]',
-            template: "<span vcl-icogram\r\n  [label]=\"label\"\r\n  [prepIcon]=\"prepIcon\"\r\n  [appIcon]=\"appIcon\"\r\n  [appIconSrc]=\"appIconSrc\"\r\n  [prepIconSrc]=\"prepIconSrc\">\r\n  <ng-content></ng-content>\r\n</span>\r\n",
+            template: "<span vcl-icogram\n  [label]=\"label\"\n  [prepIcon]=\"prepIcon\"\n  [appIcon]=\"appIcon\"\n  [appIconSrc]=\"appIconSrc\"\n  [prepIconSrc]=\"prepIconSrc\">\n  <ng-content></ng-content>\n</span>\n",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], ButtonLabelComponent);

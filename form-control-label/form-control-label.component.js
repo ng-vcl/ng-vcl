@@ -78,7 +78,7 @@ var FormControlLabelComponent = /** @class */ (function () {
     FormControlLabelComponent = __decorate([
         Component({
             selector: 'label[vcl-form-control-label]',
-            template: "{{label}}\r\n<em *ngIf=\"required\" class=\"vclRequiredIndicator\" aria-hidden=\"true\" [attr.aria-label]=\"requiredIndLabel\">\r\n  {{requiredIndicatorCharacter}}\r\n</em>\r\n<span *ngIf=\"subLabel\" class=\"vclFormControlSubLabel\">{{subLabel}}</span>\r\n<div #content><ng-content></ng-content></div>\r\n",
+            template: "{{label}}\n<em *ngIf=\"required\" class=\"vclRequiredIndicator\" aria-hidden=\"true\" [attr.aria-label]=\"requiredIndLabel\">\n  {{requiredIndicatorCharacter}}\n</em>\n<span *ngIf=\"subLabel\" class=\"vclFormControlSubLabel\">{{subLabel}}</span>\n<div #content><ng-content></ng-content></div>\n",
             host: {
                 '[class.vclFormControlLabel]': 'true',
             },

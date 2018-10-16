@@ -102,6 +102,8 @@ var TourService = /** @class */ (function () {
         var debug = this.debug || false;
         if (debug)
             console.log(tag, 'index:', index);
+        if (!this.options)
+            this.initialize();
         this.tourComponents = this.options.useOrder ?
             this._tourComponents.slice().sort(function (s1, s2) { return s1.order - s2.order; }) :
             this._tourComponents;
