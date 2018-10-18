@@ -52,7 +52,7 @@ export declare class PopoverComponent extends ObservableComponent implements OnI
     readonly classHidden: boolean;
     readonly styleVisibility: string;
     readonly transform: string;
-    private onWindowResize(event);
+    onWindowResize(event: Event): void;
     constructor(ref: ElementRef, builder: AnimationBuilder, cd: ChangeDetectorRef, animations: PopoverAnimationConfig);
     ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
