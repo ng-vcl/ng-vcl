@@ -54,7 +54,7 @@ export declare class DatePickerComponent implements OnInit, OnChanges, ControlVa
     change: EventEmitter<Date | (Date | undefined)[]>;
     currentDate: CalendarDate | undefined;
     currentRangeEnd: CalendarDate | undefined;
-    viewDate: CalendarDate | undefined;
+    viewDate: CalendarDate;
     today: CalendarDate;
     showYearPick: boolean;
     constructor(cdRef: ChangeDetectorRef);

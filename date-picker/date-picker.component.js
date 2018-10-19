@@ -60,8 +60,13 @@ var DatePickerComponent = /** @class */ (function () {
         }
     };
     DatePickerComponent.prototype.setDate = function (date) {
-        this.currentDate = new CalendarDate(date);
-        this.viewDate = this.currentDate.clone();
+        if (date) {
+            this.currentDate = new CalendarDate(date);
+            this.viewDate = this.currentDate.clone();
+        }
+        else {
+            this.viewDate = new CalendarDate();
+        }
     };
     DatePickerComponent.prototype.showYear = function () {
         if (this.disabled) {
@@ -176,8 +181,8 @@ var DatePickerComponent = /** @class */ (function () {
     };
     DatePickerComponent.prototype.writeValue = function (value) {
         this.selectedDate = value;
-        this.currentDate = new CalendarDate(value);
-        this.viewDate = this.currentDate;
+        this.currentDate = value ? new CalendarDate(value) : undefined;
+        this.viewDate = this.currentDate ? this.currentDate : new CalendarDate();
         this.cdRef.markForCheck();
     };
     DatePickerComponent.prototype.registerOnChange = function (fn) {
@@ -192,9 +197,11 @@ var DatePickerComponent = /** @class */ (function () {
     };
     DatePickerComponent.prototype.timeChange = function (date) {
         this.selectedDate = date;
-        this.currentDate = new CalendarDate(date);
-        this.onDateTap(this.currentDate);
-        this.viewDate = this.currentDate;
+        this.currentDate = date ? new CalendarDate(date) : undefined;
+        if (this.currentDate) {
+            this.onDateTap(this.currentDate);
+        }
+        this.viewDate = this.currentDate ? this.currentDate : new CalendarDate();
         this.cdRef.markForCheck();
     };
     __decorate([
