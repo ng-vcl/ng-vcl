@@ -28,19 +28,19 @@ export var TYPE_CLASS_MAP = (_a = {},
     },
     _a[NotifierType.Info] = {
         notifierClass: 'vclInfo',
-        iconClass: 'fa fa-info-circle'
+        iconClass: 'fas fa-info-circle'
     },
     _a[NotifierType.Success] = {
         notifierClass: 'vclSuccess',
-        iconClass: 'fa fa-check-circle'
+        iconClass: 'fas fa-check-circle'
     },
     _a[NotifierType.Warning] = {
         notifierClass: 'vclWarning',
-        iconClass: 'fa fa-warning'
+        iconClass: 'fas fa-exclamation-triangle'
     },
     _a[NotifierType.Error] = {
         notifierClass: 'vclError',
-        iconClass: 'fa fa-exclamation-circle'
+        iconClass: 'fas fa-exclamation-circle'
     },
     _a);
 export var POSITION_MAP = (_b = {},

@@ -18,7 +18,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 var FileInputComponent = /** @class */ (function () {
     function FileInputComponent(cdRef) {
         this.cdRef = cdRef;
-        this.icon = 'fa fa-upload';
+        this.icon = 'fas fa-upload';
         this.accept = '*';
         this.multiple = false;
         this.files = new EventEmitter();
