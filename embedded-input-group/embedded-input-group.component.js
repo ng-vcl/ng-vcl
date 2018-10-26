@@ -57,7 +57,7 @@ var EmbeddedInputGroupComponent = /** @class */ (function (_super) {
     EmbeddedInputGroupComponent = __decorate([
         Component({
             selector: 'vcl-embedded-input-group',
-            template: "<div *ngIf='prepIcon' class=\"vclPrepended\">\n  <vcl-icon [icon]='prepIcon'></vcl-icon>\n</div>\n\n<ng-content select=\"input[vcl-input][vcl-embedded-input-group]\"></ng-content>\n\n<div *ngIf='appIcon' class=\"vclAppended\">\n  <vcl-icon [icon]='appIcon'></vcl-icon>\n</div>\n\n<ng-content select=\"button[vcl-button][vcl-embedded-input-group]\"></ng-content>\n",
+            template: "<div *ngIf='prepIcon' class=\"vclPrepended\">\r\n  <vcl-icon [icon]='prepIcon'></vcl-icon>\r\n</div>\r\n\r\n<ng-content select=\"input[vcl-input][vcl-embedded-input-group]\"></ng-content>\r\n\r\n<div *ngIf='appIcon' class=\"vclAppended\">\r\n  <vcl-icon [icon]='appIcon'></vcl-icon>\r\n</div>\r\n\r\n<ng-content select=\"button[vcl-button][vcl-embedded-input-group]\"></ng-content>\r\n",
             host: {
                 '[class.vclInputGroupEmb]': 'true',
                 '[style.display]': '"block"'

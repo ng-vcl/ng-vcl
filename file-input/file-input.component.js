@@ -214,7 +214,7 @@ var FileInputComponent = /** @class */ (function () {
     FileInputComponent = __decorate([
         Component({
             selector: 'vcl-file-input',
-            template: "<input #input type=\"file\" [style.display]=\"'none'\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" />\n<div class=\"vclFileInputIcon vclIcon {{ icon }}\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div>\n<div class=\"vclFileInputPlaceholder\">\n  <ng-container *ngIf=\"filename\">{{ filename }}</ng-container>\n  <div *ngIf=\"!filename\">\n    <ng-content></ng-content>\n  </div>\n</div>\n",
+            template: "<input #input type=\"file\" [style.display]=\"'none'\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" />\r\n<div class=\"vclFileInputIcon vclIcon {{ icon }}\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div>\r\n<div class=\"vclFileInputPlaceholder\">\r\n  <ng-container *ngIf=\"filename\">{{ filename }}</ng-container>\r\n  <div *ngIf=\"!filename\">\r\n    <ng-content></ng-content>\r\n  </div>\r\n</div>\r\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {

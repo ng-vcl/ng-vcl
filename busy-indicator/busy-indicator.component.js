@@ -62,7 +62,7 @@ var BusyIndicatorComponent = /** @class */ (function () {
     BusyIndicatorComponent = __decorate([
         Component({
             selector: 'vcl-busy-indicator',
-            template: "<div class=\"vclLayoutCenterJustified vclIcogram {{layout == 'vertical' ? 'vclLayoutVertical' : 'vclLayoutHorizontal'}}\" role=\"status\">\n  <div class=\"vclIcon vclLayoutSelfCenter {{classSrc}}\" [attr.aria-label]=\"label\" role=\"img\">\n    <img *ngIf=\"!classSrc\" [style.height]=\"iconHeight\" [style.width]=\"iconWidth\" [src]=\"indicatorSrc\" role=\u201Dpresentation\u201D>\n  </div>\n  <div class=\"vclLayoutSelfCenter\">\n    <ng-content></ng-content>\n  </div>\n</div>\n\n"
+            template: "<div class=\"vclLayoutCenterJustified vclIcogram {{layout == 'vertical' ? 'vclLayoutVertical' : 'vclLayoutHorizontal'}}\" role=\"status\">\r\n  <div class=\"vclIcon vclLayoutSelfCenter {{classSrc}}\" [attr.aria-label]=\"label\" role=\"img\">\r\n    <img *ngIf=\"!classSrc\" [style.height]=\"iconHeight\" [style.width]=\"iconWidth\" [src]=\"indicatorSrc\" role=\u201Dpresentation\u201D>\r\n  </div>\r\n  <div class=\"vclLayoutSelfCenter\">\r\n    <ng-content></ng-content>\r\n  </div>\r\n</div>\r\n\r\n"
         }),
         __metadata("design:paramtypes", [DomSanitizer])
     ], BusyIndicatorComponent);

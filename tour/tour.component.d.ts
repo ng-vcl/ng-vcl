@@ -1,5 +1,5 @@
 import { OnInit, ElementRef } from '@angular/core';
-import { AttachmentX, AttachmentY, PopoverComponent } from '@ng-vcl/ng-vcl';
+import { AttachmentX, AttachmentY, PopoverComponent } from '../popover/index';
 import { TourService } from './tour.service';
 export declare const VCLTourStepTag: string;
 export declare class TourComponent implements OnInit {
