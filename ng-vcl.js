@@ -6,6 +6,7 @@ import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { AnimationBuilder, trigger, state, transition, animate, style } from '@angular/animations';
 import { Router, NavigationEnd } from '@angular/router';
 import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
+import { LayerRef } from '@ng-vcl/ng-vcl';
 
 var ObservableComponent = /** @class */ (function () {
     function ObservableComponent() {
@@ -4231,12 +4232,12 @@ var LayerResult = /** @class */ (function (_super) {
     };
     return LayerResult;
 }(Observable));
-var LayerRef = /** @class */ (function () {
-    function LayerRef() {
+var LayerRef$1 = /** @class */ (function () {
+    function LayerRef$$1() {
         this.stateChange = new Subject();
         this.state$ = this.stateChange.asObservable();
     }
-    LayerRef.prototype.open = function (attrs) {
+    LayerRef$$1.prototype.open = function (attrs) {
         this.visible = true;
         this.attrs = attrs;
         this.stateChange.next({ attrs: attrs, visible: true });
@@ -4246,7 +4247,7 @@ var LayerRef = /** @class */ (function () {
         this.results = new Subject();
         return new LayerResult(this.results, this);
     };
-    LayerRef.prototype.close = function (data) {
+    LayerRef$$1.prototype.close = function (data) {
         this.visible = false;
         this.stateChange.next({ visible: false });
         if (this.results) {
@@ -4257,7 +4258,7 @@ var LayerRef = /** @class */ (function () {
             this.results = undefined;
         }
     };
-    LayerRef.prototype.closeWithError = function (data) {
+    LayerRef$$1.prototype.closeWithError = function (data) {
         this.visible = false;
         this.stateChange.next({ visible: false });
         if (this.results) {
@@ -4265,13 +4266,13 @@ var LayerRef = /** @class */ (function () {
             this.results = undefined;
         }
     };
-    LayerRef.prototype.send = function (data) {
+    LayerRef$$1.prototype.send = function (data) {
         if (data !== undefined && this.results) {
             this.results.next(data);
         }
     };
-    LayerRef.prototype.event = function (event) { };
-    return LayerRef;
+    LayerRef$$1.prototype.event = function (event) { };
+    return LayerRef$$1;
 }());
 var DynamicLayerRef = /** @class */ (function (_super) {
     __extends$7(DynamicLayerRef, _super);
@@ -4305,7 +4306,7 @@ var DynamicLayerRef = /** @class */ (function (_super) {
         }
     };
     return DynamicLayerRef;
-}(LayerRef));
+}(LayerRef$1));
 
 var __decorate$D = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4367,7 +4368,7 @@ var LayerContainerComponent = /** @class */ (function () {
                 // The created injector injects this instance as LayerRef
                 // It is used in the component instance created within the wormhole
                 var layerInjector = ReflectiveInjector.resolveAndCreate([{
-                        provide: LayerRef,
+                        provide: LayerRef$1,
                         useValue: this.layerRef
                     }], this.layerInjector);
                 this.wormhole = new ComponentWormhole(this.layerTarget, this.layerContentContainer, layerInjector);
@@ -4446,7 +4447,7 @@ var LayerContainerComponent = /** @class */ (function () {
     ], LayerContainerComponent.prototype, "box", void 0);
     __decorate$D([
         Input(),
-        __metadata$n("design:type", LayerRef)
+        __metadata$n("design:type", LayerRef$1)
     ], LayerContainerComponent.prototype, "layerRef", void 0);
     __decorate$D([
         Input(),
@@ -4691,7 +4692,7 @@ var LayerRefDirective = /** @class */ (function (_super) {
         __metadata$q("design:paramtypes", [TemplateRef, LayerManagerService, Injector])
     ], LayerRefDirective);
     return LayerRefDirective;
-}(LayerRef));
+}(LayerRef$1));
 
 var __decorate$H = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4735,7 +4736,7 @@ var VCLLayerModule = /** @class */ (function () {
                 LayerManagerService
             ].concat((config.layers || []), [
                 {
-                    provide: LayerRef,
+                    provide: LayerRef$1,
                     useValue: undefined
                 },
                 {
@@ -5856,9 +5857,9 @@ var RadioGroupComponent = /** @class */ (function () {
                     crbtn.setInline(_this.layout === 'horizontal');
                 });
                 // Subscribe last radio button to blur event
-                _this.blurSub = _this.radioButtons.last.blur.subscribe(function () {
+                _this.blurSub = _this.radioButtons.last && _this.radioButtons.last.blur.subscribe(function () {
                     _this.onTouched();
-                });
+                }) || undefined;
                 // Subscribe to checked change event
                 var checked$ = merge.apply(void 0, (_this.radioButtons.map(function (source, idx) { return source.checkedChange.pipe(map(function () { return ({ source: source, idx: idx }); })); })));
                 _this.checkedSub = checked$.subscribe(function (c) {
@@ -6468,6 +6469,8 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$b = {
 var DatePickerComponent = /** @class */ (function () {
     function DatePickerComponent(cdRef) {
         this.cdRef = cdRef;
+        this.tag = DatePickerComponent_1.Tag;
+        this.debug = false;
         // behavior
         this.closeOnSelect = false;
         this.disabled = false;
@@ -6492,6 +6495,7 @@ var DatePickerComponent = /** @class */ (function () {
         this.today = new CalendarDate();
         this.showYearPick = false;
     }
+    DatePickerComponent_1 = DatePickerComponent;
     DatePickerComponent.prototype.ngOnInit = function () {
         if (this.config) {
             for (var key in this.config) {
@@ -6525,9 +6529,17 @@ var DatePickerComponent = /** @class */ (function () {
         this.showYearPick = true;
     };
     DatePickerComponent.prototype.onDateTap = function (date) {
-        if (this.disabled || this.isDayDisabled(date)) {
+        var tag = this.tag + ".onDateTap()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'date:', date);
+        var isDayDisabled = this.isDayDisabled(date);
+        if (debug)
+            console.log(tag, 'this.disabled:', this.disabled);
+        if (debug)
+            console.log(tag, 'isDayDisabled:', isDayDisabled);
+        if (this.disabled || isDayDisabled)
             return;
-        }
         this.select(date);
         if (!this.selectRange) {
             if (this.currentDate && !this.currentDate.isSameMonthAndYear(this.viewDate)) {
@@ -6550,13 +6562,18 @@ var DatePickerComponent = /** @class */ (function () {
      * activate the given date
      */
     DatePickerComponent.prototype.select = function (date) {
+        var tag = this.tag + ".select()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'date:', date);
+        if (debug)
+            console.log(tag, 'this.selectRange:', this.selectRange);
         if (!this.selectRange) {
             this.currentDate = date;
         }
         else {
             if (this.currentDate && this.currentRangeEnd) {
-                // reset all
-                this.currentDate = undefined;
+                this.currentDate = date;
                 this.currentRangeEnd = undefined;
             }
             else if (this.currentDate && !this.currentRangeEnd) {
@@ -6588,6 +6605,12 @@ var DatePickerComponent = /** @class */ (function () {
         if (!this.selectRange && this.currentDate && this.currentDate.isSameDay(date))
             return true;
         return !!this.currentDate && !!this.currentRangeEnd && date.inRange(this.currentDate, this.currentRangeEnd);
+    };
+    DatePickerComponent.prototype.isBeginning = function (date) {
+        return this.selectRange && !!this.currentDate && this.currentDate.isSameDay(date);
+    };
+    DatePickerComponent.prototype.isEnd = function (date) {
+        return this.selectRange && !!this.currentRangeEnd && this.currentRangeEnd.isSameDay(date);
     };
     DatePickerComponent.prototype.isDayDisabled = function (day) {
         var minDate = this.minDate || new Date(0, 0, 1);
@@ -6654,6 +6677,7 @@ var DatePickerComponent = /** @class */ (function () {
         this.viewDate = this.currentDate ? this.currentDate : new CalendarDate();
         this.cdRef.markForCheck();
     };
+    DatePickerComponent.Tag = 'DatePickerComponent';
     __decorate$_([
         Input(),
         __metadata$C("design:type", Boolean)
@@ -6751,10 +6775,10 @@ var DatePickerComponent = /** @class */ (function () {
         Output(),
         __metadata$C("design:type", Object)
     ], DatePickerComponent.prototype, "change", void 0);
-    DatePickerComponent = __decorate$_([
+    DatePickerComponent = DatePickerComponent_1 = __decorate$_([
         Component({
             selector: 'vcl-date-picker',
-            template: "<div class=\"vclLayoutHorizontal\">\r\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" style=\"min-width: 18em;\" *ngIf=\"displayDate\">\r\n    <div class=\"vclDGRow\">\r\n      <div class=\"vclDGCell vclToolbar\">\r\n        <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n          <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"prevMonth()\">\r\n                <div class=\"vclIcogram\">\r\n                  <div class=\"vclIcon fas fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div>\r\n                </div>\r\n              </button>\r\n          <span class=\"vclCalHeaderLabel\" (click)=\"showYear()\" [class.date-picker-pointer]=\"!showYearPick\">\r\n            {{viewDate?.getMonthString()}}&nbsp;&nbsp;{{viewDate?.getYearString()}}\r\n          </span>\r\n            <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"nextMonth()\">\r\n              <div class=\"vclIcogram\">\r\n                <div class=\"vclIcon fas fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div>\r\n              </div>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <ng-container *ngIf=\"!showYearPick\">\r\n        <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\">\r\n          <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\">\r\n            {{'week'}}\r\n          </div>\r\n          <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\">\r\n            <ng-container *ngIf=\"displayWeekdays\">\r\n              {{day}}\r\n            </ng-container>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\">\r\n          <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\">\r\n            {{week[5].getWeekNumber()}}\r\n          </div>\r\n          <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"disabled || isDayDisabled(day)\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\" [class.vclSelected]=\"isMarked(day)\" (click)=\"onDateTap(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\">\r\n            {{day.date.getDate()}}\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\">\r\n          <div class=\"vclDGCell\">\r\n            <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\">\r\n              <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoToday()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to today</span>\r\n                </div>\r\n              </button>\r\n              <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoSelected()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to selected</span>\r\n                </div>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showYearPick\">\r\n        <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\">\r\n          <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\">\r\n            {{year}}\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n    <vcl-time-picker *ngIf=\"displayTime\"\r\n                     [(ngModel)]=\"selectedDate\"\r\n                     (ngModelChange)=\"timeChange($event)\"\r\n                     [displayHours]=\"displayHours\"\r\n                     [displayMinutes]=\"displayMinutes\"\r\n                     [displaySeconds]=\"displaySeconds\"\r\n                     [displayHours24]=\"displayHours24\"\r\n                     [ngStyle]=\"{'margin-left': displayDate ? '10px' : 0}\">\r\n    </vcl-time-picker>\r\n</div>\r\n",
+            template: "<div class=\"vclLayoutHorizontal\">\r\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" style=\"min-width: 18em;\" *ngIf=\"displayDate\">\r\n    <div class=\"vclDGRow\">\r\n      <div class=\"vclDGCell vclToolbar\">\r\n        <div class=\"vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n          <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"prevMonth()\">\r\n                <div class=\"vclIcogram\">\r\n                  <div class=\"vclIcon fas fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div>\r\n                </div>\r\n              </button>\r\n          <span class=\"vclCalHeaderLabel\" (click)=\"showYear()\" [class.date-picker-pointer]=\"!showYearPick\">\r\n            {{ viewDate?.getMonthString() }}&nbsp;&nbsp;{{ viewDate?.getYearString() }}\r\n          </span>\r\n            <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"nextMonth()\">\r\n              <div class=\"vclIcogram\">\r\n                <div class=\"vclIcon fas fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div>\r\n              </div>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <ng-container *ngIf=\"!showYearPick\">\r\n        <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\">\r\n          <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclWeekdayLabel\">\r\n            week\r\n          </div>\r\n          <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\">\r\n            <ng-container *ngIf=\"displayWeekdays\">\r\n              {{ day }}\r\n            </ng-container>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock(); index as w\">\r\n          <div *ngIf=\"displayWeekNumbers && week.length == 7\" class=\"vclDGCell vclWeekdayLabel\">\r\n            {{ week[5].getWeekNumber() }}\r\n          </div>\r\n          <div *ngFor=\"let day of week; index as d\"\r\n            [tabindex]=\"w * d\"\r\n            class=\"vclDGCell vclCalItem\"\r\n            [class.vclToday]=\"highlightSelected && day.isToday()\"\r\n            [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\"\r\n            [class.vclDisabled]=\"disabled || isDayDisabled(day)\"\r\n            [class.vclSelected]=\"isMarked(day)\"\r\n            [class.vclSelectedAlt]=\"isBeginning(day) && !currentRangeEnd\"\r\n            [class.vclSelectedBeg]=\"isBeginning(day) && currentRangeEnd\"\r\n            [class.vclSelectedEnd]=\"isEnd(day)\"\r\n            (click)=\"onDateTap(day)\">\r\n            {{ day.date.getDate() }}\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\">\r\n          <div class=\"vclDGCell\">\r\n            <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\">\r\n              <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoToday()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to today</span>\r\n                </div>\r\n              </button>\r\n              <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoSelected()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to selected</span>\r\n                </div>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showYearPick\">\r\n        <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\">\r\n          <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\"\r\n            [class.vclSelected]=\"viewDate.date.getFullYear() == year\"\r\n            [class.vclToday]=\"highlightSelected && today.isInYear(year)\"\r\n            (click)=\"yearPickSelect(year)\">\r\n            {{ year }}\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n    <vcl-time-picker *ngIf=\"displayTime\"\r\n                     [(ngModel)]=\"selectedDate\"\r\n                     (ngModelChange)=\"timeChange($event)\"\r\n                     [displayHours]=\"displayHours\"\r\n                     [displayMinutes]=\"displayMinutes\"\r\n                     [displaySeconds]=\"displaySeconds\"\r\n                     [displayHours24]=\"displayHours24\"\r\n                     [ngStyle]=\"{ 'margin-left': displayDate ? '10px' : 0 }\">\r\n    </vcl-time-picker>\r\n</div>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$b],
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
@@ -6767,6 +6791,7 @@ var DatePickerComponent = /** @class */ (function () {
         __metadata$C("design:paramtypes", [ChangeDetectorRef])
     ], DatePickerComponent);
     return DatePickerComponent;
+    var DatePickerComponent_1;
 }());
 
 var __decorate$10 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6888,7 +6913,7 @@ var TimePickerComponent = /** @class */ (function () {
     TimePickerComponent = __decorate$10([
         Component({
             selector: 'vcl-time-picker',
-            template: "<div class=\"vclLayoutHorizontal\">\r\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" style=\"width: 18em;\" *ngIf=\"displayHours\">\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" *ngIf=\"displayHours24\">\r\n      <div class=\"vclDGRow vclToolbar\">\r\n        <button type=\"button\" class=\"vclButton vclSquare\" style=\"visibility: hidden\">12h</button>\r\n        <div class=\"vclDGCell\">\r\n          <span class=\"vclCalHeaderLabel\">Hour</span>\r\n        </div>\r\n        <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"onSwitch24h()\" style=\"height: 100%\">12h</button>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i * 6 + x)\" (tap)=\"onHourTap(i * 6 + x)\">{{ i * 6 + x }}</div>\r\n      </div>\r\n    </div>\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" *ngIf=\"!displayHours24\">\r\n      <div class=\"vclDGRow vclToolbar\">\r\n        <button type=\"button\" class=\"vclButton vclSquare\" style=\"visibility: hidden\">24h</button>\r\n        <div class=\"vclDGCell\">\r\n          <span class=\"vclCalHeaderLabel\">AM</span>\r\n        </div>\r\n        <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"onSwitch24h()\" style=\"height: 100%\">24h</button>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [12, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i % 12)\" (tap)=\"onHourTap(i % 12)\">{{ i }}</div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [6, 7, 8, 9, 10, 11]\" [class.vclSelected]=\"isHourMarked(i % 12)\" (tap)=\"onHourTap(i % 12)\">{{ i }}</div>\r\n      </div>\r\n      <div class=\"vclDGRow vclToolbar\">\r\n        <div class=\"vclDGCell\">\r\n          <span class=\"vclCalHeaderLabel\">PM</span>\r\n        </div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [12, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i % 12 + 12)\" (tap)=\"onHourTap(i % 12 + 12)\">{{ i }}</div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [6, 7, 8, 9, 10, 11]\" [class.vclSelected]=\"isHourMarked(i % 12 + 12)\" (tap)=\"onHourTap(i % 12 + 12)\">{{ i }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" [ngStyle]=\"{width: '18em', 'margin-left': displayHours ? '10px' : 0}\" *ngIf=\"displayMinutes\">\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\r\n      <div class=\"vclDGRow\">\r\n        <div class=\"vclDGCell vclToolbar\">\r\n          <span class=\"vclCalHeaderLabel\">Minute</span>\r\n        </div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3, 4, 5]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\" [class.vclSelected]=\"isMinuteMarked(i * 10 + x)\" (tap)=\"onMinuteTap(i * 10 + x)\">:{{ i * 10 + x }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" [ngStyle]=\"{width: '18em', 'margin-left': displayHours || displayMinutes ? '10px' : 0}\" *ngIf=\"displaySeconds\">\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\r\n      <div class=\"vclDGRow\">\r\n        <div class=\"vclDGCell vclToolbar\">\r\n          <span class=\"vclCalHeaderLabel\">Second</span>\r\n        </div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3, 4, 5]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\" [class.vclSelected]=\"isSecondMarked(i * 10 + x)\" (tap)=\"onSecondTap(i * 10 + x)\">:{{ i * 10 + x }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
+            template: "<div class=\"vclLayoutHorizontal\">\r\n  <div *ngIf=\"displayHours\" class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" style=\"width: 18em;\">\r\n    <div *ngIf=\"displayHours24\" class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\r\n      <div class=\"vclDGRow\">\r\n        <div class=\"vclDGCell\">\r\n          <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n            <div class=\"vclButtonDim\"></div>\r\n            <div class=\"vclCalHeaderLabel\">Hour</div>\r\n            <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"onSwitch24h()\">12h</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i * 6 + x)\" (click)=\"onHourTap(i * 6 + x)\">{{ i * 6 + x }}</div>\r\n      </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"!displayHours24\" class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\r\n      \r\n      <div class=\"vclDGRow\">\r\n        <div class=\"vclDGCell\">\r\n          <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n            <div class=\"vclButtonDim\"></div>\r\n            <div class=\"vclCalHeaderLabel\">AM</div>\r\n            <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"onSwitch24h()\">24h</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [12, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i % 12)\" (click)=\"onHourTap(i % 12)\">{{ i }}</div>\r\n      </div>\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [6, 7, 8, 9, 10, 11]\" [class.vclSelected]=\"isHourMarked(i % 12)\" (click)=\"onHourTap(i % 12)\">{{ i }}</div>\r\n      </div>\r\n\r\n      <div class=\"vclDGRow\">\r\n        <div class=\"vclDGCell\">\r\n          <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n            <div class=\"vclButtonDim\"></div>\r\n            <div class=\"vclCalHeaderLabel\">PM</div>\r\n            <div class=\"vclButtonDim\"></div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [12, 1, 2, 3, 4, 5]\" [class.vclSelected]=\"isHourMarked(i % 12 + 12)\" (click)=\"onHourTap(i % 12 + 12)\">{{ i }}</div>\r\n      </div>\r\n\r\n      <div class=\"vclDGRow\" role=\"row\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let i of [6, 7, 8, 9, 10, 11]\" [class.vclSelected]=\"isHourMarked(i % 12 + 12)\" (click)=\"onHourTap(i % 12 + 12)\">{{ i }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" [ngStyle]=\"{width: '18em', 'margin-left': displayHours ? '10px' : 0}\" *ngIf=\"displayMinutes\">\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\r\n        <div class=\"vclDGRow\">\r\n          <div class=\"vclDGCell\">\r\n            <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n              <div class=\"vclButtonDim\"></div>\r\n              <div class=\"vclCalHeaderLabel\">Minute</div>\r\n              <div class=\"vclButtonDim\"></div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3, 4, 5]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\" [class.vclSelected]=\"isMinuteMarked(i * 10 + x)\" (click)=\"onMinuteTap(i * 10 + x)\">:{{ i * 10 + x }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"vclDatePicker\" role=\"listbox\" aria-multiselectable=\"false\" [ngStyle]=\"{width: '18em', 'margin-left': displayHours || displayMinutes ? '10px' : 0}\" *ngIf=\"displaySeconds\">\r\n    <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\">\r\n      <div class=\"vclDGRow\">\r\n        <div class=\"vclDGCell\">\r\n          <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n            <div class=\"vclButtonDim\"></div>\r\n            <div class=\"vclCalHeaderLabel\">Second</div>\r\n            <div class=\"vclButtonDim\"></div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let i of [0, 1, 2, 3, 4, 5]\">\r\n        <div class=\"vclDGCell vclCalItem\" role=\"option\" *ngFor=\"let x of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\" [class.vclSelected]=\"isSecondMarked(i * 10 + x)\" (click)=\"onSecondTap(i * 10 + x)\">:{{ i * 10 + x }}</div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$c],
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
@@ -8273,7 +8298,7 @@ var AlertComponent = /** @class */ (function () {
                 '[style.outline]': '"none"'
             }
         }),
-        __metadata$I("design:paramtypes", [ElementRef, LayerRef, LayerService, ChangeDetectorRef])
+        __metadata$I("design:paramtypes", [ElementRef, LayerRef$1, LayerService, ChangeDetectorRef])
     ], AlertComponent);
     return AlertComponent;
 }());
@@ -8835,7 +8860,7 @@ var NotifierLayerRef = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotifierLayerRef;
-}(LayerRef));
+}(LayerRef$1));
 var NotifierService = /** @class */ (function () {
     function NotifierService(ls) {
         this.ls = ls;
@@ -13091,4 +13116,76 @@ var VCLRatingModule = /** @class */ (function () {
     return VCLRatingModule;
 }());
 
-export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, TourService, TourOptions, TourComponent, VCLTourModule, VCLRatingModule };
+var __decorate$2i = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$1A = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var ModalComponent = /** @class */ (function () {
+    function ModalComponent() {
+        this.tapButton = new EventEmitter();
+    }
+    ModalComponent.prototype.open = function () {
+        this.layerModal.open();
+    };
+    ModalComponent.prototype.close = function () {
+        this.layerModal.close();
+    };
+    __decorate$2i([
+        Input(),
+        __metadata$1A("design:type", Array)
+    ], ModalComponent.prototype, "buttons", void 0);
+    __decorate$2i([
+        Input(),
+        __metadata$1A("design:type", Boolean)
+    ], ModalComponent.prototype, "showClose", void 0);
+    __decorate$2i([
+        Input(),
+        __metadata$1A("design:type", String)
+    ], ModalComponent.prototype, "title", void 0);
+    __decorate$2i([
+        Input(),
+        __metadata$1A("design:type", String)
+    ], ModalComponent.prototype, "class", void 0);
+    __decorate$2i([
+        Output(),
+        __metadata$1A("design:type", Object)
+    ], ModalComponent.prototype, "tapButton", void 0);
+    __decorate$2i([
+        ViewChild('layerModal'),
+        __metadata$1A("design:type", LayerRef)
+    ], ModalComponent.prototype, "layerModal", void 0);
+    ModalComponent = __decorate$2i([
+        Component({
+            selector: 'vcl-modal',
+            template: "\r\n<ng-template vcl-layer #layerModal=\"layer\" [modal]=\"true\">\r\n  <div class=\"vclLayer\" role=\"dialog\">\r\n    <div class=\"vclLayerBox\">\r\n      <div [ngClass]=\"class\" class=\"vclPanel vclPanelDialog vclNoMargin\" role=\"dialog\">\r\n          <div *ngIf=\"showClose || title\" class=\"vclPanelHeader vclNoBg vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\">\r\n            <h3 class=\"vclPanelTitle\">{{title}}</h3>\r\n            <button *ngIf=\"showClose\" type=\"button\" class=\"vclButton vclTransparent\" (tap)=\"layerModal.close()\" >\r\n              <div class=\"vclIcogram\"><div class=\"vclIcon fa fa-times\" aria-hidden=\"true\" aria-label=\"Close\" role=\"img\"></div></div>\r\n            </button>\r\n          </div>\r\n          <div class=\"vclPanelBody\">\r\n            <div class=\"vclPanelContent\">\r\n              <ng-content></ng-content>\r\n            </div>\r\n          </div>\r\n          <div *ngIf=\"buttons\" class=\"vclPanelFooter vclNoBg vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\">\r\n            <div></div>\r\n            <div class=\"vclLooseButtonGroup\">\r\n              <ng-template ngFor let-iB [ngForOf]=\"buttons\">\r\n                <button type=\"button\" class=\"vclButton\" [ngClass]=\"iB.class\" (tap)=\"tapButton.emit(iB.onTap) \">\r\n                  <div class=\"vclIcogram\">\r\n                    <span class=\"vclText\">{{iB.label}}</span>\r\n                  </div>\r\n                </button>\r\n              </ng-template>\r\n            </div>\r\n          </div>\r\n        </div>\r\n    </div>\r\n  </div>\r\n</ng-template>"
+        })
+    ], ModalComponent);
+    return ModalComponent;
+}());
+
+var __decorate$2j = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var VCLModalModule = /** @class */ (function () {
+    function VCLModalModule() {
+    }
+    VCLModalModule = __decorate$2j([
+        NgModule({
+            imports: [CommonModule, VCLLayerModule],
+            exports: [ModalComponent],
+            declarations: [ModalComponent],
+            providers: [],
+        })
+    ], VCLModalModule);
+    return VCLModalModule;
+}());
+
+export { ObservableComponent, LayoutDirective, LayoutTargetDirective, VCLLayoutModule, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconDirective, IconFontDirective, DefaultIconResolverService, VCL_ICON_RESOLVER, VCLIconModule, MetalistItem, MetalistComponent, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, DropDirection, VCLSelectModule, IcogramComponent, IcogramSpanComponent, VCLIcogramModule, ButtonDirective, ButtonLabelComponent, ButtonSelectDirective, ButtonIconComponent, VCLButtonModule, ButtonGroupComponent, GroupButtonDirective, VCLButtonGroupModule, LayerRefDirective, LayerRef$1 as LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, TimePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputContainerComponent, TokenInputDirective, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyIndicatorCoverComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notifier, NotifierService, NotifierType, NotifierPosition, NotifierComponent, VCLNotifierModule, TooltipComponent, AnimationState, Placement, VCLTooltipModule, VCLTableModule, PasswordInputComponent, PasswordInputDirective, VCLPasswordInputModule, VCLZoomBoxModule, VCLNotificationModule, notificationTypeFromString, notificationIconFromType, notificationStyleClassFromType, NotificationType, FlexAlign, TextAlign, IconType, GALLERY_ANIMATIONS, VCLGalleryModule, VCLBadgeModule, VCLEmbeddedInputGroupModule, Autocomplete, AutocompleteOption, AutocompleteContent, InputAutocompleteDirective, TokenInputAutocompleteDirective, VCLAutocompleteModule, TourService, TourOptions, TourComponent, VCLTourModule, VCLRatingModule, VCLModalModule };

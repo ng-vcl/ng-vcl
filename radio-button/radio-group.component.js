@@ -70,9 +70,9 @@ var RadioGroupComponent = /** @class */ (function () {
                     crbtn.setInline(_this.layout === 'horizontal');
                 });
                 // Subscribe last radio button to blur event
-                _this.blurSub = _this.radioButtons.last.blur.subscribe(function () {
+                _this.blurSub = _this.radioButtons.last && _this.radioButtons.last.blur.subscribe(function () {
                     _this.onTouched();
-                });
+                }) || undefined;
                 // Subscribe to checked change event
                 var checked$ = merge.apply(void 0, (_this.radioButtons.map(function (source, idx) { return source.checkedChange.pipe(map(function () { return ({ source: source, idx: idx }); })); })));
                 _this.checkedSub = checked$.subscribe(function (c) {

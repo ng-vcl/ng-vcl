@@ -28,6 +28,9 @@ export interface DatePickerConfig {
 }
 export declare class DatePickerComponent implements OnInit, OnChanges, ControlValueAccessor {
     private cdRef;
+    static readonly Tag: string;
+    private readonly tag;
+    private readonly debug;
     closeOnSelect: boolean;
     disabled: boolean;
     highlightToday: boolean;
@@ -71,6 +74,8 @@ export declare class DatePickerComponent implements OnInit, OnChanges, ControlVa
      * ui-markers
      */
     isMarked(date: CalendarDate): boolean;
+    isBeginning(date: CalendarDate): boolean;
+    isEnd(date: CalendarDate): boolean;
     isDayDisabled(day: CalendarDate): boolean;
     /**
      * functions to move viewDate

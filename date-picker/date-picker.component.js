@@ -18,6 +18,8 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 var DatePickerComponent = /** @class */ (function () {
     function DatePickerComponent(cdRef) {
         this.cdRef = cdRef;
+        this.tag = DatePickerComponent_1.Tag;
+        this.debug = false;
         // behavior
         this.closeOnSelect = false;
         this.disabled = false;
@@ -42,6 +44,7 @@ var DatePickerComponent = /** @class */ (function () {
         this.today = new CalendarDate();
         this.showYearPick = false;
     }
+    DatePickerComponent_1 = DatePickerComponent;
     DatePickerComponent.prototype.ngOnInit = function () {
         if (this.config) {
             for (var key in this.config) {
@@ -75,9 +78,17 @@ var DatePickerComponent = /** @class */ (function () {
         this.showYearPick = true;
     };
     DatePickerComponent.prototype.onDateTap = function (date) {
-        if (this.disabled || this.isDayDisabled(date)) {
+        var tag = this.tag + ".onDateTap()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'date:', date);
+        var isDayDisabled = this.isDayDisabled(date);
+        if (debug)
+            console.log(tag, 'this.disabled:', this.disabled);
+        if (debug)
+            console.log(tag, 'isDayDisabled:', isDayDisabled);
+        if (this.disabled || isDayDisabled)
             return;
-        }
         this.select(date);
         if (!this.selectRange) {
             if (this.currentDate && !this.currentDate.isSameMonthAndYear(this.viewDate)) {
@@ -100,13 +111,18 @@ var DatePickerComponent = /** @class */ (function () {
      * activate the given date
      */
     DatePickerComponent.prototype.select = function (date) {
+        var tag = this.tag + ".select()";
+        var debug = this.debug || false;
+        if (debug)
+            console.log(tag, 'date:', date);
+        if (debug)
+            console.log(tag, 'this.selectRange:', this.selectRange);
         if (!this.selectRange) {
             this.currentDate = date;
         }
         else {
             if (this.currentDate && this.currentRangeEnd) {
-                // reset all
-                this.currentDate = undefined;
+                this.currentDate = date;
                 this.currentRangeEnd = undefined;
             }
             else if (this.currentDate && !this.currentRangeEnd) {
@@ -138,6 +154,12 @@ var DatePickerComponent = /** @class */ (function () {
         if (!this.selectRange && this.currentDate && this.currentDate.isSameDay(date))
             return true;
         return !!this.currentDate && !!this.currentRangeEnd && date.inRange(this.currentDate, this.currentRangeEnd);
+    };
+    DatePickerComponent.prototype.isBeginning = function (date) {
+        return this.selectRange && !!this.currentDate && this.currentDate.isSameDay(date);
+    };
+    DatePickerComponent.prototype.isEnd = function (date) {
+        return this.selectRange && !!this.currentRangeEnd && this.currentRangeEnd.isSameDay(date);
     };
     DatePickerComponent.prototype.isDayDisabled = function (day) {
         var minDate = this.minDate || new Date(0, 0, 1);
@@ -204,6 +226,7 @@ var DatePickerComponent = /** @class */ (function () {
         this.viewDate = this.currentDate ? this.currentDate : new CalendarDate();
         this.cdRef.markForCheck();
     };
+    DatePickerComponent.Tag = 'DatePickerComponent';
     __decorate([
         Input(),
         __metadata("design:type", Boolean)
@@ -301,10 +324,10 @@ var DatePickerComponent = /** @class */ (function () {
         Output(),
         __metadata("design:type", Object)
     ], DatePickerComponent.prototype, "change", void 0);
-    DatePickerComponent = __decorate([
+    DatePickerComponent = DatePickerComponent_1 = __decorate([
         Component({
             selector: 'vcl-date-picker',
-            template: "<div class=\"vclLayoutHorizontal\">\r\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" style=\"min-width: 18em;\" *ngIf=\"displayDate\">\r\n    <div class=\"vclDGRow\">\r\n      <div class=\"vclDGCell vclToolbar\">\r\n        <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n          <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"prevMonth()\">\r\n                <div class=\"vclIcogram\">\r\n                  <div class=\"vclIcon fas fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div>\r\n                </div>\r\n              </button>\r\n          <span class=\"vclCalHeaderLabel\" (click)=\"showYear()\" [class.date-picker-pointer]=\"!showYearPick\">\r\n            {{viewDate?.getMonthString()}}&nbsp;&nbsp;{{viewDate?.getYearString()}}\r\n          </span>\r\n            <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"nextMonth()\">\r\n              <div class=\"vclIcogram\">\r\n                <div class=\"vclIcon fas fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div>\r\n              </div>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <ng-container *ngIf=\"!showYearPick\">\r\n        <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\">\r\n          <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\">\r\n            {{'week'}}\r\n          </div>\r\n          <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\">\r\n            <ng-container *ngIf=\"displayWeekdays\">\r\n              {{day}}\r\n            </ng-container>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\">\r\n          <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\">\r\n            {{week[5].getWeekNumber()}}\r\n          </div>\r\n          <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"disabled || isDayDisabled(day)\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\" [class.vclSelected]=\"isMarked(day)\" (click)=\"onDateTap(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\">\r\n            {{day.date.getDate()}}\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\">\r\n          <div class=\"vclDGCell\">\r\n            <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\">\r\n              <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoToday()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to today</span>\r\n                </div>\r\n              </button>\r\n              <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoSelected()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to selected</span>\r\n                </div>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showYearPick\">\r\n        <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\">\r\n          <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\">\r\n            {{year}}\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n    <vcl-time-picker *ngIf=\"displayTime\"\r\n                     [(ngModel)]=\"selectedDate\"\r\n                     (ngModelChange)=\"timeChange($event)\"\r\n                     [displayHours]=\"displayHours\"\r\n                     [displayMinutes]=\"displayMinutes\"\r\n                     [displaySeconds]=\"displaySeconds\"\r\n                     [displayHours24]=\"displayHours24\"\r\n                     [ngStyle]=\"{'margin-left': displayDate ? '10px' : 0}\">\r\n    </vcl-time-picker>\r\n</div>\r\n",
+            template: "<div class=\"vclLayoutHorizontal\">\r\n  <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" style=\"min-width: 18em;\" *ngIf=\"displayDate\">\r\n    <div class=\"vclDGRow\">\r\n      <div class=\"vclDGCell vclToolbar\">\r\n        <div class=\"vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\">\r\n          <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"prevMonth()\">\r\n                <div class=\"vclIcogram\">\r\n                  <div class=\"vclIcon fas fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div>\r\n                </div>\r\n              </button>\r\n          <span class=\"vclCalHeaderLabel\" (click)=\"showYear()\" [class.date-picker-pointer]=\"!showYearPick\">\r\n            {{ viewDate?.getMonthString() }}&nbsp;&nbsp;{{ viewDate?.getYearString() }}\r\n          </span>\r\n            <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [disabled]=\"disabled\" (click)=\"nextMonth()\">\r\n              <div class=\"vclIcogram\">\r\n                <div class=\"vclIcon fas fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div>\r\n              </div>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <ng-container *ngIf=\"!showYearPick\">\r\n        <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\">\r\n          <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclWeekdayLabel\">\r\n            week\r\n          </div>\r\n          <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\">\r\n            <ng-container *ngIf=\"displayWeekdays\">\r\n              {{ day }}\r\n            </ng-container>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock(); index as w\">\r\n          <div *ngIf=\"displayWeekNumbers && week.length == 7\" class=\"vclDGCell vclWeekdayLabel\">\r\n            {{ week[5].getWeekNumber() }}\r\n          </div>\r\n          <div *ngFor=\"let day of week; index as d\"\r\n            [tabindex]=\"w * d\"\r\n            class=\"vclDGCell vclCalItem\"\r\n            [class.vclToday]=\"highlightSelected && day.isToday()\"\r\n            [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\"\r\n            [class.vclDisabled]=\"disabled || isDayDisabled(day)\"\r\n            [class.vclSelected]=\"isMarked(day)\"\r\n            [class.vclSelectedAlt]=\"isBeginning(day) && !currentRangeEnd\"\r\n            [class.vclSelectedBeg]=\"isBeginning(day) && currentRangeEnd\"\r\n            [class.vclSelectedEnd]=\"isEnd(day)\"\r\n            (click)=\"onDateTap(day)\">\r\n            {{ day.date.getDate() }}\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\">\r\n          <div class=\"vclDGCell\">\r\n            <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\">\r\n              <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoToday()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to today</span>\r\n                </div>\r\n              </button>\r\n              <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" [disabled]=\"disabled\" (click)=\"gotoSelected()\">\r\n                <div class=\" vclIcogram\">\r\n                  <span class=\"vclText \">go to selected</span>\r\n                </div>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n\r\n      <ng-container *ngIf=\"showYearPick\">\r\n        <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\">\r\n          <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\"\r\n            [class.vclSelected]=\"viewDate.date.getFullYear() == year\"\r\n            [class.vclToday]=\"highlightSelected && today.isInYear(year)\"\r\n            (click)=\"yearPickSelect(year)\">\r\n            {{ year }}\r\n          </div>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n    <vcl-time-picker *ngIf=\"displayTime\"\r\n                     [(ngModel)]=\"selectedDate\"\r\n                     (ngModelChange)=\"timeChange($event)\"\r\n                     [displayHours]=\"displayHours\"\r\n                     [displayMinutes]=\"displayMinutes\"\r\n                     [displaySeconds]=\"displaySeconds\"\r\n                     [displayHours24]=\"displayHours24\"\r\n                     [ngStyle]=\"{ 'margin-left': displayDate ? '10px' : 0 }\">\r\n    </vcl-time-picker>\r\n</div>\r\n",
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             changeDetection: ChangeDetectionStrategy.OnPush,
             host: {
@@ -317,5 +340,6 @@ var DatePickerComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [ChangeDetectorRef])
     ], DatePickerComponent);
     return DatePickerComponent;
+    var DatePickerComponent_1;
 }());
 export { DatePickerComponent };
