@@ -24,7 +24,7 @@ var SortIconComponent = /** @class */ (function () {
         this.renderer.removeClass(this.rootElement.nativeElement, 'fa-sort-up');
         this.renderer.removeClass(this.rootElement.nativeElement, 'fa-sort-down');
         switch (order) {
-            case 1: {
+            case 0: {
                 this.renderer.addClass(this.rootElement.nativeElement, 'fa-sort-up');
                 break;
             }
@@ -40,7 +40,7 @@ var SortIconComponent = /** @class */ (function () {
     };
     __decorate([
         Input(),
-        __metadata("design:type", Object)
+        __metadata("design:type", Number)
     ], SortIconComponent.prototype, "sort", void 0);
     SortIconComponent = __decorate([
         Component({

@@ -7,8 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { LayerRef } from '@ng-vcl/ng-vcl';
+import { Component, ContentChild, Input, Output, ViewChild, EventEmitter } from '@angular/core';
+import { LayerRef } from '../layer/index';
+import { ModalBodyComponent } from './modal-body.component';
+import { ModalFooterComponent } from './modal-footer.component';
 var ModalComponent = /** @class */ (function () {
     function ModalComponent() {
         this.tapButton = new EventEmitter();
@@ -21,12 +23,8 @@ var ModalComponent = /** @class */ (function () {
     };
     __decorate([
         Input(),
-        __metadata("design:type", Array)
-    ], ModalComponent.prototype, "buttons", void 0);
-    __decorate([
-        Input(),
         __metadata("design:type", Boolean)
-    ], ModalComponent.prototype, "showClose", void 0);
+    ], ModalComponent.prototype, "closeButton", void 0);
     __decorate([
         Input(),
         __metadata("design:type", String)
@@ -35,6 +33,14 @@ var ModalComponent = /** @class */ (function () {
         Input(),
         __metadata("design:type", String)
     ], ModalComponent.prototype, "class", void 0);
+    __decorate([
+        ContentChild(ModalBodyComponent),
+        __metadata("design:type", Object)
+    ], ModalComponent.prototype, "bodyComponent", void 0);
+    __decorate([
+        ContentChild(ModalFooterComponent),
+        __metadata("design:type", Object)
+    ], ModalComponent.prototype, "footerComponent", void 0);
     __decorate([
         Output(),
         __metadata("design:type", Object)
@@ -46,7 +52,7 @@ var ModalComponent = /** @class */ (function () {
     ModalComponent = __decorate([
         Component({
             selector: 'vcl-modal',
-            template: "\r\n<ng-template vcl-layer #layerModal=\"layer\" [modal]=\"true\">\r\n  <div class=\"vclLayer\" role=\"dialog\">\r\n    <div class=\"vclLayerBox\">\r\n      <div [ngClass]=\"class\" class=\"vclPanel vclPanelDialog vclNoMargin\" role=\"dialog\">\r\n          <div *ngIf=\"showClose || title\" class=\"vclPanelHeader vclNoBg vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\">\r\n            <h3 class=\"vclPanelTitle\">{{title}}</h3>\r\n            <button *ngIf=\"showClose\" type=\"button\" class=\"vclButton vclTransparent\" (tap)=\"layerModal.close()\" >\r\n              <div class=\"vclIcogram\"><div class=\"vclIcon fa fa-times\" aria-hidden=\"true\" aria-label=\"Close\" role=\"img\"></div></div>\r\n            </button>\r\n          </div>\r\n          <div class=\"vclPanelBody\">\r\n            <div class=\"vclPanelContent\">\r\n              <ng-content></ng-content>\r\n            </div>\r\n          </div>\r\n          <div *ngIf=\"buttons\" class=\"vclPanelFooter vclNoBg vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\">\r\n            <div></div>\r\n            <div class=\"vclLooseButtonGroup\">\r\n              <ng-template ngFor let-iB [ngForOf]=\"buttons\">\r\n                <button type=\"button\" class=\"vclButton\" [ngClass]=\"iB.class\" (tap)=\"tapButton.emit(iB.onTap) \">\r\n                  <div class=\"vclIcogram\">\r\n                    <span class=\"vclText\">{{iB.label}}</span>\r\n                  </div>\r\n                </button>\r\n              </ng-template>\r\n            </div>\r\n          </div>\r\n        </div>\r\n    </div>\r\n  </div>\r\n</ng-template>"
+            template: "\n<ng-template vcl-layer #layerModal=\"layer\" [modal]=\"true\">\n  <div class=\"vclLayer\" role=\"dialog\">\n    <div class=\"vclLayerBox\">\n      <div [ngClass]=\"class\" class=\"vclPanel vclPanelDialog vclNoMargin\" role=\"dialog\">\n        <div *ngIf=\"closeButton || title\" class=\"vclPanelHeader vclNoBg vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\">\n          <h3 class=\"vclPanelTitle\">{{title}}</h3>\n          <button *ngIf=\"closeButton\" type=\"button\" class=\"vclButton vclTransparent\" (tap)=\"layerModal.close()\" >\n            <div class=\"vclIcogram\"><div class=\"vclIcon fa fa-times\" aria-hidden=\"true\" aria-label=\"Close\" role=\"img\"></div></div>\n          </button>\n        </div>\n        <div class=\"vclPanelBody\">\n          <div class=\"vclPanelContent\" *ngIf=\"bodyComponent != null\">\n            <ng-content select=\"vcl-modal-body\"></ng-content>\n          </div>\n        </div>\n        <div class=\"vclPanelFooter vclNoBg vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" *ngIf=\"footerComponent != null\">\n          <div></div>\n          <ng-content select=\"vcl-modal-footer\"></ng-content>\n        </div>\n      </div>\n    </div>\n  </div>\n</ng-template>"
         })
     ], ModalComponent);
     return ModalComponent;

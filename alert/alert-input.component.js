@@ -61,7 +61,7 @@ var AlertInputComponent = /** @class */ (function () {
     ], AlertInputComponent.prototype, "valueChange", void 0);
     AlertInputComponent = __decorate([
         Component({
-            template: "<input #input *ngIf=\"control==='input'\" class=\"vclInput\" [placeholder]=\"placeholder\" [ngModel]=\"inputValue\" (ngModelChange)=\"inputValueChange($event)\" autofocus>\r\n",
+            template: "<input #input *ngIf=\"control==='input'\" class=\"vclInput\" [placeholder]=\"placeholder\" [ngModel]=\"inputValue\" (ngModelChange)=\"inputValueChange($event)\" autofocus>\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
             selector: 'alert-input'
         })

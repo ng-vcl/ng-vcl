@@ -7,6 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from './modal.component';
+import { ModalBodyComponent } from './modal-body.component';
+import { ModalFooterComponent } from './modal-footer.component';
 import { VCLLayerModule } from '../layer/index';
 var VCLModalModule = /** @class */ (function () {
     function VCLModalModule() {
@@ -14,8 +16,8 @@ var VCLModalModule = /** @class */ (function () {
     VCLModalModule = __decorate([
         NgModule({
             imports: [CommonModule, VCLLayerModule],
-            exports: [ModalComponent],
-            declarations: [ModalComponent],
+            exports: [ModalComponent, ModalBodyComponent, ModalFooterComponent],
+            declarations: [ModalComponent, ModalBodyComponent, ModalFooterComponent],
             providers: [],
         })
     ], VCLModalModule);

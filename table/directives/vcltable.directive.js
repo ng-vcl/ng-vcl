@@ -30,6 +30,9 @@ var VclTableDirective = /** @class */ (function () {
     VclTableDirective = __decorate([
         Directive({
             selector: '[vcl-table]',
+            host: {
+                '[class.vclTable]': 'true',
+            }
         }),
         __metadata("design:paramtypes", [Renderer2, ElementRef])
     ], VclTableDirective);

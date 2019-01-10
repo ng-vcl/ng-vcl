@@ -38,7 +38,7 @@ var IcogramComponent = /** @class */ (function () {
                 '[class.vclIcogram]': 'true',
                 '[attr.role]': '"img"',
             },
-            template: "<div vclLayoutTarget=\"prepIcon\" vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\">\r\n  <ng-content select=\"[prepIcon]\"></ng-content>\r\n</div>\r\n<div vclLayoutTarget=\"label\" *ngIf=\"!!label\" class=\"vclText\">{{label}}</div>\r\n<ng-content></ng-content>\r\n<div vclLayoutTarget=\"appIcon\" vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\">\r\n  <ng-content select=\"[appIcon]\"></ng-content>\r\n</div>\r\n",
+            template: "<div vclLayoutTarget=\"prepIcon\" vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\">\n  <ng-content select=\"[prepIcon]\"></ng-content>\n</div>\n<div vclLayoutTarget=\"label\" *ngIf=\"!!label\" class=\"vclText\">{{label}}</div>\n<ng-content></ng-content>\n<div vclLayoutTarget=\"appIcon\" vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\">\n  <ng-content select=\"[appIcon]\"></ng-content>\n</div>\n",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], IcogramComponent);
@@ -75,7 +75,7 @@ var IcogramSpanComponent = /** @class */ (function () {
                 '[class.vclIcogram]': 'true',
                 '[attr.role]': '"img"',
             },
-            template: "<span vclLayoutTarget=\"prepIcon\" vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\">\r\n  <ng-content select=\"[prepIcon]\"></ng-content>\r\n</span>\r\n<span vclLayoutTarget=\"label\" *ngIf=\"!!label\" class=\"vclText\">{{label}}</span>\r\n<ng-content></ng-content>\r\n<span vclLayoutTarget=\"appIcon\" vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\">\r\n  <ng-content select=\"[appIcon]\"></ng-content>\r\n</span>\r\n  ",
+            template: "<span vclLayoutTarget=\"prepIcon\" vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\">\n  <ng-content select=\"[prepIcon]\"></ng-content>\n</span>\n<span vclLayoutTarget=\"label\" *ngIf=\"!!label\" class=\"vclText\">{{label}}</span>\n<ng-content></ng-content>\n<span vclLayoutTarget=\"appIcon\" vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\">\n  <ng-content select=\"[appIcon]\"></ng-content>\n</span>\n  ",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], IcogramSpanComponent);

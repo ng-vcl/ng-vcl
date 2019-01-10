@@ -185,7 +185,7 @@ var SelectComponent = /** @class */ (function () {
     });
     SelectComponent.prototype.open = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var tag, debug, position, screenHeight, spaceBottom, spaceTop, dropDirection;
+            var tag, debug, position, clientHeight, screenHeight, spaceBottom, spaceTop, dropDirection;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -195,8 +195,9 @@ var SelectComponent = /** @class */ (function () {
                         position = this.elementRef.nativeElement.getBoundingClientRect();
                         if (this.debug)
                             console.log(tag, 'position:', position);
+                        clientHeight = document.documentElement ? document.documentElement.clientHeight : undefined;
                         screenHeight = window.innerHeight
-                            || document.documentElement.clientHeight
+                            || clientHeight
                             || document.body.clientHeight;
                         if (this.debug)
                             console.log(tag, 'screenHeight:', screenHeight);
@@ -380,7 +381,7 @@ var SelectComponent = /** @class */ (function () {
     SelectComponent = SelectComponent_1 = __decorate([
         Component({
             selector: 'vcl-select',
-            template: "<div (offClick)=\"close()\">\r\n  <div\r\n    #select\r\n    class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\"\r\n    [style.marginBottom]=\"0\"\r\n    >\r\n    <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\r\n      {{displayValue}}\r\n    </div>\r\n    <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\r\n      <vcl-token-list [disabled]=\"disabled\">\r\n        <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item.metaItem)\"></vcl-token>\r\n      </vcl-token-list>\r\n    </div>\r\n\r\n    <button vcl-button\r\n      [disabled]=\"disabled\"\r\n      type=\"button\"\r\n      tabindex=\"-1\"\r\n      class=\"vclTransparent vclAppended\"\r\n      [icon]=\"expanded ? expandedIcon : collapsedIcon\"\r\n      (click)=\"toggle()\">\r\n    </button>\r\n  </div>\r\n\r\n  <vcl-dropdown \r\n      #dropdown\r\n      tabindex=\"-1\"\r\n      [disabled]=\"disabled\"\r\n      [expanded]=\"expanded\"\r\n      [value]=\"value\"\r\n      [mode]=\"mode\"\r\n      [maxSelectableItems]=\"maxSelectableItems\"\r\n      [style.position]=\"'relative'\"\r\n      [style.top.px]=\"dropdownTop\"\r\n      [style.width]=\"'100%'\"\r\n      [style.position]=\"'absolute'\"\r\n      [style.zIndex]=\"zIndex\"\r\n      (change)=\"onDropdownChange($event)\"\r\n      (itemsChange)=\"onItemsChange()\"\r\n  >\r\n    <vcl-dropdown-option\r\n      *ngFor=\"let item of items\" \r\n      [metadata]=\"item\" \r\n      [value]=\"item.value\" \r\n      [disabled]=\"disabled || item.disabled\" \r\n      [label]=\"item.label\" \r\n      [sublabel]=\"item.sublabel\"\r\n      [prepIcon]=\"item.prepIcon\"\r\n      [appIcon]=\"item.appIcon\"\r\n      [appIconSrc]=\"item.appIconSrc\"\r\n      [prepIconSrc]=\"item.prepIconSrc\"\r\n      >\r\n    </vcl-dropdown-option>\r\n  </vcl-dropdown>\r\n</div>\r\n",
+            template: "<div (offClick)=\"close()\">\n  <div\n    #select\n    class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\"\n    [style.marginBottom]=\"0\"\n    >\n    <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\n      {{displayValue}}\n    </div>\n    <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle()\">\n      <vcl-token-list [disabled]=\"disabled\">\n        <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item.metaItem)\"></vcl-token>\n      </vcl-token-list>\n    </div>\n\n    <button vcl-button\n      [disabled]=\"disabled\"\n      type=\"button\"\n      tabindex=\"-1\"\n      class=\"vclTransparent vclAppended\"\n      [icon]=\"expanded ? expandedIcon : collapsedIcon\"\n      (click)=\"toggle()\">\n    </button>\n  </div>\n\n  <vcl-dropdown \n      #dropdown\n      tabindex=\"-1\"\n      [disabled]=\"disabled\"\n      [expanded]=\"expanded\"\n      [value]=\"value\"\n      [mode]=\"mode\"\n      [maxSelectableItems]=\"maxSelectableItems\"\n      [style.position]=\"'relative'\"\n      [style.top.px]=\"dropdownTop\"\n      [style.width]=\"'100%'\"\n      [style.position]=\"'absolute'\"\n      [style.zIndex]=\"zIndex\"\n      (change)=\"onDropdownChange($event)\"\n      (itemsChange)=\"onItemsChange()\"\n  >\n    <vcl-dropdown-option\n      *ngFor=\"let item of items\" \n      [metadata]=\"item\" \n      [value]=\"item.value\" \n      [disabled]=\"disabled || item.disabled\" \n      [label]=\"item.label\" \n      [sublabel]=\"item.sublabel\"\n      [prepIcon]=\"item.prepIcon\"\n      [appIcon]=\"item.appIcon\"\n      [appIconSrc]=\"item.appIconSrc\"\n      [prepIconSrc]=\"item.prepIconSrc\"\n      >\n    </vcl-dropdown-option>\n  </vcl-dropdown>\n</div>\n",
             // changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {

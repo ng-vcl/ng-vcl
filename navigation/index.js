@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VCLLinkModule } from '../link/index';
+import { VCLIconModule } from '../icon/index';
 import { NavigationComponent, NavigationItemDirective } from './navigation.component';
 export { NavigationComponent, NavigationItemDirective };
 var VCLNavigationModule = /** @class */ (function () {
@@ -14,7 +15,7 @@ var VCLNavigationModule = /** @class */ (function () {
     }
     VCLNavigationModule = __decorate([
         NgModule({
-            imports: [CommonModule, VCLLinkModule],
+            imports: [CommonModule, VCLLinkModule, VCLIconModule],
             exports: [NavigationComponent, NavigationItemDirective],
             declarations: [NavigationComponent, NavigationItemDirective],
             providers: [],

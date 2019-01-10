@@ -25,7 +25,7 @@ var GalleryFooterComponent = /** @class */ (function () {
     GalleryFooterComponent = __decorate([
         Component({
             selector: 'vcl-gallery-footer',
-            template: "<div class=\"vclGalleryFooter vclAlignCentered\">\r\n  {{ target.selectedImage + 1 }}&nbsp;/&nbsp;{{ target.images ? target.images.length : 0 }}\r\n</div>\r\n"
+            template: "<div class=\"vclGalleryFooter vclAlignCentered\">\n  {{ target.selectedImage + 1 }}&nbsp;/&nbsp;{{ target.images ? target.images.length : 0 }}\n</div>\n"
         }),
         __param(0, Optional()),
         __metadata("design:paramtypes", [GalleryComponent])

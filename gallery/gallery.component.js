@@ -88,7 +88,7 @@ var GalleryComponent = /** @class */ (function () {
     GalleryComponent = __decorate([
         Component({
             selector: 'vcl-gallery',
-            template: "<div class=\"vclGallery\" touch-action=\"pan-y\">\r\n  <ng-content></ng-content>\r\n</div>\r\n",
+            template: "<div class=\"vclGallery\" touch-action=\"pan-y\">\n  <ng-content></ng-content>\n</div>\n",
             host: {
                 '[attr.role]': '"gallery"',
             }

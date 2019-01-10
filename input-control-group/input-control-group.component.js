@@ -41,7 +41,7 @@ var InputControlGroup = /** @class */ (function () {
         Component({
             selector: 'vcl-input-control-group, [vcl-input-control-group]',
             changeDetection: ChangeDetectionStrategy.OnPush,
-            template: "<ng-content></ng-content>\r\n\r\n<div *ngIf=\"type && label && label!==''\" class=\"vclFormControlHint\"\r\n  [class.vclError]=\"type=='error'\"\r\n  [class.vclWarning]=\"type=='warning'\"\r\n  [class.vclSuccess]=\"type=='success'\">\r\n  {{label}}\r\n</div>\r\n"
+            template: "<ng-content></ng-content>\n\n<div *ngIf=\"type && label && label!==''\" class=\"vclFormControlHint\"\n  [class.vclError]=\"type=='error'\"\n  [class.vclWarning]=\"type=='warning'\"\n  [class.vclSuccess]=\"type=='success'\">\n  {{label}}\n</div>\n"
         })
     ], InputControlGroup);
     return InputControlGroup;
